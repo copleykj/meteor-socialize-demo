@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { User } from 'meteor/socialize:user-model';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 import { Grid, Row, Col, Button, Panel } from 'react-bootstrap';
 import SimpleSchema from 'simpl-schema';
@@ -34,7 +35,7 @@ const RegisterSchema = new SimpleSchema({
 
 export default class LoginPage extends Component {
     static propTypes = {
-        user: React.PropTypes.instanceOf(User),
+        user: PropTypes.instanceOf(User),
     }
 
     state = { signUp: false };

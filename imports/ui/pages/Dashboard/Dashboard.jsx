@@ -1,5 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { User } from 'meteor/socialize:user-model';
+
 import MainHeader from '../../components/MainHeader/MainHeader.jsx';
 
 
@@ -10,7 +13,7 @@ const Dashboard = ({ user }) => (
 );
 
 Dashboard.propTypes = {
-    user: React.PropTypes.instanceOf(User),
+    user: PropTypes.instanceOf(User),
 };
 
 export default Dashboard;

@@ -3,6 +3,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { User } from 'meteor/socialize:user-model';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import LoginPage from './pages/Login/Login.jsx';
 
@@ -11,8 +12,8 @@ const App = ({ children, ...props }) => (
 );
 
 App.propTypes = {
-    user: React.PropTypes.instanceOf(User),
-    children: React.PropTypes.node,
+    user: PropTypes.instanceOf(User),
+    children: PropTypes.node,
 };
 
 const AppContainer = createContainer(() => ({
