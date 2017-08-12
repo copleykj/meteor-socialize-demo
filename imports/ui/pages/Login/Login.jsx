@@ -72,7 +72,7 @@ export default class LoginPage extends Component {
                                 <AutoForm schema={RegisterSchema} onSubmit={this.handleSubmit}>
                                     <AutoField name="username" />
                                     <AutoField name="email" />
-                                    <AutoField name="password" />
+                                    <AutoField name="password" type="password" />
                                     <Button type="submit" bsStyle="info">Register</Button>
                                     <ErrorsField />
                                     <p style={{ marginTop: '1.2em' }}>Already have an account? <a href="#" onClick={(event) => { event.preventDefault(); this.setState({ signUp: false }); }}>Log In</a></p>
@@ -81,7 +81,7 @@ export default class LoginPage extends Component {
                             { !signUp &&
                                 <AutoForm schema={LoginSchema} onSubmit={this.handleSubmit}>
                                     <AutoField name="usernameOrEmail" label="Username or Email" />
-                                    <AutoField name="password" />
+                                    <AutoField name="password" type="password" />
                                     <Button type="submit" bsStyle="info">Log In</Button>
                                     <ErrorsField />
                                     <p style={{ marginTop: '1.2em' }}>Don&apos;t have an account? <a href="#" onClick={(event) => { event.preventDefault(); this.setState({ signUp: true }); }}>Register</a></p>
