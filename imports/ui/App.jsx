@@ -4,8 +4,11 @@ import { User } from 'meteor/socialize:user-model';
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import plural from 'plural';
 
 import LoginPage from './pages/Login/Login.jsx';
+
+plural.monkeyPatch();
 
 const App = ({ children, ...props }) => (
     props.user ? children && React.cloneElement(children, { ...props }) : <LoginPage />
