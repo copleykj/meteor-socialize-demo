@@ -8,6 +8,7 @@ import MainHeader from '../../components/MainHeader/MainHeader.jsx';
 
 const Dashboard = ({ user }) => (
     <div id="page-dashboard">
+    <div id="page-dashboard" style={{ paddingTop: '80px' }}>
         {MainHeader(user)}
     </div>
 );

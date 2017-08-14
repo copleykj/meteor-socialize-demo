@@ -12,7 +12,7 @@ const handleLogout = () => {
 };
 
 export default user => (
-    <Navbar staticTop>
+    <Navbar fixedTop>
         <Navbar.Header>
             <Navbar.Brand>
                 <a href="#">Socialize</a>
