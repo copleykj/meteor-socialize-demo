@@ -27,3 +27,4 @@ socialize:user-blocking
 socialize:postable
 socialize:likeable
 socialize:commentable
+socialize:user-presence
