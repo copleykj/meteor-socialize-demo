@@ -7,7 +7,8 @@ import SimpleSchema from 'simpl-schema';
 const StatusSchema = new SimpleSchema({
     status: {
         type: String,
-        allowedValues: ['online', 'idle'],
+        defaultValue: 'offline',
+        allowedValues: ['online', 'idle', 'offline'],
     },
 });
 
@@ -28,5 +29,5 @@ UserPresence.onUserIdle(function onUserIdle(userId) {
 });
 
 UserPresence.onUserOffline(function onUserOffline(userId) {
-    Meteor.users.update(userId, { $unset: { status: true } });
+    Meteor.users.update(userId, { $set: { status: 'offline' } });
 });
