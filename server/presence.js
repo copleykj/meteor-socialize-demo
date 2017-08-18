@@ -10,6 +10,10 @@ const StatusSchema = new SimpleSchema({
         optional: true,
         allowedValues: ['online', 'idle'],
     },
+    lastOnline: {
+        type: Date,
+        optional: true,
+    },
 });
 
 User.attachSchema(StatusSchema);
@@ -21,7 +25,7 @@ UserPresence.onCleanup(function onCleanup(sessionIds) {
 });
 
 UserPresence.onUserOnline(function onUserOnline(userId) {
-    Meteor.users.update(userId, { $set: { status: 'online' } });
+    Meteor.users.update(userId, { $set: { status: 'online', lastOnline: new Date() } });
 });
 
 UserPresence.onUserIdle(function onUserIdle(userId) {
