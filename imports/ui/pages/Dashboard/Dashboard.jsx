@@ -5,15 +5,13 @@ import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import MainHeader from '../../components/MainHeader/MainHeader.jsx';
+import MainHeader from '../../layouts/MainHeader/MainHeader.jsx';
 import PostComponent from '../../components/Post/Post.jsx';
 import Composer from '../../components/Composer/Composer.jsx';
 
 
 const Dashboard = ({ user, posts, onlineFriends }) => (
-    <div id="page-dashboard" style={{ paddingTop: '80px' }}>
-        {MainHeader(user)}
-
+    <MainHeader user={user}>
         <Grid>
             <Row>
                 <Col xs={5}>
@@ -48,7 +46,7 @@ const Dashboard = ({ user, posts, onlineFriends }) => (
                 </Col>
             </Row>
         </Grid>
-    </div>
+    </MainHeader>
 );
 
 Dashboard.propTypes = {
