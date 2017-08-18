@@ -1,4 +1,4 @@
-import { Grid, Col, Row } from 'react-bootstrap';
+import { Grid, Col, Row, Well } from 'react-bootstrap';
 import { User } from 'meteor/socialize:user-model';
 import { Post } from 'meteor/socialize:postable';
 import { createContainer } from 'meteor/react-meteor-data';
@@ -10,23 +10,43 @@ import PostComponent from '../../components/Post/Post.jsx';
 import Composer from '../../components/Composer/Composer.jsx';
 
 
-const Dashboard = ({ user, posts }) => (
+const Dashboard = ({ user, posts, onlineFriends }) => (
     <div id="page-dashboard" style={{ paddingTop: '80px' }}>
         {MainHeader(user)}
 
         <Grid>
-            <Col xs={5}>
-                <Row>
+            <Row>
+                <Col xs={5}>
                     {Composer(user)}
-                </Row>
-                <Row>
                     {
                         posts.map(post => (
                             <PostComponent post={post} key={post._id} />
                         ))
                     }
-                </Row>
-            </Col>
+                </Col>
+                <Col xs={4} />
+                <Col xs={3}>
+                    <h4>Online Friends</h4>
+                    <hr />
+                    {
+                        onlineFriends.map(friend => (
+                            <Well bsSize="small" key={friend._id}>
+                                {friend.username}
+                                <span
+                                    className="pull-right"
+                                    style={{
+                                        display: 'inline-block',
+                                        padding: '6px',
+                                        margin: '4px',
+                                        borderRadius: '50%',
+                                        backgroundColor: friend.status === 'online' ? 'YellowGreen' : 'DarkOrange',
+                                    }}
+                                />
+                            </Well>
+                        ))
+                    }
+                </Col>
+            </Row>
         </Grid>
     </div>
 );
@@ -34,6 +54,7 @@ const Dashboard = ({ user, posts }) => (
 Dashboard.propTypes = {
     user: PropTypes.instanceOf(User),
     posts: PropTypes.arrayOf(PropTypes.instanceOf(Post)),
+    onlineFriends: PropTypes.arrayOf(PropTypes.instanceOf(User)),
 };
 
 const DashboardContainer = createContainer(({ user }) => {
@@ -42,6 +63,7 @@ const DashboardContainer = createContainer(({ user }) => {
         x,
         user,
         posts: user.feed().posts(null, null, 'date', -1).fetch(),
+        onlineFriends: user.onlineFriends().fetch(),
     };
 }, Dashboard);
 
