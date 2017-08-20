@@ -1,0 +1,33 @@
+options:
+  # merge default rules
+  merge-default-rules: true
+
+# Rule Configuration
+rules:
+  extends-before-mixins: 2
+  extends-before-declarations: 2
+  placeholder-in-extend: 2
+
+  no-warn: 1
+  no-debug: 1
+  no-important: 2
+  no-ids: 0
+  no-color-literals: 0
+  no-duplicate-properties: 0
+
+  clean-import-paths:
+    - 0
+
+  nesting-depth:
+    - 1
+    - max-depth: 5
+
+  hex-notation:
+    - 2
+    - style: lowercase
+  indentation:
+    - 2
+    - size: 4
+  property-sort-order:
+    - 1
+    - ignore-custom-properties: true
