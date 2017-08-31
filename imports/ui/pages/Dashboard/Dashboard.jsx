@@ -60,7 +60,7 @@ const DashboardContainer = createContainer(({ user }) => {
     return {
         x,
         user,
-        posts: user.feed().posts(null, null, 'date', -1).fetch(),
+        posts: user.feed().posts({ sort: { date: -1 } }).fetch(),
         onlineFriends: user.onlineFriends().fetch(),
     };
 }, Dashboard);
