@@ -1,9 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { User } from 'meteor/socialize:user-model';
+import { createContainer } from 'meteor/react-meteor-data';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router';
-import { Navbar, Nav, NavDropdown, MenuItem } from 'react-bootstrap';
+import { browserHistory, Link } from 'react-router';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Navbar, Nav, NavDropdown, NavItem, MenuItem, Badge } from 'react-bootstrap';
 
 const handleLogout = () => {
     Meteor.logout((error) => {
@@ -13,14 +15,19 @@ const handleLogout = () => {
     });
 };
 
-const MainHeader = ({ user, children }) => (
-    <div style={{ paddingTop: '80px' }}>
+const MainHeader = ({ user, numUnreadConversations, newestConversationId, children, paddingTop }) => (
+    <div style={{ paddingTop }}>
         <Navbar fixedTop>
             <Navbar.Header>
                 <Navbar.Brand>
-                    <a href="#">Socialize</a>
+                    <Link to="/">Socialize</Link>
                 </Navbar.Brand>
             </Navbar.Header>
+
+            <Nav>
+                <LinkContainer to={`/messages/${newestConversationId || 'new'}`}><NavItem>Messages <Badge bsStyle="info">{numUnreadConversations || ''}</Badge></NavItem></LinkContainer>
+            </Nav>
+
             <Nav pullRight>
                 <NavDropdown title={user.username} id="user-menu">
                     <MenuItem>My Profile</MenuItem>
@@ -37,7 +44,25 @@ const MainHeader = ({ user, children }) => (
 
 MainHeader.propTypes = {
     user: PropTypes.instanceOf(User),
+    numUnreadConversations: PropTypes.number,
+    newestConversationId: PropTypes.string,
     children: PropTypes.node,
+    paddingTop: PropTypes.string,
 };
 
-export default MainHeader;
+MainHeader.defaultProps = {
+    paddingTop: '80px',
+};
+
+const MainHeaderContainer = createContainer(({ user, params, ...props }) => {
+    const unreadConversation = user.newestConversation();
+    const newestConversationId = params.conversationId || (unreadConversation && unreadConversation._id);
+    return {
+        user,
+        numUnreadConversations: user.numUnreadConversations(),
+        newestConversationId,
+        ...props,
+    };
+}, MainHeader);
+
+export default MainHeaderContainer;

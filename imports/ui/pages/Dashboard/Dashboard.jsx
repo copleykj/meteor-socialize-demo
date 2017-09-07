@@ -7,11 +7,11 @@ import React from 'react';
 
 import MainHeader from '../../layouts/MainHeader/MainHeader.jsx';
 import PostComponent from '../../components/Post/Post.jsx';
-import Composer from '../../components/Composer/Composer.jsx';
+import Composer from '../../components/PostComposer/PostComposer.jsx';
 
 
-const Dashboard = ({ user, posts, onlineFriends }) => (
-    <MainHeader user={user}>
+const Dashboard = ({ user, posts, onlineFriends, params }) => (
+    <MainHeader user={user} params={params}>
         <Grid>
             <Row>
                 <Col xs={5}>
@@ -53,6 +53,9 @@ Dashboard.propTypes = {
     user: PropTypes.instanceOf(User),
     posts: PropTypes.arrayOf(PropTypes.instanceOf(Post)),
     onlineFriends: PropTypes.arrayOf(PropTypes.instanceOf(User)),
+    params: PropTypes.shape({
+        conversationId: PropTypes.string,
+    }),
 };
 
 const DashboardContainer = createContainer(({ user }) => {

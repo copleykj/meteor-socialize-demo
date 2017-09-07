@@ -1,5 +1,243 @@
+//setup bootstrap with darkly theme
 @import './theme/_variables.scss';
-
 @import '{}/node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
-
 @import './theme/_bootswatch.scss';
+
+
+// page level styles
+@import './styles/_messages.scss';
+
+
+///////////////////////////////////////////
+//// SCSS partials are not working     ////
+//// So we will leave the imports for  ////
+//// future use and write styles here  ////
+//// in hopes that the fourseven:scss  ////
+//// bug will actually get fixed       ////
+//////////////////////////////////////////
+
+@mixin triangle($direction, $horizontal, $vertical, $color) {
+    border-style: solid;
+    content: '';
+    display: block;
+    height: 0;
+    width: 0;
+
+    @if $direction == top {
+        border-color: transparent transparent $color;
+        border-width: 0 $vertical $horizontal;
+    }
+    @if $direction == bottom {
+        border-color: $color transparent transparent;
+        border-width: $vertical $horizontal 0 $vertical;
+    }
+    @if $direction == left {
+        border-color: transparent $color transparent transparent;
+        border-width: $vertical $horizontal $vertical 0;
+    }
+    @if $direction == right {
+        border-color: transparent transparent transparent $color;
+        border-width: $vertical 0 $vertical $horizontal;
+    }
+    @if $direction == topright {
+        border-color: transparent $color transparent transparent;
+        border-width: 0 $horizontal $vertical 0;
+    }
+    @if $direction == bottomright {
+        border-color: transparent transparent $color;
+        border-width: 0 0 $horizontal $vertical;
+    }
+    @if $direction == bottomleft {
+        border-color: transparent transparent transparent $color;
+        border-width: $horizontal 0 0 $vertical;
+    }
+    @if $direction == topleft {
+        border-color: $color transparent transparent;
+        border-width: $horizontal $vertical 0 0;
+    }
+}
+
+
+//user status colors
+$online-color: #9acd32;
+$idle-color: #ff8c00;
+
+//chat bubble triangle size
+$triangle-size: 10px;
+
+* {
+    box-sizing: border-box;
+}
+
+.scroll-area {
+    flex: 1;
+}
+
+//begin messages page
+#messages-page {
+    display: flex;
+    height: calc(100vh - 60px);
+
+    #conversations-column {
+        flex: 1.5;
+        max-width: 300px;
+        padding-top: 10px;
+
+        a {
+            background-color: $gray-dark;
+            color: inherit;
+            display: block;
+            text-decoration: none;
+
+            &.active {
+                background-color: $brand-primary;
+            }
+        }
+
+        .conversation {
+            align-items: center;
+            display: flex;
+            margin-bottom: 2px;
+            padding: 5px;
+
+            >div {
+                &:nth-child(2) {
+                    flex: 1;
+                    overflow: hidden;
+                    padding: 0 10px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+            }
+        }
+    }
+
+    #messages-column {
+        background-color: $gray-dark;
+        display: flex;
+        flex: 3;
+        flex-direction: column;
+        min-width: 400px;
+
+        .thumb-vertical {
+            background-color: $brand-primary;
+            border-radius: 2px;
+        }
+
+        #conversation-header {
+            margin: 5px;
+        }
+
+        #messages-container {
+            display: flex;
+            flex: 5;
+            flex-direction: column;
+            justify-content: flex-end;
+            overflow: hidden;
+            padding: 20px 15px 0;
+
+            .message {
+
+                display: flex;
+                margin-bottom: 20px;
+
+                &.self {
+                    flex-direction: row-reverse;
+
+                    .chat-bubble {
+                        background-color: $gray-light;
+                        color: $gray-darker;
+
+                        &::before {
+                            @include triangle(right, $triangle-size, $triangle-size, $gray-light);
+                            position: absolute;
+                            right: -$triangle-size;
+                        }
+                    }
+
+                    .username {
+                        text-align: right;
+                    }
+                }
+
+                &:not(.self) {
+                    .chat-bubble {
+                        &::before {
+                            @include triangle(left, $triangle-size, $triangle-size, $brand-primary);
+                            left: -$triangle-size;
+                            position: absolute;
+                        }
+                    }
+                }
+
+                .chat-bubble {
+                    background-color: $brand-primary;
+                    border-radius: 5px;
+                    margin: 0 10px;
+                    max-width: 440px;
+                    min-width: 200px;
+                    padding: 10px;
+                    position: relative;
+
+                    &::before {
+                        top: 5px;
+                    }
+                }
+            }
+        }
+
+        #message-composer {
+            display: flex;
+            padding: 5px;
+
+            > div {
+                &:first-child {
+                    flex: 1;
+                }
+
+                &:nth-child(2) {
+                    padding: 10px 5px 10px 10px;
+                }
+            }
+        }
+    }
+
+    #participants-column {
+        flex: 1;
+        margin-left: 10px;
+        max-width: 200px;
+        padding-top: 10px;
+
+        .conversation-participant {
+            align-items: center;
+            display: flex;
+            margin-bottom: 5px;
+
+            >div {
+                &:nth-child(2) {
+                    flex: 1;
+                    overflow: hidden;
+                    padding: 0 10px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                .status {
+                    border-radius: 50%;
+                    display: inline-block;
+                    padding: 6px;
+
+                    &.online {
+                        background-color: $online-color;
+                    }
+
+                    &.idle {
+                        background-color: $idle-color;
+                    }
+                }
+            }
+
+        }
+    }
+}
+//end messages page
