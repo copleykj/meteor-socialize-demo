@@ -1,5 +1,6 @@
 import { Conversation, Message } from 'meteor/socialize:messaging';
 import { Scrollbars } from 'react-custom-scrollbars';
+import ReactLetterAvatar from 'react-letter-avatar';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
@@ -50,7 +51,12 @@ export default class MessagesContainer extends Component {
                                 const self = sender.isSelf() && 'self';
                                 return (
                                     <div className={`message ${self}`} key={message._id}>
-                                        <div><img src="http://via.placeholder.com/60x60" alt="placeholder" /></div>
+                                        <div>
+                                            <ReactLetterAvatar
+                                                name={sender.username.toUpperCase()}
+                                                size={60}
+                                            />
+                                        </div>
                                         <div className="chat-bubble">
                                             <p>{message.body}</p>
                                             <div className="username"><small>{sender.displayName()} - <small>{message.timestamp()}</small></small></div>

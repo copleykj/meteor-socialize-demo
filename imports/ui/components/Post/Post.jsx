@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Comment } from 'meteor/socialize:commentable';
 import { User } from 'meteor/socialize:user-model';
 import { Post } from 'meteor/socialize:postable';
+import ReactLetterAvatar from 'react-letter-avatar';
 import { Well, Clearfix, Glyphicon, Button, ButtonGroup, ButtonToolbar, FormGroup } from 'react-bootstrap';
 import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
@@ -20,8 +21,13 @@ const PostComponent = ({ post, poster, comments, commentCount, likeCount, likedB
     }
     return (
         <Well style={{ overflow: 'hidden' }}>
-            <img className="pull-left" src="http://via.placeholder.com/60x60" alt="placeholder" />
-            <div style={{ marginLeft: '75px' }}>
+            <div className="pull-left">
+                <ReactLetterAvatar
+                    name={poster.username.toUpperCase()}
+                    size={60}
+                />
+            </div>
+            <div style={{ marginLeft: '70px' }}>
                 <p style={{ marginBottom: '4px', marginTop: '-5px' }} className="text-info">{poster.username}</p>
                 <p>{post.body}</p>
                 <div className="text-warning">
@@ -52,7 +58,12 @@ const PostComponent = ({ post, poster, comments, commentCount, likeCount, likedB
                     style={{ marginTop: '10px' }}
                 >
                     <FormGroup>
-                        <img className="pull-left" src="http://via.placeholder.com/40x40" alt="placeholder" />
+                        <div className="pull-left">
+                            <ReactLetterAvatar
+                                name={poster.username.toUpperCase()}
+                                size={40}
+                            />
+                        </div>
                         <div style={{ marginLeft: '60px' }}>
                             <textarea style={{ maxWidth: '100%' }} className="form-control input-sm" ref={(ref) => { ta = ref; }} placeholder="Enter your comment.." />
                         </div>
