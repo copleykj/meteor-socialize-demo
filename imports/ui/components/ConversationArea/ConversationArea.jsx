@@ -3,15 +3,16 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import Composer from '../../components/MessageComposer/MessageComposer.jsx';
+import MessageComposer from '../../components/MessageComposer/MessageComposer.jsx';
 
 export default class MessagesContainer extends Component {
     componentDidMount() {
-        this.scrollView.scrollToBottom();
+        this.goToBottom();
     }
     componentDidUpdate() {
-        if (this.scrollDiff > -10 || this.conversationId !== this.props.currentConversation._id) {
-            this.conversationId = this.props.currentConversation._id;
+        const { currentConversation } = this.props;
+        if (currentConversation && (this.scrollDiff > -10 || this.conversationId !== currentConversation._id)) {
+            this.conversationId = currentConversation._id;
             /* If scroll is close to bottom, we'll scroll to bottom as new
                 messages are added */
             this.scrollView.scrollToBottom();
@@ -23,15 +24,17 @@ export default class MessagesContainer extends Component {
         const { scrollTop, clientHeight, scrollHeight } = values;
         this.scrollDiff = (scrollTop + clientHeight) - scrollHeight;
     }
+    onSend = () => {
+        this.goToBottom();
+    }
+    goToBottom = () => {
+        this.scrollView.scrollToBottom();
+    }
     render() {
         const { messages, currentConversation } = this.props;
+
         return (
             <div id="messages-column">
-                {!currentConversation &&
-                    <div id="conversation-header">
-                        <p className="text-center">New Conversation</p>
-                    </div>
-                }
                 <Scrollbars
                     className="scroll-area"
                     universal
@@ -39,6 +42,7 @@ export default class MessagesContainer extends Component {
                     onScrollFrame={this.onScrollFrame}
                     ref={(ref) => { this.scrollView = ref; }}
                 >
+
                     <div id="messages-container">
                         {messages &&
                             messages.map((message) => {
@@ -57,7 +61,7 @@ export default class MessagesContainer extends Component {
                         }
                     </div>
                 </Scrollbars>
-                {Composer(currentConversation, this.scrollView)}
+                <MessageComposer conversation={currentConversation} onFocus={this.goToBottom} onSend={this.onSend} />
             </div>
         );
     }

@@ -79,26 +79,42 @@ $triangle-size: 10px;
     height: calc(100vh - 60px);
 
     #conversations-column {
+        display: flex;
         flex: 1.5;
+        flex-direction: column;
         max-width: 300px;
-        padding-top: 10px;
+
+        header {
+            align-items: center;
+            display: flex;
+            padding: 5px 10px;
+
+            h4 {
+                flex: 1;
+            }
+        }
 
         a {
-            background-color: $gray-dark;
+
             color: inherit;
             display: block;
             text-decoration: none;
-
-            &.active {
-                background-color: $brand-primary;
-            }
         }
 
         .conversation {
             align-items: center;
+            background-color: $gray-dark;
             display: flex;
             margin-bottom: 2px;
             padding: 5px;
+
+            &.unread {
+                border-right: 3px solid $brand-danger;
+            }
+
+            &.active {
+                background-color: $brand-primary;
+            }
 
             >div {
                 &:nth-child(2) {
@@ -122,6 +138,10 @@ $triangle-size: 10px;
         .thumb-vertical {
             background-color: $brand-primary;
             border-radius: 2px;
+        }
+
+        .label {
+            cursor: pointer;
         }
 
         #conversation-header {
