@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import ReactLetterAvatar from 'react-letter-avatar';
 import { ButtonToolbar, ButtonGroup, Button, Glyphicon, Clearfix } from 'react-bootstrap';
+
+import ReactLetterAvatar from '../LetterAvatar/LetterAvatar.jsx';
 
 const PostComment = (comment) => {
     const likedByUser = comment.isLikedBy(Meteor.user());

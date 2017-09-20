@@ -1,9 +1,9 @@
 import { Conversation, Message } from 'meteor/socialize:messaging';
 import { Scrollbars } from 'react-custom-scrollbars';
-import ReactLetterAvatar from 'react-letter-avatar';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
+import ReactLetterAvatar from '../LetterAvatar/LetterAvatar.jsx';
 import MessageComposer from '../../components/MessageComposer/MessageComposer.jsx';
 
 export default class MessagesContainer extends Component {

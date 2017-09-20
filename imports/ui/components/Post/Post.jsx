@@ -2,12 +2,12 @@ import { Meteor } from 'meteor/meteor';
 import { Comment } from 'meteor/socialize:commentable';
 import { User } from 'meteor/socialize:user-model';
 import { Post } from 'meteor/socialize:postable';
-import ReactLetterAvatar from 'react-letter-avatar';
 import { Well, Clearfix, Glyphicon, Button, ButtonGroup, ButtonToolbar, FormGroup } from 'react-bootstrap';
 import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import ReactLetterAvatar from '../LetterAvatar/LetterAvatar.jsx';
 import PostComment from '../PostComment/PostComment.jsx';
 
 const PostComponent = ({ post, poster, comments, commentCount, likeCount, likedByUser }) => {
