@@ -9,6 +9,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import ReactLetterAvatar from '../../components/LetterAvatar/LetterAvatar.jsx';
 import ConversationArea from '../../components/ConversationArea/ConversationArea.jsx';
 import MainHeader from '../../layouts/MainHeader/MainHeader.jsx';
 import NewConversation from '../../components/NewConversation/NewConversation.jsx';
@@ -27,7 +28,10 @@ const Messages = ({ user, messages, currentConversation, conversationParticipant
                     conversationParticipants.map(participatingUser => (
                         <div className="conversation-participant" key={participatingUser._id}>
                             <div>
-                                <img src="http://via.placeholder.com/40x40" alt="placeholder" />
+                                <ReactLetterAvatar
+                                    name={participatingUser.username.toUpperCase()}
+                                    size={40}
+                                />
                             </div>
                             <div>{participatingUser.username}</div>
                             <div>
@@ -90,7 +94,10 @@ const ConversationRow = ({ conversation, lastMessage, sender, isUnread }) => {
     return (
         <Link to={`/messages/${conversation._id}`} key={conversation._id} activeClassName="active" className={`conversation ${unread}`}>
             <div>
-                <img src="http://via.placeholder.com/60x60" alt="placeholder" />
+                <ReactLetterAvatar
+                    name={sender.username.toUpperCase()}
+                    size={60}
+                />
             </div>
             <div>
                 { sender &&
