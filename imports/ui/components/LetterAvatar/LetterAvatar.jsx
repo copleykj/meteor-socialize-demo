@@ -63,7 +63,7 @@ const ReactLetterAvatar = ({ name, size, radius, ...props }) => {
         width: size,
         height: size,
         fontSize: `${Math.floor(size / 1.6)}px`,
-        lineHeight: `${size}px`,
+        lineHeight: `${Math.ceil(size / 1.06)}px`,
         borderRadius: radius,
     };
 
