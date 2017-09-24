@@ -6,6 +6,7 @@ import { BlocksCollection } from 'meteor/socialize:user-blocking';
 import { PostsCollection } from 'meteor/socialize:postable';
 import { LikesCollection } from 'meteor/socialize:likeable';
 import { CommentsCollection } from 'meteor/socialize:commentable';
+import { ProfilesCollection } from 'meteor/socialize:user-profile';
 import {
     MessagesCollection,
     ConversationsCollection,
@@ -25,5 +26,6 @@ Meteor.publish(null, function nullPublish() {
         PostsCollection.find(),
         LikesCollection.find(),
         CommentsCollection.find(),
+        ProfilesCollection.find(),
     ];
 }, { is_auto: true });

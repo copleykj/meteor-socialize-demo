@@ -86,6 +86,7 @@ socialize:server-time@1.0.0
 socialize:user-blocking@1.0.0
 socialize:user-model@1.0.0
 socialize:user-presence@1.0.0
+socialize:user-profile@1.0.0
 spacebars@1.0.15
 spacebars-compiler@1.1.2
 srp@1.0.10

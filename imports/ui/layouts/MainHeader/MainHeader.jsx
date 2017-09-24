@@ -30,7 +30,9 @@ const MainHeader = ({ user, numUnreadConversations, newestConversationId, childr
 
             <Nav pullRight>
                 <NavDropdown title={user.username} id="user-menu">
-                    <MenuItem>My Profile</MenuItem>
+                    <LinkContainer to={`/profile/${user.username}`}>
+                        <MenuItem>My Profile</MenuItem>
+                    </LinkContainer>
                     <MenuItem>Friends</MenuItem>
                     <MenuItem>Account</MenuItem>
                     <MenuItem divider />

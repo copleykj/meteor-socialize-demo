@@ -4,6 +4,7 @@ import App from '../ui/App.jsx';
 import Dashboard from '../ui/pages/Dashboard/Dashboard.jsx';
 import Login from '../ui/pages/Login/Login.jsx';
 import Messages from '../ui/pages/Messages/Messages.jsx';
+import UserProfile from '../ui/pages/UserProfile/UserProfile.jsx';
 
 export default (
     <Route path="/" component={App}>
@@ -13,5 +14,6 @@ export default (
             <Route path=":conversationId" />
             <Route path="/new" />
         </Route>
+        <Route path="/profile/:username" component={UserProfile} />
     </Route>
 );
