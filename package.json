@@ -2,7 +2,7 @@
   "name": "meteor-socialize",
   "private": true,
   "scripts": {
-    "start": "meteor run"
+    "start": "meteor run --settings settings.json"
   },
   "dependencies": {
     "babel-runtime": "^6.23.0",
