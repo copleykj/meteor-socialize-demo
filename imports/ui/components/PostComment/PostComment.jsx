@@ -28,7 +28,7 @@ const PostComment = (comment) => {
                     <p style={{ marginBottom: '0', whiteSpace: 'pre-line', wordWrap: 'break-word' }}>{comment.body}</p>
                     <div>
                         <small className="pull-right text-warning">
-                            {`${comment.likeCount()} ${'like'.plural(comment.likeCount())}`}
+                            {`${comment.likeCount} ${'like'.plural(comment.likeCount)}`}
                         </small>
                         <Clearfix />
                     </div>

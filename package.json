@@ -18,7 +18,7 @@
     "react-dom": "^15.6.1",
     "react-router": "^3.0.5",
     "react-router-bootstrap": "^0.23.3",
-    "simpl-schema": "^0.3.1",
+    "simpl-schema": "^0.5.0",
     "uniforms": "^1.20.0",
     "uniforms-bootstrap3": "^1.20.0"
   },

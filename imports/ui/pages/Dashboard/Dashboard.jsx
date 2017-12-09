@@ -1,13 +1,15 @@
+import { Meteor } from 'meteor/meteor';
+
 import { Grid, Col, Row, Well } from 'react-bootstrap';
-import { User } from 'meteor/socialize:user-model';
 import { Post } from 'meteor/socialize:postable';
+import { User } from 'meteor/socialize:user-model';
 import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import Composer from '../../components/PostComposer/PostComposer.jsx';
 import MainHeader from '../../layouts/MainHeader/MainHeader.jsx';
 import PostComponent from '../../components/Post/Post.jsx';
-import Composer from '../../components/PostComposer/PostComposer.jsx';
 
 
 const Dashboard = ({ user, posts, onlineFriends, params }) => (
@@ -59,11 +61,10 @@ Dashboard.propTypes = {
 };
 
 const DashboardContainer = createContainer(({ user }) => {
-    let x;
+    Meteor.subscribe('posts');
     return {
-        x,
         user,
-        posts: user.feed().posts({ sort: { date: -1 } }).fetch(),
+        posts: user.feed().posts({ sort: { createdAt: -1 } }).fetch(),
         onlineFriends: user.onlineFriends().fetch(),
     };
 }, Dashboard);

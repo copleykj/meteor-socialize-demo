@@ -16,7 +16,6 @@ es5-shim@4.6.15                # ECMAScript 5 compatibility for older browsers
 ecmascript@0.8.1              # Enable ECMAScript2015+ syntax in app code
 shell-server@0.2.4            # Server-side component of the `meteor shell` command
 react-meteor-data
-cultofcoders:redis-oplog
 reactrouter:react-router-ssr
 socialize:friendships
 accounts-password
@@ -30,4 +29,5 @@ socialize:likeable
 socialize:commentable
 socialize:user-presence
 fourseven:scss
-disable-oplog
+reywood:publish-composite
+aldeed:collection2-core
