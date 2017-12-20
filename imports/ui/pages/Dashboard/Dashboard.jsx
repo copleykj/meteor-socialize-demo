@@ -64,7 +64,7 @@ const DashboardContainer = createContainer(({ user }) => {
     Meteor.subscribe('posts');
     return {
         user,
-        posts: user.feed().posts({ sort: { createdAt: -1 } }).fetch(),
+        posts: user.feed().friendsPosts({ sort: { createdAt: -1 } }).fetch(),
         onlineFriends: user.onlineFriends().fetch(),
     };
 }, Dashboard);
