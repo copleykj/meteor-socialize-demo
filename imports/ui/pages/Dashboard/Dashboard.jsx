@@ -61,7 +61,7 @@ Dashboard.propTypes = {
 };
 
 const DashboardContainer = createContainer(({ user }) => {
-    Meteor.subscribe('posts');
+    Meteor.subscribe('socialize.feed.friendsPosts', user._id);
     return {
         user,
         posts: user.feed().friendsPosts({ sort: { createdAt: -1 } }).fetch(),
