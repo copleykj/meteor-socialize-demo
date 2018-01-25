@@ -10,7 +10,7 @@ import React from 'react';
 import ReactLetterAvatar from '../LetterAvatar/LetterAvatar.jsx';
 import PostComment from '../PostComment/PostComment.jsx';
 
-const PostComponent = ({ post, poster, comments, commentCount, likeCount, likedByUser }) => {
+const PostComponent = ({ post, poster, comments, likedByUser }) => {
     let likeIcon = 'heart-empty';
     let textClass = '';
     let ta;
@@ -19,6 +19,8 @@ const PostComponent = ({ post, poster, comments, commentCount, likeCount, likedB
         likeIcon = 'heart';
         textClass = 'text-danger';
     }
+
+    const { commentCount, likeCount } = post;
     return (
         <Well style={{ overflow: 'hidden' }}>
             <div className="pull-left">
@@ -81,8 +83,6 @@ PostComponent.propTypes = {
     post: PropTypes.instanceOf(Post),
     poster: PropTypes.instanceOf(User),
     comments: PropTypes.arrayOf(PropTypes.instanceOf(Comment)),
-    commentCount: PropTypes.number,
-    likeCount: PropTypes.number,
     likedByUser: PropTypes.bool,
 };
 
@@ -90,8 +90,6 @@ const PostComponentContainer = createContainer(({ post }) => ({
     post,
     poster: post.poster(),
     comments: post.comments().fetch(),
-    commentCount: post.commentCount(),
-    likeCount: post.likeCount(),
     likedByUser: post.isLikedBy(Meteor.user()),
 }), PostComponent);
 

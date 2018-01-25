@@ -9,6 +9,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import ReactLetterAvatar from '../../components/LetterAvatar/LetterAvatar.jsx';
 import ConversationArea from '../../components/ConversationArea/ConversationArea.jsx';
 import MainHeader from '../../layouts/MainHeader/MainHeader.jsx';
 import NewConversation from '../../components/NewConversation/NewConversation.jsx';
@@ -27,7 +28,10 @@ const Messages = ({ user, messages, currentConversation, conversationParticipant
                     conversationParticipants.map(participatingUser => (
                         <div className="conversation-participant" key={participatingUser._id}>
                             <div>
-                                <img src="http://via.placeholder.com/40x40" alt="placeholder" />
+                                <ReactLetterAvatar
+                                    name={participatingUser.username.toUpperCase()}
+                                    size={40}
+                                />
                             </div>
                             <div>{participatingUser.username}</div>
                             <div>
@@ -43,14 +47,19 @@ const Messages = ({ user, messages, currentConversation, conversationParticipant
 );
 
 const MessagesContainer = createContainer(({ user, params }) => {
-    params.conversationId && Meteor.subscribe('viewingConversation', params.conversationId);
-    const currentConversation = ConversationsCollection.findOne(params.conversationId);
-    currentConversation && currentConversation.participants().fetch();
+    const { conversationId } = params;
+    let currentConversation;
+    if (conversationId && conversationId !== 'new') {
+        Meteor.subscribe('socialize.viewingConversation', conversationId);
+        Meteor.subscribe('socialize.messagesFor', conversationId);
+        currentConversation = ConversationsCollection.findOne(conversationId);
+        currentConversation && currentConversation.participants().fetch();
+    }
     return {
         user,
         currentConversation,
         conversationParticipants: currentConversation && currentConversation.participantsAsUsers().fetch(),
-        messages: currentConversation && currentConversation.messages().fetch(),
+        messages: currentConversation && currentConversation.messages({ sort: { createdAt: -1 } }).fetch().reverse(),
     };
 }, Messages);
 
@@ -82,7 +91,8 @@ Conversations.propTypes = {
 };
 
 const ConversationsContainer = createContainer(({ user }) => ({
-    conversations: user.conversations({ sort: { date: -1 } }).fetch(),
+    ready: Meteor.subscribe('socialize.conversations'),
+    conversations: user.conversations({ sort: { createdAt: -1 } }).fetch(),
 }), Conversations);
 
 const ConversationRow = ({ conversation, lastMessage, sender, isUnread }) => {
@@ -90,12 +100,15 @@ const ConversationRow = ({ conversation, lastMessage, sender, isUnread }) => {
     return (
         <Link to={`/messages/${conversation._id}`} key={conversation._id} activeClassName="active" className={`conversation ${unread}`}>
             <div>
-                <img src="http://via.placeholder.com/60x60" alt="placeholder" />
+                <ReactLetterAvatar
+                    name={sender && sender.username.toUpperCase()}
+                    size={60}
+                />
             </div>
             <div>
                 { sender &&
                     <span>
-                        <span className="text-warning">{sender.displayName()}</span>: {lastMessage.body}
+                        <span className="text-warning">{sender && sender.displayName()}</span>: {lastMessage.body}
                     </span>
                 }
             </div>
@@ -112,7 +125,7 @@ ConversationRow.propTypes = {
 
 const ConversationContainer = createContainer(({ conversation }) => {
     const lastMessage = conversation.lastMessage();
-    const sender = lastMessage.user();
+    const sender = lastMessage && lastMessage.user();
     const isUnread = conversation.isUnread();
     return {
         conversation,

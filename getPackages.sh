@@ -18,3 +18,4 @@ git clone -b devel --single-branch https://github.com/copleykj/socialize-server-
 git clone -b devel --single-branch https://github.com/copleykj/socialize-user-blocking.git
 git clone -b devel --single-branch https://github.com/copleykj/socialize-user-model.git
 git clone -b devel --single-branch https://github.com/copleykj/socialize-user-presence.git
+git clone -b devel --single-branch https://github.com/copleykj/socialize-user-profile.git
