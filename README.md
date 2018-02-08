@@ -1,22 +1,19 @@
 # Meteor Socialize Demo #
 
-The start of a quick demo of the socialize packages for meteor. At the moment it's basically just scaffolded. I'll be adding more shortly.
-
-Currently the versions of the packages this demo relies on aren't released on atmosphere. Run the `getPackages.sh` file to clone them at their `devel` branches.
+The start of a quick demo of the socialize packages for meteor. At the moment it is pretty basic, but has a login/register page, user feed, messaging, profiles, and friend requests. There is quite a bit more to be added and a ton of polish to apply still. This is very much a work in progress and you are welcome to help it along with issues and pull requests.
 
 ## Setup ##
 
-1. Clone this repository
-2. Locate `getPackages.sh` in the project dir, chmod +x and execute
-3. run `meteor npm install`
+```sh
+$ git clone https://github.com/copleykj/meteor-socialize-demo.git
+$ meteor npm install
+```
 
 ## Running ##
 
 ```shell
 $ meteor run
 ```
-
-This project is very basic at the moment with only register/login/logout functionality. Feel free to contribute by adding features or fixing bugs as I progress.
 
 ## Contributing ##
 
