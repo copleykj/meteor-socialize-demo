@@ -5,8 +5,9 @@
     "start": "meteor run --settings settings.json"
   },
   "dependencies": {
+    "@babel/runtime": "^7.0.0-beta.38",
     "babel-runtime": "^6.23.0",
-    "bcrypt": "^1.0.2",
+    "bcrypt": "^1.0.3",
     "bootstrap-sass": "^3.3.7",
     "idle-timer": "^1.2.0",
     "meteor-node-stubs": "^0.2.11",
