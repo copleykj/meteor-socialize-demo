@@ -1,4 +1,5 @@
 import { Button, SplitButton, MenuItem, ButtonToolbar, Grid } from 'react-bootstrap';
+import { Meteor } from 'meteor/meteor';
 import { Profile, ProfilesCollection } from 'meteor/socialize:user-profile';
 import { User } from 'meteor/socialize:user-model';
 import { createContainer } from 'meteor/react-meteor-data';
@@ -24,6 +25,7 @@ class UserProfile extends Component {
     }
     render() {
         const {
+            ready,
             areFriends,
             hasRequest,
             hasPendingRequest,
@@ -45,7 +47,7 @@ class UserProfile extends Component {
         } else {
             actionText = 'Add Friend';
         }
-        return (
+        return ready && (
             <MainHeader user={user} params={params} paddingTop={'60px'}>
                 <Grid id="user-profile-page">
                     <header>
@@ -70,15 +72,26 @@ class UserProfile extends Component {
 
 const UserProfileContainer = createContainer(({ params, user }) => {
     const { username } = params;
+    const ready = Meteor.subscribe('socialize.userProfile', username).ready();
     const profile = ProfilesCollection.findOne({ username });
-    const profileUser = profile && profile.user();
 
-    const areFriends = profileUser.isFriendsWith(user);
-    const hasRequest = user.hasFriendshipRequestFrom(profileUser);
-    const hasPendingRequest = profileUser.hasFriendshipRequestFrom(user);
-    const blocking = profileUser.blocksUser(user) || user.blocksUser(profileUser);
-    const isSelf = profileUser.isSelf();
+    let profileUser;
+    let areFriends;
+    let hasRequest;
+    let hasPendingRequest;
+    let blocking;
+    let isSelf;
+
+    if (ready) {
+        profileUser = profile && profile.user();
+        areFriends = profileUser && profileUser.isFriendsWith();
+        hasRequest = user.hasFriendshipRequestFrom(profileUser);
+        hasPendingRequest = profileUser.hasFriendshipRequestFrom(user);
+        blocking = profileUser.blocksUser(user) || user.blocksUser(profileUser);
+        isSelf = profileUser.isSelf();
+    }
     return {
+        ready,
         areFriends,
         hasRequest,
         hasPendingRequest,
