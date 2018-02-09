@@ -78,7 +78,7 @@ service-configuration@1.0.11
 sha@1.0.9
 shell-server@0.3.1
 shim-common@0.1.0
-socialize:base-model@1.1.1
+socialize:base-model@1.1.1_1
 socialize:commentable@1.0.0
 socialize:feed@1.0.0
 socialize:friendships@1.0.0
@@ -90,7 +90,7 @@ socialize:requestable@1.0.0
 socialize:server-presence@1.0.1
 socialize:server-time@1.0.0
 socialize:user-blocking@1.0.0
-socialize:user-model@1.0.0
+socialize:user-model@1.0.1
 socialize:user-presence@1.0.0
 socialize:user-profile@1.0.0
 socket-stream-client@0.1.0
