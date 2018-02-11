@@ -1,11 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
+import { Link } from 'react-router';
 import { ButtonToolbar, ButtonGroup, Button, Glyphicon, Clearfix } from 'react-bootstrap';
 
 import ReactLetterAvatar from '../LetterAvatar/LetterAvatar.jsx';
 
 const PostComment = (comment) => {
     const likedByUser = comment.isLikedBy(Meteor.user());
+    const username = comment.user().username;
     let likeIcon = 'heart-empty';
     let textClass = '';
 
@@ -24,7 +26,9 @@ const PostComment = (comment) => {
                 </div>
                 <div style={{ marginLeft: '50px' }}>
                     <small className="pull-right"><Glyphicon className={textClass} glyph={likeIcon} onClick={() => { likedByUser ? comment.unlike() : comment.like(); }} /></small>
-                    <p style={{ marginBottom: '2px' }} className="text-info">{comment.user().username}</p>
+                    <p style={{ marginBottom: '2px' }} className="text-info">
+                        <Link to={`/profile/${username}`}>{username}</Link>
+                    </p>
                     <p style={{ marginBottom: '0', whiteSpace: 'pre-line', wordWrap: 'break-word' }}>{comment.body}</p>
                     <div>
                         <small className="pull-right text-warning">

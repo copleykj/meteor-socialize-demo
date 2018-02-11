@@ -6,6 +6,7 @@ import { Well, Clearfix, Glyphicon, Button, ButtonGroup, ButtonToolbar, FormGrou
 import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router';
 
 import ReactLetterAvatar from '../LetterAvatar/LetterAvatar.jsx';
 import PostComment from '../PostComment/PostComment.jsx';
@@ -30,7 +31,9 @@ const PostComponent = ({ post, poster, comments, likedByUser }) => {
                 />
             </div>
             <div style={{ marginLeft: '70px' }}>
-                <p style={{ marginBottom: '4px', marginTop: '-5px' }} className="text-info">{poster.username}</p>
+                <p style={{ marginBottom: '4px', marginTop: '-5px' }} className="text-info">
+                    <Link to={`/profile/${poster.username}`}>{poster.username}</Link>
+                </p>
                 <p>{post.body}</p>
                 <div className="text-warning">
                     <small className="pull-left">

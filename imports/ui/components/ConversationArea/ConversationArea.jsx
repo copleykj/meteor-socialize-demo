@@ -2,6 +2,7 @@ import { Conversation, Message } from 'meteor/socialize:messaging';
 import { Scrollbars } from 'react-custom-scrollbars';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 
 import ReactLetterAvatar from '../LetterAvatar/LetterAvatar.jsx';
 import MessageComposer from '../../components/MessageComposer/MessageComposer.jsx';
@@ -59,7 +60,12 @@ export default class MessagesContainer extends Component {
                                         </div>
                                         <div className="chat-bubble">
                                             <p>{message.body}</p>
-                                            <div className="username"><small>{sender.displayName()} - <small>{message.timestamp()}</small></small></div>
+                                            <div className="username">
+                                                <small>
+                                                    <Link to={`/profile/${sender.username}`}>{sender.displayName()}</Link> -
+                                                    <small>{message.timestamp()}</small>
+                                                </small>
+                                            </div>
                                         </div>
                                     </div>
                                 );
