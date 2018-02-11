@@ -47,23 +47,25 @@ class UserProfile extends Component {
         } else {
             actionText = 'Add Friend';
         }
-        return ready && (
+        return (
             <MainHeader user={user} params={params} paddingTop={'60px'}>
-                <Grid id="user-profile-page">
-                    <header>
-                        <ReactLetterAvatar name={profileUser.username} size={150} className="avatar" />
-                        <h1 className="username">{profileUser.username}</h1>
-                        {isSelf ?
-                            <ButtonToolbar><Button bsStyle="warning" bsSize="small">Edit Profile</Button></ButtonToolbar> :
-                            <ButtonToolbar>
-                                <SplitButton onClick={this.handleProfileAction} bsStyle="info" bsSize="small" title={actionText} id="profile-actions">
-                                    <MenuItem eventKey="1">Block</MenuItem>
-                                </SplitButton>
-                                <Button bsStyle="info" bsSize="small">Message</Button>
-                            </ButtonToolbar>
-                        }
-                    </header>
-                </Grid>
+                { ready &&
+                    <Grid id="user-profile-page">
+                        <header>
+                            <ReactLetterAvatar name={profileUser.username} size={150} className="avatar" />
+                            <h1 className="username">{profileUser.username}</h1>
+                            {isSelf ?
+                                <ButtonToolbar><Button bsStyle="warning" bsSize="small">Edit Profile</Button></ButtonToolbar> :
+                                <ButtonToolbar>
+                                    <SplitButton onClick={this.handleProfileAction} bsStyle="info" bsSize="small" title={actionText} id="profile-actions">
+                                        <MenuItem eventKey="1">Block</MenuItem>
+                                    </SplitButton>
+                                    <Button bsStyle="info" bsSize="small">Message</Button>
+                                </ButtonToolbar>
+                            }
+                        </header>
+                    </Grid>
+                }
             </MainHeader>
         );
     }
