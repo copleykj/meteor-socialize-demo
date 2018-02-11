@@ -73,6 +73,20 @@ $triangle-size: 10px;
     flex: 1;
 }
 
+a {
+    color: inherit !important;
+    outline: none !important;
+    text-decoration: none !important;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: inherit !important;
+        outline: none !important;
+        text-decoration: none !important;
+    }
+}
+
 //begin messages page
 #messages-page {
     display: flex;
@@ -95,10 +109,7 @@ $triangle-size: 10px;
         }
 
         a {
-
-            color: inherit;
             display: block;
-            text-decoration: none;
         }
 
         .conversation {
