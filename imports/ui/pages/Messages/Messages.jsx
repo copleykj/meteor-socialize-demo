@@ -15,12 +15,12 @@ import MainHeader from '../../layouts/MainHeader/MainHeader.jsx';
 import NewConversation from '../../components/NewConversation/NewConversation.jsx';
 
 
-const Messages = ({ user, messages, currentConversation, conversationParticipants, params }) => (
+const Messages = ({ user, messages, currentConversation, conversationParticipants, params, toUser }) => (
     <MainHeader user={user} paddingTop="60px" params={params}>
         <Grid id="messages-page">
             <ConversationsContainer user={user} />
             {params.conversationId === 'new' ?
-                <NewConversation /> :
+                <NewConversation toUser={toUser} /> :
                 <ConversationArea messages={messages} currentConversation={currentConversation} />
             }
             <div id="participants-column">
@@ -47,17 +47,25 @@ const Messages = ({ user, messages, currentConversation, conversationParticipant
     </MainHeader>
 );
 
-const MessagesContainer = createContainer(({ user, params }) => {
+const MessagesContainer = createContainer(({ user, params, location: { query: { toUsername } } }) => {
     const { conversationId } = params;
     let currentConversation;
+    let toUser;
+    if (toUsername) {
+        Meteor.subscribe('socialize.userProfile', toUsername);
+        toUser = Meteor.users.findOne({ username: toUsername });
+    }
     if (conversationId && conversationId !== 'new') {
         Meteor.subscribe('socialize.viewingConversation', conversationId);
         Meteor.subscribe('socialize.messagesFor', conversationId);
         currentConversation = ConversationsCollection.findOne(conversationId);
         currentConversation && currentConversation.participants().fetch();
+    } else {
+        Meteor.subscribe('socialize.friends', user._id).ready();
     }
     return {
         user,
+        toUser,
         currentConversation,
         conversationParticipants: currentConversation && currentConversation.participantsAsUsers().fetch(),
         messages: currentConversation && currentConversation.messages({ sort: { createdAt: -1 } }).fetch().reverse(),
@@ -66,6 +74,7 @@ const MessagesContainer = createContainer(({ user, params }) => {
 
 Messages.propTypes = {
     user: PropTypes.instanceOf(User),
+    toUser: PropTypes.instanceOf(User),
     currentConversation: PropTypes.instanceOf(Conversation),
     conversationParticipants: PropTypes.arrayOf(PropTypes.instanceOf(User)),
     messages: PropTypes.arrayOf(PropTypes.instanceOf(Message)),

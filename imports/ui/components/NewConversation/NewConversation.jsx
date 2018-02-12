@@ -1,13 +1,19 @@
 import { Meteor } from 'meteor/meteor';
+import { User } from 'meteor/socialize:user-model';
 
 import { Label, Glyphicon } from 'react-bootstrap';
 import { Scrollbars } from 'react-custom-scrollbars';
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
+import PropTypes from 'prop-types';
 
 import MessageComposer from '../../components/MessageComposer/MessageComposer.jsx';
 
 export default class NewConversation extends Component {
-    state = { selectedUsers: [], searchQuery: '' };
+    static propTypes = {
+        toUser: PropTypes.instanceOf(User),
+    }
+    state = { selectedUsers: [], searchQuery: '' }
     search = (e) => {
         const query = e.target.value;
         let search;
@@ -16,10 +22,23 @@ export default class NewConversation extends Component {
         }
         this.setState({ searchQuery: search });
     }
+    handleRemoveParticipant = (e, user) => {
+        e.preventDefault();
+        const { toUser } = this.props;
+        if (toUser && toUser._id === user._id) {
+            browserHistory.replace('/messages/new');
+        }
+        const { selectedUsers } = this.state;
+        const newParticipants = selectedUsers.filter(participant => participant._id !== user._id);
+        this.setState({ selectedUsers: newParticipants });
+    }
     render() {
-        const { searchQuery, selectedUsers } = this.state;
+        let { selectedUsers } = this.state;
+        const { searchQuery } = this.state;
+        const { toUser } = this.props;
+        if (toUser) selectedUsers = [...selectedUsers, toUser];
         const selectedIds = selectedUsers.map(user => user._id);
-        const selector = { _id: { $nin: [Meteor.userId(), ...selectedIds] } };
+        const selector = { _id: { $nin: [Meteor.userId(), ...selectedIds], $in: Meteor.user().friends().map(friend => friend.friendId) } };
 
         if (searchQuery) {
             selector.username = new RegExp(searchQuery, 'i');
@@ -38,11 +57,7 @@ export default class NewConversation extends Component {
                                     <span key={user._id}>
                                         <Label
                                             bsStyle="primary"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                const newParticipants = selectedUsers.filter(participant => participant._id !== user._id);
-                                                this.setState({ selectedUsers: newParticipants });
-                                            }}
+                                            onClick={e => this.handleRemoveParticipant(e, user)}
                                         >
                                             {user.username} <Glyphicon glyph="remove" />
                                         </Label>&nbsp;
@@ -63,7 +78,7 @@ export default class NewConversation extends Component {
                     renderThumbVertical={props => <div {...props} className="thumb-vertical" />}
                 >
                     <div>
-                        {!this.state.composing &&
+                        {!this.state.composing && !toUser &&
                             (
                                 potentialParticipants.length === 0 && selectedUsers.length === 0 ?
                                     <p>You don&apos;t have any friends yet. Visit a user profile to message them if you are not yet friends.</p> :
