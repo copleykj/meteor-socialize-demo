@@ -16,6 +16,11 @@ const StatusSchema = new SimpleSchema({
     },
 });
 
+User.addFieldsToPublish({
+    status: 1,
+});
+
+
 User.attachSchema(StatusSchema);
 
 UserPresence.onCleanup(function onCleanup(sessionIds) {
