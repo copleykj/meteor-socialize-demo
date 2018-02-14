@@ -1,16 +1,19 @@
-import { Button, SplitButton, MenuItem, ButtonToolbar, Grid } from 'react-bootstrap';
 import { Meteor } from 'meteor/meteor';
+
+import { AutoForm, AutoField } from 'uniforms-bootstrap3';
+import { Button, SplitButton, MenuItem, ButtonToolbar, Grid, Modal, Row, Col } from 'react-bootstrap';
 import { Profile, ProfilesCollection } from 'meteor/socialize:user-profile';
 import { User } from 'meteor/socialize:user-model';
+import { browserHistory } from 'react-router';
 import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { browserHistory } from 'react-router';
 
 import MainHeader from '../../layouts/MainHeader/MainHeader';
 import ReactLetterAvatar from '../../components/LetterAvatar/LetterAvatar.jsx';
 
 class UserProfile extends Component {
+    state = { showModal: false }
     handleProfileAction = () => {
         const { areFriends, hasRequest, hasPendingRequest, profileUser } = this.props;
 
@@ -23,6 +26,12 @@ class UserProfile extends Component {
         } else {
             profileUser.requestFriendship();
         }
+    }
+    handleShow = () => {
+        this.setState({ showModal: true });
+    }
+    handleHide = () => {
+        this.setState({ showModal: false });
     }
     handleSendMessage = async () => {
         const { profileUser } = this.props;
@@ -61,9 +70,12 @@ class UserProfile extends Component {
                     <Grid id="user-profile-page">
                         <header>
                             <ReactLetterAvatar name={profileUser.username} size={150} className="avatar" />
-                            <h1 className="username">{profileUser.username}</h1>
+                            <h1 className="username">{profile.fullName()} ({profileUser.username})</h1>
+
                             {isSelf ?
-                                <ButtonToolbar><Button bsStyle="warning" bsSize="small">Edit Profile</Button></ButtonToolbar> :
+                                <ButtonToolbar>
+                                    <Button onClick={this.handleShow} bsStyle="warning" bsSize="small">Edit Profile</Button>
+                                </ButtonToolbar> :
                                 <ButtonToolbar>
                                     <SplitButton onClick={this.handleProfileAction} bsStyle="info" bsSize="small" title={actionText} id="profile-actions">
                                         <MenuItem eventKey="1">Block</MenuItem>
@@ -74,6 +86,39 @@ class UserProfile extends Component {
                         </header>
                     </Grid>
                 }
+                <Modal
+                    show={this.state.showModal}
+                    onHide={this.handleHide}
+                >
+                    {profile &&
+                        <AutoForm
+                            schema={profile._getSchema()}
+                            onSubmit={(doc) => { doc.save(); this.handleHide(); }}
+                            model={profile}
+                        >
+                            <Modal.Header>
+                                <Modal.Title>Edit Profile</Modal.Title>
+                            </Modal.Header>
+
+                            <Modal.Body>
+                                <Row>
+                                    <Col xs={6}>
+                                        <AutoField name="firstName" />
+                                    </Col>
+                                    <Col xs={6}>
+                                        <AutoField name="lastName" />
+                                    </Col>
+                                </Row>
+
+                            </Modal.Body>
+
+                            <Modal.Footer>
+                                <Button onClick={this.handleHide}>Close</Button>
+                                <Button type="submit" bsStyle="primary">Save changes</Button>
+                            </Modal.Footer>
+                        </AutoForm>
+                    }
+                </Modal>
             </MainHeader>
         );
     }
