@@ -1,0 +1,19 @@
+#friends-list {
+    .friends-list-item {
+        align-items: center;
+        display: flex;
+        padding: 2px 0;
+
+        &:not(:last-child) {
+            border-bottom: 1px solid $gray;
+        }
+
+        div {
+            &:nth-child(2) {
+                align-self: flex-start;
+                flex: 1;
+                margin: 0 10px;
+            }
+        }
+    }
+}

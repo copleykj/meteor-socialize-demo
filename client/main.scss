@@ -64,6 +64,8 @@ $triangle-size: 10px;
 @import '../imports/ui/pages/UserProfile/UserProfile.scss';
 
 
+//Component Level Styles
+@import '../imports/ui/components/FriendsList/FriendsList.scss';
 
 * {
     box-sizing: border-box;
