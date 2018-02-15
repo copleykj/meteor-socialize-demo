@@ -15,8 +15,8 @@ import MainHeader from '../../layouts/MainHeader/MainHeader.jsx';
 import NewConversation from '../../components/NewConversation/NewConversation.jsx';
 
 
-const Messages = ({ user, messages, currentConversation, conversationParticipants, params, toUser }) => (
-    <MainHeader user={user} paddingTop="60px" params={params}>
+const Messages = ({ user, messages, currentConversation, conversationParticipants, params, toUser, ...props }) => (
+    <MainHeader user={user} paddingTop="60px" params={params} {...props} >
         <Grid id="messages-page">
             <ConversationsContainer user={user} />
             {params.conversationId === 'new' ?

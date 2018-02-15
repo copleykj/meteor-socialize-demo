@@ -12,8 +12,8 @@ import MainHeader from '../../layouts/MainHeader/MainHeader.jsx';
 import PostComponent from '../../components/Post/Post.jsx';
 
 
-const Dashboard = ({ user, posts, onlineFriends, params }) => (
-    <MainHeader user={user} params={params}>
+const Dashboard = ({ user, posts, onlineFriends, params, ...props }) => (
+    <MainHeader user={user} params={params} {...props}>
         <Grid>
             <Row>
                 <Col xs={5}>

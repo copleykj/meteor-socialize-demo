@@ -51,6 +51,7 @@ class UserProfile extends Component {
             profile,
             user,
             params,
+            ...props
         } = this.props;
 
         let actionText;
@@ -65,7 +66,7 @@ class UserProfile extends Component {
             actionText = 'Add Friend';
         }
         return (
-            <MainHeader user={user} params={params} paddingTop={'60px'}>
+            <MainHeader user={user} params={params} paddingTop={'60px'} {...props}>
                 { ready &&
                     <Grid id="user-profile-page">
                         <header>
