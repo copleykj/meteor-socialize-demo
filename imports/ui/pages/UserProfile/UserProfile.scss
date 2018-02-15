@@ -1,0 +1,24 @@
+#user-profile-page {
+    header {
+        background: #4b79a1;
+        background: linear-gradient(to left, #4b79a1, #283e51);
+        display: flex;
+        flex-direction: column;
+        height: 300px;
+        justify-content: flex-end;
+        padding: 0 0 20px 220px;
+        position: relative;
+
+        .username {
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            border: 4px solid #fff;
+            bottom: -25px;
+            left: 40px;
+            position: absolute;
+        }
+    }
+}

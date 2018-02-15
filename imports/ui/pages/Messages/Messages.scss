@@ -1,0 +1,184 @@
+//begin messages page
+#messages-page {
+    display: flex;
+    height: calc(100vh - 60px);
+
+    #conversations-column {
+        display: flex;
+        flex: 1.5;
+        flex-direction: column;
+        max-width: 300px;
+
+        header {
+            align-items: center;
+            display: flex;
+            padding: 5px 10px;
+
+            h4 {
+                flex: 1;
+            }
+        }
+
+        a {
+            display: block;
+        }
+
+        .conversation {
+            align-items: center;
+            background-color: $gray-dark;
+            display: flex;
+            margin-bottom: 2px;
+            padding: 5px;
+
+            &.unread {
+                border-right: 3px solid $brand-danger;
+            }
+
+            &.active {
+                background-color: $brand-primary;
+            }
+
+            >div {
+                &:nth-child(2) {
+                    flex: 1;
+                    overflow: hidden;
+                    padding: 0 10px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+            }
+        }
+    }
+
+    #messages-column {
+        background-color: $gray-dark;
+        display: flex;
+        flex: 3;
+        flex-direction: column;
+        min-width: 400px;
+
+        .thumb-vertical {
+            background-color: $brand-primary;
+            border-radius: 2px;
+        }
+
+        .label {
+            cursor: pointer;
+        }
+
+        #conversation-header {
+            margin: 5px;
+        }
+
+        #messages-container {
+            display: flex;
+            flex: 5;
+            flex-direction: column;
+            justify-content: flex-end;
+            overflow: hidden;
+            padding: 20px 15px 0;
+
+            .message {
+
+                display: flex;
+                margin-bottom: 20px;
+
+                &.self {
+                    flex-direction: row-reverse;
+
+                    .chat-bubble {
+                        background-color: $gray-light;
+                        color: $gray-darker;
+
+                        &::before {
+                            @include triangle(right, $triangle-size, $triangle-size, $gray-light);
+                            position: absolute;
+                            right: -$triangle-size;
+                        }
+                    }
+
+                    .username {
+                        text-align: right;
+                    }
+                }
+
+                &:not(.self) {
+                    .chat-bubble {
+                        &::before {
+                            @include triangle(left, $triangle-size, $triangle-size, $brand-primary);
+                            left: -$triangle-size;
+                            position: absolute;
+                        }
+                    }
+                }
+
+                .chat-bubble {
+                    background-color: $brand-primary;
+                    border-radius: 5px;
+                    margin: 0 10px;
+                    max-width: 440px;
+                    min-width: 200px;
+                    padding: 10px;
+                    position: relative;
+
+                    &::before {
+                        top: 5px;
+                    }
+                }
+            }
+        }
+
+        #message-composer {
+            display: flex;
+            padding: 5px;
+
+            > div {
+                &:first-child {
+                    flex: 1;
+                }
+
+                &:nth-child(2) {
+                    padding: 10px 5px 10px 10px;
+                }
+            }
+        }
+    }
+
+    #participants-column {
+        flex: 1;
+        margin-left: 10px;
+        max-width: 200px;
+        padding-top: 10px;
+
+        .conversation-participant {
+            align-items: center;
+            display: flex;
+            margin-bottom: 5px;
+
+            >div {
+                &:nth-child(2) {
+                    flex: 1;
+                    overflow: hidden;
+                    padding: 0 10px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                .status {
+                    border-radius: 50%;
+                    display: inline-block;
+                    padding: 6px;
+
+                    &.online {
+                        background-color: $online-color;
+                    }
+
+                    &.idle {
+                        background-color: $idle-color;
+                    }
+                }
+            }
+
+        }
+    }
+}
