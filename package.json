@@ -9,6 +9,8 @@
     "babel-runtime": "^6.23.0",
     "bcrypt": "^1.0.3",
     "bootstrap-sass": "^3.3.7",
+    "cloudinary": "^1.10.0",
+    "cloudinary-core": "^2.5.0",
     "idle-timer": "^1.2.0",
     "meteor-node-stubs": "^0.2.11",
     "plural": "^0.3.0",
