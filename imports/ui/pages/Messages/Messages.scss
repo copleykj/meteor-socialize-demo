@@ -120,6 +120,8 @@
                     min-width: 200px;
                     padding: 10px;
                     position: relative;
+                    white-space: pre-line;
+                    word-wrap: break-word;
 
                     &::before {
                         top: 5px;
