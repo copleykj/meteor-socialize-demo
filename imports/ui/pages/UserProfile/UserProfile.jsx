@@ -10,6 +10,7 @@ import React, { Component } from 'react';
 
 import MainHeader from '../../layouts/MainHeader/MainHeader';
 import ReactLetterAvatar from '../../components/LetterAvatar/LetterAvatar.jsx';
+import ProfileFeed from '../../components/ProfileFeed/ProfileFeed.jsx';
 import { handleSendMessage } from '../../../utils/messaging.js';
 
 class UserProfile extends Component {
@@ -78,6 +79,11 @@ class UserProfile extends Component {
                                 </ButtonToolbar>
                             }
                         </header>
+                        <Row>
+                            <Col xs={6}>
+                                <ProfileFeed user={profileUser} />
+                            </Col>
+                        </Row>
                     </Grid>
                 }
                 <Modal
@@ -122,8 +128,8 @@ class UserProfile extends Component {
 const UserProfileContainer = createContainer(({ params, user }) => {
     const { username } = params;
     const ready = Meteor.subscribe('socialize.userProfile', username).ready();
-    const profile = ProfilesCollection.findOne({ username });
 
+    let profile;
     let profileUser;
     let areFriends;
     let hasRequest;
@@ -132,7 +138,8 @@ const UserProfileContainer = createContainer(({ params, user }) => {
     let isSelf;
 
     if (ready) {
-        profileUser = profile && profile.user();
+        profile = ProfilesCollection.findOne({ username });
+        profileUser = profile.user();
         areFriends = profileUser && profileUser.isFriendsWith();
         hasRequest = user.hasFriendshipRequestFrom(profileUser);
         hasPendingRequest = profileUser.hasFriendshipRequestFrom(user);
