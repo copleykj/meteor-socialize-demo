@@ -4,13 +4,13 @@ import { AutoForm, AutoField } from 'uniforms-bootstrap3';
 import { Button, SplitButton, MenuItem, ButtonToolbar, Grid, Modal, Row, Col } from 'react-bootstrap';
 import { Profile, ProfilesCollection } from 'meteor/socialize:user-profile';
 import { User } from 'meteor/socialize:user-model';
-import { browserHistory } from 'react-router';
 import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import MainHeader from '../../layouts/MainHeader/MainHeader';
 import ReactLetterAvatar from '../../components/LetterAvatar/LetterAvatar.jsx';
+import { handleSendMessage } from '../../../utils/messaging.js';
 
 class UserProfile extends Component {
     state = { showModal: false }
@@ -32,13 +32,6 @@ class UserProfile extends Component {
     }
     handleHide = () => {
         this.setState({ showModal: false });
-    }
-    handleSendMessage = async () => {
-        const { profileUser } = this.props;
-        const conversationId = await Meteor.user().findExistingConversationWithUsers([profileUser._id]) || `new?toUsername=${profileUser.username}`;
-        if (conversationId) {
-            browserHistory.push(`/messages/${conversationId}`);
-        }
     }
     render() {
         const {
@@ -81,7 +74,7 @@ class UserProfile extends Component {
                                     <SplitButton onClick={this.handleProfileAction} bsStyle="info" bsSize="small" title={actionText} id="profile-actions">
                                         <MenuItem eventKey="1">Block</MenuItem>
                                     </SplitButton>
-                                    <Button onClick={this.handleSendMessage} bsStyle="info" bsSize="small">Message</Button>
+                                    <Button onClick={() => handleSendMessage(profileUser)} bsStyle="info" bsSize="small">Message</Button>
                                 </ButtonToolbar>
                             }
                         </header>
