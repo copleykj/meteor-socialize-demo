@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { createContainer } from 'meteor/react-meteor-data';
+import { withTracker } from 'meteor/react-meteor-data';
 import { User } from 'meteor/socialize:user-model';
 
 import React from 'react';
@@ -19,8 +19,8 @@ App.propTypes = {
     children: PropTypes.node,
 };
 
-const AppContainer = createContainer(() => ({
+const AppContainer = withTracker(() => ({
     user: Meteor.user(),
-}), App);
+}))(App);
 
 export default AppContainer;

@@ -5,7 +5,7 @@ import { Grid, Glyphicon } from 'react-bootstrap';
 import { Link } from 'react-router';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { User } from 'meteor/socialize:user-model';
-import { createContainer } from 'meteor/react-meteor-data';
+import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -47,7 +47,7 @@ const Messages = ({ user, messages, currentConversation, conversationParticipant
     </MainHeader>
 );
 
-const MessagesContainer = createContainer(({ user, params, location: { query: { toUsername } } }) => {
+const MessagesContainer = withTracker(({ user, params, location: { query: { toUsername } } }) => {
     const { conversationId } = params;
     let currentConversation;
     let toUser;
@@ -70,7 +70,7 @@ const MessagesContainer = createContainer(({ user, params, location: { query: { 
         conversationParticipants: currentConversation && currentConversation.participantsAsUsers().fetch(),
         messages: currentConversation && currentConversation.messages({ sort: { createdAt: -1 } }).fetch().reverse(),
     };
-}, Messages);
+})(Messages);
 
 Messages.propTypes = {
     user: PropTypes.instanceOf(User),
@@ -100,10 +100,10 @@ Conversations.propTypes = {
     conversations: PropTypes.arrayOf(PropTypes.instanceOf(Conversation)),
 };
 
-const ConversationsContainer = createContainer(({ user }) => ({
+const ConversationsContainer = withTracker(({ user }) => ({
     ready: Meteor.subscribe('socialize.conversations'),
     conversations: user.conversations({ sort: { createdAt: -1 } }).fetch(),
-}), Conversations);
+}))(Conversations);
 
 const ConversationRow = ({ conversation, lastMessage, sender, isUnread }) => {
     const unread = isUnread ? 'unread' : '';
@@ -133,7 +133,7 @@ ConversationRow.propTypes = {
     isUnread: PropTypes.bool,
 };
 
-const ConversationContainer = createContainer(({ conversation }) => {
+const ConversationContainer = withTracker(({ conversation }) => {
     const lastMessage = conversation.lastMessage();
     const sender = lastMessage && lastMessage.user();
     const isUnread = conversation.isUnread();
@@ -143,4 +143,4 @@ const ConversationContainer = createContainer(({ conversation }) => {
         sender,
         isUnread,
     };
-}, ConversationRow);
+})(ConversationRow);

@@ -4,7 +4,7 @@ import { AutoForm, AutoField } from 'uniforms-bootstrap3';
 import { Button, SplitButton, MenuItem, ButtonToolbar, Grid, Modal, Row, Col } from 'react-bootstrap';
 import { Profile, ProfilesCollection } from 'meteor/socialize:user-profile';
 import { User } from 'meteor/socialize:user-model';
-import { createContainer } from 'meteor/react-meteor-data';
+import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
@@ -125,7 +125,7 @@ class UserProfile extends Component {
 }
 
 
-const UserProfileContainer = createContainer(({ params, user }) => {
+const UserProfileContainer = withTracker(({ params, user }) => {
     const { username } = params;
     const ready = Meteor.subscribe('socialize.userProfile', username).ready();
 
@@ -157,7 +157,7 @@ const UserProfileContainer = createContainer(({ params, user }) => {
         params,
         user,
     };
-}, UserProfile);
+})(UserProfile);
 
 UserProfile.propTypes = {
     ready: PropTypes.bool,
