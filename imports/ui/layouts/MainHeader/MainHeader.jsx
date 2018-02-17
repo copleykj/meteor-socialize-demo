@@ -75,7 +75,7 @@ MainHeader.defaultProps = {
 
 const MainHeaderContainer = withTracker(({ user, params, location: { query } }) => {
     Meteor.subscribe('socialize.unreadConversations').ready();
-    Meteor.subscribe('socialize.conversations', { limit: 1 }).ready();
+    Meteor.subscribe('socialize.conversations', { limit: 1, sort: { updatedAt: -1 } }).ready();
     const unreadConversation = user.newestConversation();
     const newestConversationId = params.conversationId || (unreadConversation && unreadConversation._id);
     return {

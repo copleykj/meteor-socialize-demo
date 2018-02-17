@@ -36,7 +36,7 @@ const Messages = ({ user, messages, currentConversation, conversationParticipant
                             <div>
                                 <Link to={`/profile/${participatingUser.username}`}>{participatingUser.username}</Link></div>
                             <div>
-                                {participatingUser.isObserving(currentConversation) && <span><Glyphicon glyph="eye-open" /> </span>}
+                                {participatingUser.isObserving(currentConversation._id) && <span><Glyphicon glyph="eye-open" /> </span>}
                                 <span className={`status ${participatingUser.status}`} />
                             </div>
                         </div>
