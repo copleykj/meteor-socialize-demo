@@ -3,7 +3,7 @@ import { Comment } from 'meteor/socialize:commentable';
 import { User } from 'meteor/socialize:user-model';
 import { Post } from 'meteor/socialize:postable';
 import { Well, Clearfix, Glyphicon, Button, ButtonGroup, ButtonToolbar, FormGroup } from 'react-bootstrap';
-import { createContainer } from 'meteor/react-meteor-data';
+import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
@@ -89,11 +89,11 @@ PostComponent.propTypes = {
     likedByUser: PropTypes.bool,
 };
 
-const PostComponentContainer = createContainer(({ post }) => ({
+const PostComponentContainer = withTracker(({ post }) => ({
     post,
     poster: post.poster(),
     comments: post.comments().fetch(),
     likedByUser: post.isLikedBy(Meteor.user()),
-}), PostComponent);
+}))(PostComponent);
 
 export default PostComponentContainer;

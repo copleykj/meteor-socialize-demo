@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Grid, Col, Row, Well } from 'react-bootstrap';
 import { Post } from 'meteor/socialize:postable';
 import { User } from 'meteor/socialize:user-model';
-import { createContainer } from 'meteor/react-meteor-data';
+import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -60,13 +60,13 @@ Dashboard.propTypes = {
     }),
 };
 
-const DashboardContainer = createContainer(({ user }) => {
+const DashboardContainer = withTracker(({ user }) => {
     Meteor.subscribe('socialize.feed.friendsPosts', user._id);
     return {
         user,
         posts: user.feed().friendsPosts({ sort: { createdAt: -1 } }).fetch(),
         onlineFriends: user.onlineFriends().fetch(),
     };
-}, Dashboard);
+})(Dashboard);
 
 export default DashboardContainer;

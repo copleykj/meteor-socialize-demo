@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { User } from 'meteor/socialize:user-model';
-import { createContainer } from 'meteor/react-meteor-data';
+import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { browserHistory, Link } from 'react-router';
@@ -73,7 +73,7 @@ MainHeader.defaultProps = {
     paddingTop: '80px',
 };
 
-const MainHeaderContainer = createContainer(({ user, params, location: { query } }) => {
+const MainHeaderContainer = withTracker(({ user, params, location: { query } }) => {
     Meteor.subscribe('socialize.unreadConversations').ready();
     Meteor.subscribe('socialize.conversations', { limit: 1 }).ready();
     const unreadConversation = user.newestConversation();
@@ -84,6 +84,6 @@ const MainHeaderContainer = createContainer(({ user, params, location: { query }
         newestConversationId,
         showFriends: !!query.showFriends,
     };
-}, MainHeader);
+})(MainHeader);
 
 export default MainHeaderContainer;
