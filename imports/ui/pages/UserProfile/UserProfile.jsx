@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor';
+import { Cloudinary } from 'meteor/socialize:cloudinary';
 
 import { AutoForm, AutoField } from 'uniforms-bootstrap3';
-import { Button, SplitButton, MenuItem, ButtonToolbar, Grid, Modal, Row, Col } from 'react-bootstrap';
+import { Button, SplitButton, MenuItem, ButtonToolbar, Grid, Modal, Row, Col, Glyphicon } from 'react-bootstrap';
 import { Profile, ProfilesCollection } from 'meteor/socialize:user-profile';
 import { User } from 'meteor/socialize:user-model';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -9,9 +10,11 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import MainHeader from '../../layouts/MainHeader/MainHeader';
-import ReactLetterAvatar from '../../components/LetterAvatar/LetterAvatar.jsx';
+import UserAvatar from '../../components/UserAvatar/UserAvatar.jsx';
 import ProfileFeed from '../../components/ProfileFeed/ProfileFeed.jsx';
 import { handleSendMessage } from '../../../utils/messaging.js';
+import Uploader from '../../components/Uploader/Uploader.jsx';
+
 
 class UserProfile extends Component {
     state = { showModal: false }
@@ -45,6 +48,7 @@ class UserProfile extends Component {
             profile,
             user,
             params,
+            percentUploaded,
             ...props
         } = this.props;
 
@@ -64,21 +68,37 @@ class UserProfile extends Component {
                 { ready &&
                     <Grid id="user-profile-page">
                         <header>
-                            <ReactLetterAvatar name={profileUser.username} size={150} className="avatar" />
-                            <h1 className="username">{profile.fullName()} ({profileUser.username})</h1>
+                            <section>
+                                <div className="avatar-container">
+                                    {isSelf &&
+                                        <div className="upload-container">
+                                            <Uploader afterUpload={fileData => Meteor.call('setAvatar', fileData.public_id)} groupId="avatar">
+                                                <Button bsStyle="link">
+                                                    <Glyphicon glyph="upload" />
+                                                </Button>
+                                            </Uploader>
+                                        </div>
+                                    }
+                                    <UserAvatar user={profileUser} size={150} className="avatar" />
+                                </div>
 
-                            {isSelf ?
-                                <ButtonToolbar>
-                                    <Button onClick={this.handleShow} bsStyle="warning" bsSize="small">Edit Profile</Button>
-                                </ButtonToolbar> :
-                                <ButtonToolbar>
-                                    <SplitButton onClick={this.handleProfileAction} bsStyle="info" bsSize="small" title={actionText} id="profile-actions">
-                                        <MenuItem eventKey="1">Block</MenuItem>
-                                    </SplitButton>
-                                    <Button onClick={() => handleSendMessage(profileUser)} bsStyle="info" bsSize="small">Message</Button>
-                                </ButtonToolbar>
-                            }
+                                <div className="actions-container">
+                                    <h1 className="username">{profile.fullName()} ({profileUser.username})</h1>
+                                    {isSelf ?
+                                        <ButtonToolbar>
+                                            <Button onClick={this.handleShow} bsStyle="warning" bsSize="small">Edit Profile</Button>
+                                        </ButtonToolbar> :
+                                        <ButtonToolbar>
+                                            <SplitButton onClick={this.handleProfileAction} bsStyle="info" bsSize="small" title={actionText} id="profile-actions">
+                                                <MenuItem eventKey="1">Block</MenuItem>
+                                            </SplitButton>
+                                            <Button onClick={() => handleSendMessage(profileUser)} bsStyle="info" bsSize="small">Message</Button>
+                                        </ButtonToolbar>
+                                    }
+                                </div>
+                            </section>
                         </header>
+                        <div className="upload-progress">{percentUploaded && <div style={{ width: `${percentUploaded}%` }} />}</div>
                         <Row>
                             <Col xs={6}>
                                 <ProfileFeed user={profileUser} />
@@ -128,7 +148,12 @@ class UserProfile extends Component {
 const UserProfileContainer = withTracker(({ params, user }) => {
     const { username } = params;
     const ready = Meteor.subscribe('socialize.userProfile', username).ready();
+    let uploadingFile;
 
+    if (Meteor.isClient) {
+        uploadingFile = Cloudinary.collection.findOne({ status: 'uploading', groupId: 'avatar' });
+    }
+    
     let profile;
     let profileUser;
     let areFriends;
@@ -156,6 +181,7 @@ const UserProfileContainer = withTracker(({ params, user }) => {
         profile,
         params,
         user,
+        percentUploaded: uploadingFile && uploadingFile.percent_uploaded,
     };
 })(UserProfile);
 
@@ -168,6 +194,7 @@ UserProfile.propTypes = {
     profileUser: PropTypes.instanceOf(User),
     user: PropTypes.instanceOf(User),
     profile: PropTypes.instanceOf(Profile),
+    percentUploaded: PropTypes.number,
     params: PropTypes.shape({
         username: PropTypes.string,
     }),

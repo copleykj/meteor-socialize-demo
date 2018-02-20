@@ -7,7 +7,7 @@ import { Link } from 'react-router';
 import { ButtonToolbar, Dropdown, MenuItem, Glyphicon, Modal } from 'react-bootstrap';
 
 import { handleSendMessage } from '../../../utils/messaging.js';
-import ReactLetterAvatar from '../LetterAvatar/LetterAvatar.jsx';
+import UserAvatar from '../UserAvatar/UserAvatar.jsx';
 
 class FriendsList extends Component {
     static propTypes = {
@@ -33,8 +33,8 @@ class FriendsList extends Component {
                                 <div className="friends-list-item" key={friend._id}>
                                     <div>
                                         <Link to={`/profile/${friend.username}`}>
-                                            <ReactLetterAvatar
-                                                name={friend.username.toUpperCase()}
+                                            <UserAvatar
+                                                user={friend}
                                                 size={60}
                                             />
                                         </Link>

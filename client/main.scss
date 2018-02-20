@@ -1,22 +1,18 @@
+$link-color: #fff;
 //setup bootstrap with darkly theme
 @import './theme/_variables.scss';
 @import '{}/node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 @import './theme/_bootswatch.scss';
 
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,400,900');
+
+$montserrat: 'Montserrat', sans-serif;
 //user status colors
 $online-color: #9acd32;
 $idle-color: #ff8c00;
 
 //chat bubble triangle size
 $triangle-size: 10px;
-
-///////////////////////////////////////////
-//// SCSS partials are not working     ////
-//// So we will leave the imports for  ////
-//// future use and write styles here  ////
-//// in hopes that the fourseven:scss  ////
-//// bug will actually get fixed       ////
-//////////////////////////////////////////
 
 @mixin triangle($direction, $horizontal, $vertical, $color) {
     border-style: solid;
@@ -60,6 +56,7 @@ $triangle-size: 10px;
 }
 
 //Page Level Styles
+@import '../imports/ui/pages/Login/Login.scss';
 @import '../imports/ui/pages/Messages/Messages.scss';
 @import '../imports/ui/pages/UserProfile/UserProfile.scss';
 

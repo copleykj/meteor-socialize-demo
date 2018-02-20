@@ -1,16 +1,15 @@
 import { Meteor } from 'meteor/meteor';
-
-import { Grid, Col, Row, Well } from 'react-bootstrap';
 import { Post } from 'meteor/socialize:postable';
 import { User } from 'meteor/socialize:user-model';
 import { withTracker } from 'meteor/react-meteor-data';
+
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Grid, Col, Row, Well } from 'react-bootstrap';
 
 import Composer from '../../components/PostComposer/PostComposer.jsx';
 import MainHeader from '../../layouts/MainHeader/MainHeader.jsx';
 import PostComponent from '../../components/Post/Post.jsx';
-
 
 const Dashboard = ({ user, posts, onlineFriends, params, ...props }) => (
     <MainHeader user={user} params={params} {...props}>
