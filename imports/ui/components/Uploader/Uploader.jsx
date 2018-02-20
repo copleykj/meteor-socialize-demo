@@ -30,12 +30,14 @@ export default class Uploader extends Component {
         children: PropTypes.element.isRequired,
         multiple: PropTypes.bool,
         accept: PropTypes.string,
+        groupId: PropTypes.string,
     }
     static defaultProps = {
         accept: 'image/*',
+        groupId: 'general',
     }
     onChange = (e) => {
-        const uploads = Cloudinary.uploadFiles(e.currentTarget.files);
+        const uploads = Cloudinary.uploadFiles(e.currentTarget.files, { groupId: this.props.groupId, options: {} });
         uploads.forEach(async (response) => {
             const fileData = await response;
             this.props.afterUpload.call(this, fileData);
