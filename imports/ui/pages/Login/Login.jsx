@@ -4,7 +4,7 @@ import { User } from 'meteor/socialize:user-model';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
-import { Grid, Row, Col, Button, Panel, Collapse } from 'react-bootstrap';
+import { Grid, Row, Col, Button, Collapse } from 'react-bootstrap';
 import SimpleSchema from 'simpl-schema';
 import AutoField from 'uniforms-bootstrap3/AutoField';
 import AutoForm from 'uniforms-bootstrap3/AutoForm';
