@@ -75,38 +75,41 @@ export default class LoginPage extends Component {
     render() {
         const { signUp, loginError } = this.state;
         return (
-            <Grid>
-                <Row>
-                    <Col xs={6} xsOffset={3}>
-                        <h1 className="text-center" style={{ marginTop: '200px' }}>Socialize</h1>
-                        <Panel header={signUp ? 'Register Account' : 'Login'} bsStyle="primary">
-                            { signUp &&
-                                <AutoForm showInlineError schema={RegisterSchema} onSubmit={this.handleSubmit} error={loginError}>
-                                    <AutoField name="username" />
-                                    <AutoField name="email" />
-                                    <AutoField name="password" type="password" />
-                                    <Collapse in={!!loginError}>
-                                        <ErrorsField />
-                                    </Collapse>
-                                    <Button type="submit" bsStyle="primary">Register</Button>
-                                    <p style={{ marginTop: '1.2em' }}>Already have an account? <a href="#" onClick={this.switchForm}>Log In</a></p>
-                                </AutoForm>
-                            }
-                            { !signUp &&
-                                <AutoForm showInlineError schema={LoginSchema} onSubmit={this.handleSubmit} error={loginError}>
-                                    <AutoField name="usernameOrEmail" label="Username or Email" />
-                                    <AutoField name="password" type="password" />
-                                    <Collapse in={!!loginError}>
-                                        <ErrorsField />
-                                    </Collapse>
-                                    <Button type="submit" bsStyle="primary">Log In</Button>
-                                    <p style={{ marginTop: '1.2em' }}>Don&apos;t have an account? <a href="#" onClick={this.switchForm}>Register</a></p>
-                                </AutoForm>
-                            }
-                        </Panel>
-                    </Col>
-                </Row>
-            </Grid>
+            <div id="login-page">
+                <Grid>
+                    <Row>
+                        <Col xs={6} xsOffset={3}>
+                            <div className="form-container">
+                                <img src="meteor-logo.svg" alt="" />
+                                <h1>Socialize</h1>
+                                { signUp &&
+                                    <AutoForm showInlineError schema={RegisterSchema} onSubmit={this.handleSubmit} error={loginError}>
+                                        <AutoField name="username" placeholder label={false} />
+                                        <AutoField name="email" placeholder label={false} />
+                                        <AutoField name="password" type="password" placeholder label={false} />
+                                        <Collapse in={!!loginError}>
+                                            <ErrorsField />
+                                        </Collapse>
+                                        <Button type="submit" bsStyle="primary" block>Register</Button>
+                                        <p style={{ marginTop: '1.2em' }}>Already have an account? <a href="#" onClick={this.switchForm}>Log In</a></p>
+                                    </AutoForm>
+                                }
+                                { !signUp &&
+                                    <AutoForm showInlineError schema={LoginSchema} onSubmit={this.handleSubmit} error={loginError}>
+                                        <AutoField name="usernameOrEmail" placeholder="Username or Email" label={false} />
+                                        <AutoField name="password" type="password" placeholder label={false} />
+                                        <Collapse in={!!loginError}>
+                                            <ErrorsField />
+                                        </Collapse>
+                                        <Button type="submit" bsStyle="primary" block>Log In</Button>
+                                        <p style={{ marginTop: '1.2em' }}>Don&apos;t have an account? <a href="#" onClick={this.switchForm}>Register</a></p>
+                                    </AutoForm>
+                                }
+                            </div>
+                        </Col>
+                    </Row>
+                </Grid>
+            </div>
         );
     }
 }
