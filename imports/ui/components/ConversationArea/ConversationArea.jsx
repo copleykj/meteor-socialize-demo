@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-import ReactLetterAvatar from '../LetterAvatar/LetterAvatar.jsx';
+import UserAvatar from '../UserAvatar/UserAvatar.jsx';
 import MessageComposer from '../../components/MessageComposer/MessageComposer.jsx';
 
 export default class MessagesContainer extends Component {
@@ -53,8 +53,8 @@ export default class MessagesContainer extends Component {
                                 return (
                                     <div className={`message ${self}`} key={message._id}>
                                         <div>
-                                            <ReactLetterAvatar
-                                                name={sender.username.toUpperCase()}
+                                            <UserAvatar
+                                                user={sender}
                                                 size={60}
                                             />
                                         </div>

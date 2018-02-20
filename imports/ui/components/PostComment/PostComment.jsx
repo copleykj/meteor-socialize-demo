@@ -1,13 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Link } from 'react-router';
-import { ButtonToolbar, ButtonGroup, Button, Glyphicon, Clearfix } from 'react-bootstrap';
+import { Glyphicon, Clearfix } from 'react-bootstrap';
 
-import ReactLetterAvatar from '../LetterAvatar/LetterAvatar.jsx';
+import UserAvatar from '../UserAvatar/UserAvatar.jsx';
 
 const PostComment = (comment) => {
     const likedByUser = comment.isLikedBy(Meteor.user());
-    const username = comment.user().username;
+    const user = comment.user();
+    const username = user.username;
     let likeIcon = 'heart-empty';
     let textClass = '';
 
@@ -19,8 +20,8 @@ const PostComment = (comment) => {
         <div style={{ borderBottom: '1px solid #3a3a3a', margin: '3px 0', padding: '2px 0' }} key={comment._id}>
             <div>
                 <div className="pull-left">
-                    <ReactLetterAvatar
-                        name={comment.user().username.toUpperCase()}
+                    <UserAvatar
+                        user={user}
                         size={40}
                     />
                 </div>

@@ -79,6 +79,7 @@ sha@1.0.9
 shell-server@0.3.1
 shim-common@0.1.0
 socialize:base-model@1.1.2
+socialize:cloudinary@1.0.0
 socialize:commentable@1.0.0
 socialize:feed@1.0.1
 socialize:friendships@1.0.0

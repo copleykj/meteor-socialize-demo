@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
 
-import ReactLetterAvatar from '../LetterAvatar/LetterAvatar.jsx';
+import UserAvatar from '../UserAvatar/UserAvatar.jsx';
 import PostComment from '../PostComment/PostComment.jsx';
 
 const PostComponent = ({ post, poster, comments, likedByUser }) => {
@@ -25,8 +25,8 @@ const PostComponent = ({ post, poster, comments, likedByUser }) => {
     return (
         <Well style={{ overflow: 'hidden' }}>
             <div className="pull-left">
-                <ReactLetterAvatar
-                    name={poster.username.toUpperCase()}
+                <UserAvatar
+                    user={poster}
                     size={60}
                 />
             </div>
@@ -64,8 +64,8 @@ const PostComponent = ({ post, poster, comments, likedByUser }) => {
                 >
                     <FormGroup>
                         <div className="pull-left">
-                            <ReactLetterAvatar
-                                name={poster.username.toUpperCase()}
+                            <UserAvatar
+                                user={poster}
                                 size={40}
                             />
                         </div>
