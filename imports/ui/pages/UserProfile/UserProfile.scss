@@ -6,8 +6,33 @@
         flex-direction: column;
         height: 300px;
         justify-content: flex-end;
-        padding: 0 0 20px 220px;
-        position: relative;
+        padding: 20px;
+
+        section {
+            display: flex;
+
+            .avatar-container {
+                position: relative;
+                top: 35px;
+
+                .upload-container {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+
+                    button {
+                        font-size: 24px;
+                    }
+                }
+            }
+
+            .actions-container {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                margin-left: 30px;
+            }
+        }
 
         .username {
             font-weight: 300;
@@ -16,9 +41,16 @@
 
         .avatar {
             border: 4px solid #fff;
-            bottom: -25px;
-            left: 40px;
-            position: absolute;
+        }
+    }
+
+    .upload-progress {
+        height: 5px;
+
+        div {
+            background-color: $text-color;
+            height: 100%;
+            width: 0;
         }
     }
 

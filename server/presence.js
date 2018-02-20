@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
 import { User } from 'meteor/socialize:user-model';
 import { UserPresence } from 'meteor/socialize:user-presence';
+import { Cloudinary } from 'meteor/socialize:cloudinary';
 import SimpleSchema from 'simpl-schema';
 
 
@@ -10,6 +12,10 @@ const StatusSchema = new SimpleSchema({
         optional: true,
         allowedValues: ['online', 'idle'],
     },
+    avatar: {
+        type: String,
+        optional: true,
+    },
     lastOnline: {
         type: Date,
         optional: true,
@@ -18,6 +24,21 @@ const StatusSchema = new SimpleSchema({
 
 User.addFieldsToPublish({
     status: 1,
+    avatar: 1,
+});
+
+
+Meteor.methods({
+    setAvatar(publicId) {
+        check(publicId, String);
+        if (this.userId) {
+            const currentUser = Meteor.users.findOne({ _id: this.userId });
+            const { avatar } = currentUser;
+            avatar && Cloudinary.api.delete_resources([avatar]);
+            currentUser.avatar = publicId;
+            currentUser.save();
+        }
+    },
 });
 
 
