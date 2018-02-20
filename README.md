@@ -1,4 +1,5 @@
 # Meteor Socialize Demo #
+![demo](https://storage.googleapis.com/openscreenshot/G/D/F/HJwQ_6FDG.png)
 
 The start of a quick demo of the socialize packages for meteor. At the moment it is pretty basic, but has a login/register page, user feed, messaging, profiles, friend requests, friends list, and avatar upload. There is quite a bit more to be added and a ton of polish to apply still. This is very much a work in progress and you are welcome to help it along with issues and pull requests.
 
