@@ -1,0 +1,17 @@
+#post-composer {
+    background-color: $custom-default-bg;
+    display: flex;
+    margin-bottom: 10px;
+    padding: 5px;
+
+    ::placeholder {
+        color: $gray-dark;
+    }
+
+    textarea {
+        background-color: transparent;
+        font-size: 18px;
+        margin: 5px;
+        resize: none;
+    }
+}

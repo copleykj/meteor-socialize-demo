@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Link } from 'react-router';
-import { Glyphicon, Clearfix } from 'react-bootstrap';
+import { Glyphicon, Button } from 'react-bootstrap';
+import TimeAgo from 'react-timeago';
 
 import UserAvatar from '../UserAvatar/UserAvatar.jsx';
 
@@ -17,27 +18,27 @@ const PostComment = (comment) => {
         textClass = 'text-danger';
     }
     return (
-        <div style={{ borderBottom: '1px solid #3a3a3a', margin: '3px 0', padding: '2px 0' }} key={comment._id}>
-            <div>
-                <div className="pull-left">
-                    <UserAvatar
-                        user={user}
-                        size={40}
-                    />
-                </div>
-                <div style={{ marginLeft: '50px' }}>
-                    <small className="pull-right"><Glyphicon className={textClass} glyph={likeIcon} onClick={() => { likedByUser ? comment.unlike() : comment.like(); }} /></small>
-                    <p style={{ marginBottom: '2px' }} className="text-info">
+        <div className="post-comment" key={comment._id}>
+            <div className="header">
+                <UserAvatar
+                    user={user}
+                    size={40}
+                />
+                <section>
+                    <p className="username">
                         <Link to={`/profile/${username}`}>{username}</Link>
                     </p>
-                    <p style={{ marginBottom: '0', whiteSpace: 'pre-line', wordWrap: 'break-word' }}>{comment.body}</p>
-                    <div>
-                        <small className="pull-right text-warning">
-                            {`${comment.likeCount} ${'like'.plural(comment.likeCount)}`}
-                        </small>
-                        <Clearfix />
-                    </div>
-                </div>
+                    <p className="time-ago"><TimeAgo date={comment.createdAt} /></p>
+                </section>
+            </div>
+            <p className="body">{comment.body}</p>
+            <div className="footer">
+                <small>
+                    {`${comment.likeCount} ${'like'.plural(comment.likeCount)}`}
+                </small>
+                <Button bsSize="xsmall" bsStyle="link" onClick={() => { likedByUser ? comment.unlike() : comment.like(); }} >
+                    <Glyphicon className={textClass} glyph={likeIcon} />
+                </Button>
             </div>
         </div>
     );

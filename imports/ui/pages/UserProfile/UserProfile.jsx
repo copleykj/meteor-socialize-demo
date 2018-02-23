@@ -99,7 +99,7 @@ class UserProfile extends Component {
                             </section>
                         </header>
                         <div className="upload-progress">{percentUploaded && <div style={{ width: `${percentUploaded}%` }} />}</div>
-                        <Row>
+                        <Row id="profile-content">
                             <Col xs={6}>
                                 <ProfileFeed user={profileUser} />
                             </Col>
@@ -153,7 +153,7 @@ const UserProfileContainer = withTracker(({ params, user }) => {
     if (Meteor.isClient) {
         uploadingFile = Cloudinary.collection.findOne({ status: 'uploading', groupId: 'avatar' });
     }
-    
+
     let profile;
     let profileUser;
     let areFriends;

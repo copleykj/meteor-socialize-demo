@@ -20,6 +20,7 @@ $brand-success:         #00bc8c !default;
 $brand-info:            #3498DB !default;
 $brand-warning:         #F39C12 !default;
 $brand-danger:          #E74C3C !default;
+$custom-default-bg:     rgba(240, 240, 240, .34);
 
 
 //== Scaffolding
@@ -233,13 +234,13 @@ $cursor-disabled:                not-allowed !default;
 //## Dropdown menu container and contents.
 
 //** Background for the dropdown menu.
-$dropdown-bg:                    $gray-dark !default;
+$dropdown-bg:                    $custom-default-bg !default;
 //** Dropdown menu `border-color`.
 $dropdown-border:                rgba(0,0,0,.15) !default;
 //** Dropdown menu `border-color` **for IE8**.
 $dropdown-fallback-border:       #ccc !default;
 //** Divider color for between dropdown items.
-$dropdown-divider-bg:            $gray !default;
+$dropdown-divider-bg:            $gray-light !default;
 
 //** Dropdown link text color.
 $dropdown-link-color:            $gray-lighter !default;
@@ -366,7 +367,7 @@ $navbar-padding-vertical:          (($navbar-height - $line-height-computed) / 2
 $navbar-collapse-max-height:       340px !default;
 
 $navbar-default-color:             #fff !default;
-$navbar-default-bg:                $brand-primary !default;
+$navbar-default-bg:                $custom-default-bg !default;
 $navbar-default-border:            transparent !default;
 
 // Navbar links

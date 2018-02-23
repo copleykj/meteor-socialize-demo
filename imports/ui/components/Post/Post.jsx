@@ -2,89 +2,104 @@ import { Meteor } from 'meteor/meteor';
 import { Comment } from 'meteor/socialize:commentable';
 import { User } from 'meteor/socialize:user-model';
 import { Post } from 'meteor/socialize:postable';
-import { Well, Clearfix, Glyphicon, Button, ButtonGroup, ButtonToolbar, FormGroup } from 'react-bootstrap';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Glyphicon, Button, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router';
+import TimeAgo from 'react-timeago';
 
 import UserAvatar from '../UserAvatar/UserAvatar.jsx';
 import PostComment from '../PostComment/PostComment.jsx';
+import ComposerTextArea from '../ComposerTextArea/ComposerTextArea.jsx';
 
-const PostComponent = ({ post, poster, comments, likedByUser }) => {
-    let likeIcon = 'heart-empty';
-    let textClass = '';
-    let ta;
-
-    if (likedByUser) {
-        likeIcon = 'heart';
-        textClass = 'text-danger';
+class PostComponent extends Component {
+    addComment = (bodyText) => {
+        const { post } = this.props;
+        post.addComment(bodyText);
+        this.ta.value = '';
     }
+    render() {
+        const { user, post, poster, comments, likedByUser } = this.props;
+        let likeIcon = 'heart-empty';
+        let textClass = '';
 
-    const { commentCount, likeCount } = post;
-    return (
-        <Well style={{ overflow: 'hidden' }}>
-            <div className="pull-left">
-                <UserAvatar
-                    user={poster}
-                    size={60}
-                />
-            </div>
-            <div style={{ marginLeft: '70px' }}>
-                <p style={{ marginBottom: '4px', marginTop: '-5px' }} className="text-info">
-                    <Link to={`/profile/${poster.username}`}>{poster.username}</Link>
-                </p>
-                <p>{post.body}</p>
-                <div className="text-warning">
-                    <small className="pull-left">
-                        {`${likeCount} ${'like'.plural(likeCount)}`} - {`${commentCount} ${'comment'.plural(commentCount)}`}
-                    </small>
-                    <ButtonToolbar className="pull-right">
-                        <ButtonGroup>
-                            <Button bsSize="xsmall" onClick={() => { likedByUser ? post.unlike() : post.like(); }}>
-                                <Glyphicon className={textClass} glyph={likeIcon} />
-                            </Button>
-                        </ButtonGroup>
-                    </ButtonToolbar>
+        if (likedByUser) {
+            likeIcon = 'heart';
+            textClass = 'text-danger';
+        }
+
+        const { commentCount, likeCount } = post;
+        return (
+            <div className="post-container">
+                <div className="post">
+                    <div className="header">
+                        <Link to={`/profile/${poster.username}`}>
+                            <UserAvatar user={poster} size={50} />
+                        </Link>
+                        <section>
+                            <p className="username">
+                                <Link to={`/profile/${poster.username}`}>{poster.username}</Link>
+                            </p>
+                            <p className="time-ago"><TimeAgo date={post.createdAt} /></p>
+                        </section>
+                    </div>
+                    <p className="body">{post.body}</p>
+                    <div className="footer">
+                        <small>
+                            {`${likeCount} ${'like'.plural(likeCount)}`} - {`${commentCount} ${'comment'.plural(commentCount)}`}
+                        </small>
+                        <ButtonToolbar>
+                            <ButtonGroup>
+                                <Button bsSize="xsmall" bsStyle="link" onClick={() => { likedByUser ? post.unlike() : post.like(); }}>
+                                    <Glyphicon className={textClass} glyph={likeIcon} />
+                                </Button>
+                            </ButtonGroup>
+                        </ButtonToolbar>
+                    </div>
                 </div>
-            </div>
-            <Clearfix />
-            <div style={{ borderTop: '1px solid #3a3a3a', marginTop: '10px', paddingTop: '10px' }}>
-                {
-                    comments.map(PostComment)
-                }
+                <div className="comments-container">
+                    {
+                        comments.map(PostComment)
+                    }
 
-                <form
-                    onSubmit={(event) => {
-                        event.preventDefault();
-                        post.addComment(ta.value);
-                        ta.value = '';
-                    }}
-                    style={{ marginTop: '10px' }}
-                >
-                    <FormGroup>
-                        <div className="pull-left">
+                    <form>
+                        <div>
                             <UserAvatar
-                                user={poster}
+                                user={user}
                                 size={40}
                             />
                         </div>
-                        <div style={{ marginLeft: '60px' }}>
-                            <textarea style={{ maxWidth: '100%' }} className="form-control input-sm" ref={(ref) => { ta = ref; }} placeholder="Enter your comment.." />
+                        <div className="input-container">
+                            <ComposerTextArea
+                                rows="1"
+                                className="form-control input-sm"
+                                getRef={(ref) => { this.ta = ref; }}
+                                placeholder="Enter your comment.."
+                                onSend={this.addComment}
+                            />
                         </div>
-                    </FormGroup>
-                    <Button className="pull-right" bsStyle="primary" bsSize="xsmall" type="submit">Add Comment</Button>
-                    <Clearfix />
-                </form>
+                        <Button
+                            bsStyle="link"
+                            bsSize="xsmall"
+                            onClick={() => {
+                                this.addComment(this.ta.value);
+                            }}
+                        >
+                            <Glyphicon glyph="send" />
+                        </Button>
+                    </form>
 
+                </div>
             </div>
-        </Well>
-    );
-};
+        );
+    }
+}
 
 PostComponent.propTypes = {
     post: PropTypes.instanceOf(Post),
     poster: PropTypes.instanceOf(User),
+    user: PropTypes.instanceOf(User),
     comments: PropTypes.arrayOf(PropTypes.instanceOf(Comment)),
     likedByUser: PropTypes.bool,
 };
@@ -92,6 +107,7 @@ PostComponent.propTypes = {
 const PostComponentContainer = withTracker(({ post }) => ({
     post,
     poster: post.poster(),
+    user: Meteor.user(),
     comments: post.comments().fetch(),
     likedByUser: post.isLikedBy(Meteor.user()),
 }))(PostComponent);

@@ -1,0 +1,28 @@
+.post-comment {
+    background-color: $custom-default-bg;
+    margin-bottom: 5px;
+    padding: 5px;
+
+    .header {
+        .username {
+            font-size: 20px;
+        }
+
+        .time-ago {
+            font-size: 10px;
+        }
+    }
+
+    .footer {
+        padding: 0 5px;
+
+        button {
+            font-size: 14px !important;
+        }
+    }
+
+    .body {
+        font-size: 16px;
+        padding: 0 5px;
+    }
+}
