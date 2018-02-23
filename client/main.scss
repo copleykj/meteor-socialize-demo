@@ -63,9 +63,22 @@ $triangle-size: 10px;
 
 //Component Level Styles
 @import '../imports/ui/components/FriendsList/FriendsList.scss';
+@import '../imports/ui/components/Post/Post.scss';
+@import '../imports/ui/components/PostComment/PostComment.scss';
+@import '../imports/ui/components/PostComposer/PostComposer.scss';
 
 * {
     box-sizing: border-box;
+
+    &:focus,
+    &:active {
+        outline: none !important;
+    }
+}
+
+body {
+    background: linear-gradient(135deg, #b75050, #336498);
+    min-height: 100vh;
 }
 
 .scroll-area {

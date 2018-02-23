@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const ComposerTextArea = ({ onFocus, onBlur, onSend, getRef, disabled }) => (
+const ComposerTextArea = ({ onFocus, onBlur, onSend, getRef, disabled, className, ...props }) => (
     <textarea
         disabled={disabled}
         ref={getRef}
@@ -13,7 +13,8 @@ const ComposerTextArea = ({ onFocus, onBlur, onSend, getRef, disabled }) => (
                 onSend(event.target.value);
             }
         }}
-        className="form-control"
+        className={`form-control ${className}`}
+        {...props}
     />
 );
 
@@ -23,6 +24,7 @@ ComposerTextArea.propTypes = {
     onSend: PropTypes.func,
     getRef: PropTypes.func,
     disabled: PropTypes.bool,
+    className: PropTypes.string,
 };
 
 export default ComposerTextArea;

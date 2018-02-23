@@ -1,7 +1,6 @@
 #user-profile-page {
     header {
-        background: #4b79a1;
-        background: linear-gradient(to left, #4b79a1, #283e51);
+        background: $custom-default-bg;
         display: flex;
         flex-direction: column;
         height: 300px;
@@ -54,7 +53,7 @@
         }
     }
 
-    #profile-feed {
-        margin-top: 30px;
+    #profile-content {
+        margin-top: 15px;
     }
 }

@@ -16,7 +16,7 @@ const Dashboard = ({ user, posts, onlineFriends, params, ...props }) => (
         <Grid>
             <Row>
                 <Col xs={5}>
-                    {Composer(user)}
+                    <Composer user={user} />
                     {
                         posts.map(post => (
                             <PostComponent post={post} key={post._id} />
