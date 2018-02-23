@@ -28,7 +28,7 @@ const PostComment = (comment) => {
                     <p className="username">
                         <Link to={`/profile/${username}`}>{username}</Link>
                     </p>
-                    <p className="time-ago"><TimeAgo date={comment.createdAt} /></p>
+                    <p className="time-ago"><TimeAgo date={comment.createdAt} minPeriod={10} /></p>
                 </section>
             </div>
             <p className="body">{comment.body}</p>
