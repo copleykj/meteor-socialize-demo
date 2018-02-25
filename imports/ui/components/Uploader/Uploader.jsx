@@ -31,6 +31,7 @@ export default class Uploader extends Component {
         multiple: PropTypes.bool,
         accept: PropTypes.string,
         groupId: PropTypes.string,
+        title: PropTypes.string,
     }
     static defaultProps = {
         accept: 'image/*',
@@ -47,7 +48,7 @@ export default class Uploader extends Component {
         return (
             <span style={fileContainer}>
                 {this.props.children}
-                <input style={fileInput} type="file" accept={this.props.accept} multiple={this.props.multiple} onChange={this.onChange} />
+                <input style={fileInput} type="file" title={this.props.title} accept={this.props.accept} multiple={this.props.multiple} onChange={this.onChange} />
             </span>
         );
     }

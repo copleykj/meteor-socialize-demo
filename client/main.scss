@@ -1,4 +1,6 @@
-$link-color: #fff;
+$link-color: #375a7f;
+$link-hover-color: #fff;
+$body-bg: linear-gradient(135deg, #b75050, #336498);
 //setup bootstrap with darkly theme
 @import './theme/_variables.scss';
 @import '{}/node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
@@ -77,7 +79,7 @@ $triangle-size: 10px;
 }
 
 body {
-    background: linear-gradient(135deg, #b75050, #336498);
+    background: $body-bg;
     min-height: 100vh;
 }
 
