@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Cloudinary } from 'meteor/socialize:cloudinary';
 
 import { AutoForm, AutoField } from 'uniforms-bootstrap3';
-import { Button, SplitButton, MenuItem, ButtonToolbar, Grid, Modal, Row, Col, Glyphicon } from 'react-bootstrap';
+import { Button, MenuItem, ButtonToolbar, ButtonGroup, Grid, Modal, Row, Col, Glyphicon, Dropdown } from 'react-bootstrap';
 import { Profile, ProfilesCollection } from 'meteor/socialize:user-profile';
 import { User } from 'meteor/socialize:user-model';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -53,15 +53,20 @@ class UserProfile extends Component {
         } = this.props;
 
         let actionText;
+        let glyph;
 
         if (areFriends) {
             actionText = 'Unfriend';
+            glyph = 'remove-circle';
         } else if (hasRequest) {
             actionText = 'Accept Request';
+            glyph = 'ok-circle';
         } else if (hasPendingRequest) {
             actionText = 'Cancel Request';
+            glyph = 'minus-sign';
         } else {
             actionText = 'Add Friend';
+            glyph = 'plus-sign';
         }
         return (
             <MainHeader user={user} params={params} paddingTop={'60px'} {...props}>
@@ -72,9 +77,9 @@ class UserProfile extends Component {
                                 <div className="avatar-container">
                                     {isSelf &&
                                         <div className="upload-container">
-                                            <Uploader afterUpload={fileData => Meteor.call('setAvatar', fileData.public_id)} groupId="avatar">
+                                            <Uploader title="Choose a new avatar to upload" afterUpload={fileData => Meteor.call('setAvatar', fileData.public_id)} groupId="avatar">
                                                 <Button bsStyle="link">
-                                                    <Glyphicon glyph="upload" />
+                                                    <Glyphicon glyph="circle-arrow-up" />
                                                 </Button>
                                             </Uploader>
                                         </div>
@@ -84,21 +89,33 @@ class UserProfile extends Component {
 
                                 <div className="actions-container">
                                     <h1 className="username">{profile.fullName()} ({profileUser.username})</h1>
-                                    {isSelf ?
-                                        <ButtonToolbar>
-                                            <Button onClick={this.handleShow} bsStyle="warning" bsSize="small">Edit Profile</Button>
-                                        </ButtonToolbar> :
-                                        <ButtonToolbar>
-                                            <SplitButton onClick={this.handleProfileAction} bsStyle="info" bsSize="small" title={actionText} id="profile-actions">
-                                                <MenuItem eventKey="1">Block</MenuItem>
-                                            </SplitButton>
-                                            <Button onClick={() => handleSendMessage(profileUser)} bsStyle="info" bsSize="small">Message</Button>
-                                        </ButtonToolbar>
-                                    }
+                                    <ButtonToolbar>
+                                        {isSelf ?
+                                            <ButtonGroup>
+                                                <Button onClick={this.handleShow} bsStyle="link" bsSize="small"><Glyphicon glyph="edit" /> Edit Profile</Button>
+                                            </ButtonGroup> :
+                                            <ButtonGroup>
+                                                <Button onClick={() => handleSendMessage(profileUser)} className="seperator" bsStyle="link" bsSize="small"><Glyphicon glyph="envelope" /> Message</Button>
+                                                <Button onClick={this.handleProfileAction} className="seperator" bsStyle="link" bsSize="small" id="profile-actions">
+                                                    <Glyphicon glyph={glyph} />
+                                                    {actionText}
+                                                </Button>
+                                                <Dropdown title="Menu" id="menu-nav-dropdown">
+                                                    <Dropdown.Toggle bsStyle="link" noCaret>
+                                                        <Glyphicon glyph="option-vertical" />
+                                                    </Dropdown.Toggle>
+                                                    <Dropdown.Menu>
+                                                        <MenuItem>Block</MenuItem>
+                                                    </Dropdown.Menu>
+                                                </Dropdown>
+                                            </ButtonGroup>
+                                        }
+                                    </ButtonToolbar>
+
                                 </div>
                             </section>
                         </header>
-                        <div className="upload-progress">{percentUploaded && <div style={{ width: `${percentUploaded}%` }} />}</div>
+                        <div className="upload-progress">{!!percentUploaded && <div style={{ width: `${percentUploaded}%` }} />}</div>
                         <Row id="profile-content">
                             <Col xs={6}>
                                 <ProfileFeed user={profileUser} />

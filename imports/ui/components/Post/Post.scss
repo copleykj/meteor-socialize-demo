@@ -45,6 +45,10 @@
         color: $brand-primary;
         display: flex;
         justify-content: space-between;
+
+        button {
+            color: #fff;
+        }
     }
 
     .comments-container {

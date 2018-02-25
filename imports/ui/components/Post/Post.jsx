@@ -41,7 +41,7 @@ class PostComponent extends Component {
                             <p className="username">
                                 <Link to={`/profile/${poster.username}`}>{poster.username}</Link>
                             </p>
-                            <p className="time-ago"><TimeAgo date={post.createdAt} /></p>
+                            <p className="time-ago"><TimeAgo date={post.createdAt} minPeriod={10} /></p>
                         </section>
                     </div>
                     <p className="body">{post.body}</p>

@@ -1,22 +1,37 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Component } from 'react';
 
-const ComposerTextArea = ({ onFocus, onBlur, onSend, getRef, disabled, className, ...props }) => (
-    <textarea
-        disabled={disabled}
-        ref={getRef}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        onKeyPress={(event) => {
-            if (event.shiftKey && event.which === 13) {
-                event.preventDefault();
-                onSend(event.target.value);
-            }
-        }}
-        className={`form-control ${className}`}
-        {...props}
-    />
-);
+
+class ComposerTextArea extends Component {
+    componentDidMount() {
+        this.ref.style.overflowY = 'hidden';
+        this.ref.style.height = `${this.ref.scrollHeight}px`;
+    }
+    autoSize = () => {
+        this.ref.style.height = 'auto';
+        this.ref.style.height = `${this.ref.scrollHeight}px`;
+    }
+    render() {
+        const { onFocus, onBlur, onSend, getRef, disabled, className, ...props } = this.props;
+        return (
+            <textarea
+                disabled={disabled}
+                ref={(ref) => { this.ref = ref; getRef(ref); }}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                onInput={this.autoSize}
+                onKeyPress={(event) => {
+                    if (event.shiftKey && event.which === 13) {
+                        event.preventDefault();
+                        onSend(event.target.value);
+                    }
+                }}
+                className={`form-control ${className}`}
+                {...props}
+            />
+        );
+    }
+}
 
 ComposerTextArea.propTypes = {
     onFocus: PropTypes.func,
