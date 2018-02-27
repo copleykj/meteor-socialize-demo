@@ -9,6 +9,7 @@ import { Navbar, Nav, NavDropdown, NavItem, MenuItem, Badge } from 'react-bootst
 
 import { addQuery, removeQuery } from '../../../utils/router.js';
 import FriendsList from '../../components/FriendsList/FriendsList.jsx';
+import OnlineFriends from '../../components/OnlineFriends/OnlineFriends.jsx';
 
 const handleLogout = () => {
     Meteor.logout((error) => {
@@ -19,7 +20,24 @@ const handleLogout = () => {
 };
 
 class MainHeader extends Component {
-    state = { showFriends: false }
+    state = { showFriends: false, coloredNavbar: false }
+    componentDidMount() {
+        window.addEventListener('scroll', this.handleScroll);
+    }
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+    }
+    handleScroll = () => {
+        const { scrollY } = window;
+        const { coloredNavbar } = this.state;
+        if (scrollY >= 20 && !coloredNavbar) {
+            this.setState({ coloredNavbar: true });
+        }
+
+        if (scrollY < 20 && coloredNavbar) {
+            this.setState({ coloredNavbar: false });
+        }
+    }
     handleShow = () => {
         addQuery({ showFriends: true });
     }
@@ -27,34 +45,42 @@ class MainHeader extends Component {
         removeQuery('showFriends');
     }
     render() {
-        const { user, numUnreadConversations, newestConversationId, children, paddingTop, showFriends } = this.props;
+        const { user, numUnreadConversations, newestConversationId, children, showFriends, paddingTop } = this.props;
+        const { coloredNavbar } = this.state;
+        const navbarStyle = coloredNavbar ? { backgroundColor: '#8C5667' } : {};
+
         return (
-            <div style={{ paddingTop }}>
-                <Navbar fixedTop>
-                    <Navbar.Header>
-                        <Navbar.Brand>
-                            <Link to="/">Socialize</Link>
-                        </Navbar.Brand>
-                    </Navbar.Header>
+            <div id="content-container">
+                <div id="main-content">
+                    <div style={{ paddingTop }}>
+                        <Navbar fixedTop style={navbarStyle}>
+                            <Navbar.Header>
+                                <Navbar.Brand>
+                                    <Link to="/">Socialize</Link>
+                                </Navbar.Brand>
+                            </Navbar.Header>
 
-                    <Nav>
-                        <LinkContainer to={`/messages/${newestConversationId || 'new'}`}><NavItem>Messages <Badge bsStyle="info">{numUnreadConversations || ''}</Badge></NavItem></LinkContainer>
-                    </Nav>
+                            <Nav>
+                                <LinkContainer to={`/messages/${newestConversationId || 'new'}`}><NavItem>Messages <Badge bsStyle="info">{numUnreadConversations || ''}</Badge></NavItem></LinkContainer>
+                            </Nav>
 
-                    <Nav pullRight>
-                        <NavDropdown title={user.username} id="user-menu">
-                            <LinkContainer to={`/profile/${user.username}`}>
-                                <MenuItem>My Profile</MenuItem>
-                            </LinkContainer>
-                            <MenuItem onClick={this.handleShow}>Friends</MenuItem>
-                            <MenuItem>Account</MenuItem>
-                            <MenuItem divider />
-                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                        </NavDropdown>
-                    </Nav>
-                </Navbar>
-                {children}
-                { showFriends && <FriendsList show={showFriends} handleHide={this.handleHide} /> }
+                            <Nav pullRight>
+                                <NavDropdown title={user.username} id="user-menu">
+                                    <LinkContainer to={`/profile/${user.username}`}>
+                                        <MenuItem>My Profile</MenuItem>
+                                    </LinkContainer>
+                                    <MenuItem onClick={this.handleShow}>Friends</MenuItem>
+                                    <MenuItem>Account</MenuItem>
+                                    <MenuItem divider />
+                                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                </NavDropdown>
+                            </Nav>
+                        </Navbar>
+                        {children}
+                        { showFriends && <FriendsList show={showFriends} handleHide={this.handleHide} /> }
+                    </div>
+                </div>
+                <OnlineFriends user={user} />
             </div>
         );
     }

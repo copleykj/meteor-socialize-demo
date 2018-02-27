@@ -68,6 +68,7 @@ $triangle-size: 10px;
 @import '../imports/ui/components/Post/Post.scss';
 @import '../imports/ui/components/PostComment/PostComment.scss';
 @import '../imports/ui/components/PostComposer/PostComposer.scss';
+@import '../imports/ui/components/OnlineFriends/OnlineFriends.scss';
 
 * {
     box-sizing: border-box;
@@ -99,4 +100,17 @@ a {
         outline: none !important;
         text-decoration: none !important;
     }
+}
+
+#content-container {
+
+    #main-content {
+        margin-right: 300px;
+
+        .navbar {
+            margin-right: 300px;
+            transition: background-color .5s ease;
+        }
+    }
+
 }

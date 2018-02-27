@@ -1,0 +1,27 @@
+#online-friends {
+    background-color: $custom-default-bg;
+    height: 100vh;
+    padding: 10px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 300px;
+
+    >div {
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        padding: 10px;
+
+        .avatar {
+            margin-right: 10px;
+        }
+
+        .username {
+            flex: 1;
+        }
+    }
+
+}
