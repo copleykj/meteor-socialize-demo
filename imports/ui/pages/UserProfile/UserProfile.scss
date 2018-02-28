@@ -69,6 +69,15 @@
         }
     }
 
+    #about {
+        background-color: $custom-default-bg;
+        padding: 20px;
+
+        p {
+            margin: 0;
+        }
+    }
+
     .upload-progress {
         height: 5px;
 
