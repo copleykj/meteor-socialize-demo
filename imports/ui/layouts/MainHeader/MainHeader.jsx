@@ -5,11 +5,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { browserHistory, Link } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Navbar, Nav, NavDropdown, NavItem, MenuItem, Badge } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, NavItem, MenuItem, Dropdown, Badge, Glyphicon } from 'react-bootstrap';
 
 import { addQuery, removeQuery } from '../../../utils/router.js';
 import FriendsList from '../../components/FriendsList/FriendsList.jsx';
 import OnlineFriends from '../../components/OnlineFriends/OnlineFriends.jsx';
+import RequestItem from '../../components/RequestItem/RequestItem.jsx';
 
 const handleLogout = () => {
     Meteor.logout((error) => {
@@ -45,7 +46,7 @@ class MainHeader extends Component {
         removeQuery('showFriends');
     }
     render() {
-        const { user, numUnreadConversations, newestConversationId, children, showFriends, paddingTop } = this.props;
+        const { user, numUnreadConversations, newestConversationId, children, showFriends, paddingTop, requests, numRequests } = this.props;
         const { coloredNavbar } = this.state;
         const navbarStyle = coloredNavbar ? { backgroundColor: '#8C5667' } : {};
 
@@ -61,8 +62,23 @@ class MainHeader extends Component {
                             </Navbar.Header>
 
                             <Nav>
-                                <LinkContainer to={`/messages/${newestConversationId || 'new'}`}><NavItem>Messages <Badge bsStyle="info">{numUnreadConversations || ''}</Badge></NavItem></LinkContainer>
+                                <LinkContainer to={`/messages/${newestConversationId || 'new'}`}><NavItem>Messages <Badge>{numUnreadConversations}</Badge></NavItem></LinkContainer>
                             </Nav>
+
+                            <Dropdown id="menu-nav-dropdown" >
+                                <Dropdown.Toggle noCaret bsStyle="link">
+                                    <Glyphicon glyph="user" />
+                                    <Badge>{numRequests}</Badge>
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    {requests && requests.length > 0 ?
+                                        requests.map(request => <RequestItem key={request._id} request={request} />) :
+                                        <div className="request-item">
+                                            <p className="no-requests text-danger">No Requests</p>
+                                        </div>
+                                    }
+                                </Dropdown.Menu>
+                            </Dropdown>
 
                             <Nav pullRight>
                                 <NavDropdown title={user.username} id="user-menu">
@@ -88,7 +104,7 @@ class MainHeader extends Component {
 MainHeader.propTypes = {
     user: PropTypes.instanceOf(User),
     showFriends: PropTypes.bool,
-    numUnreadConversations: PropTypes.number,
+    numUnreadConversations: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     newestConversationId: PropTypes.string,
     children: PropTypes.node,
     paddingTop: PropTypes.string,
@@ -101,12 +117,17 @@ MainHeader.defaultProps = {
 const MainHeaderContainer = withTracker(({ user, params, location: { query } }) => {
     Meteor.subscribe('socialize.unreadConversations').ready();
     Meteor.subscribe('socialize.conversations', { limit: 1, sort: { updatedAt: -1 } }).ready();
+    Meteor.subscribe('socialize.friendRequests', {}).ready();
+
+    const requests = user.friendRequests().fetch();
     const unreadConversation = user.newestConversation();
     const newestConversationId = params.conversationId || (unreadConversation && unreadConversation._id);
     return {
         user,
-        numUnreadConversations: user.numUnreadConversations(),
+        numUnreadConversations: user.numUnreadConversations() || '',
         newestConversationId,
+        requests,
+        numRequests: requests.length || '',
         showFriends: !!query.showFriends,
     };
 })(MainHeader);
