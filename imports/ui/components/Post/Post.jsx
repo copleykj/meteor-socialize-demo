@@ -34,9 +34,7 @@ class PostComponent extends Component {
             <div className="post-container">
                 <div className="post">
                     <div className="header">
-                        <Link to={`/profile/${poster.username}`}>
-                            <UserAvatar user={poster} size={50} />
-                        </Link>
+                        <UserAvatar user={poster} size={50} />
                         <section>
                             <p className="username">
                                 <Link to={`/profile/${poster.username}`}>{poster.username}</Link>

@@ -3,6 +3,7 @@ import { Cloudinary } from 'meteor/socialize:cloudinary';
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router';
 
 import ReactLetterAvatar from '../LetterAvatar/LetterAvatar.jsx';
 
@@ -27,7 +28,7 @@ const UserAvatar = ({ user, size, ...props }) => {
         );
     }
 
-    return returnElement;
+    return <Link to={`/profile/${user.username}`}>{returnElement}</Link>;
 };
 
 UserAvatar.propTypes = propTypes;
