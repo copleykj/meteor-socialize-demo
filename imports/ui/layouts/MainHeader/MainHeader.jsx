@@ -70,7 +70,6 @@ class MainHeader extends Component {
                                         <MenuItem>My Profile</MenuItem>
                                     </LinkContainer>
                                     <MenuItem onClick={this.handleShow}>Friends</MenuItem>
-                                    <MenuItem>Account</MenuItem>
                                     <MenuItem divider />
                                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                                 </NavDropdown>
