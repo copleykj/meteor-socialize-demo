@@ -87,7 +87,7 @@ socialize:likeable@1.0.0
 socialize:linkable-model@1.0.1
 socialize:messaging@1.1.0
 socialize:postable@1.0.0
-socialize:requestable@1.0.0
+socialize:requestable@1.0.1
 socialize:server-presence@1.0.1
 socialize:server-time@1.0.0
 socialize:user-blocking@1.0.0
