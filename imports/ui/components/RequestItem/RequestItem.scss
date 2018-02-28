@@ -1,0 +1,39 @@
+.request-item {
+    align-items: center;
+    background-color: rgba($custom-default-bg, .8);
+    display: flex;
+    margin: 1px 5px;
+    padding: 10px;
+    width: 300px;
+
+    p {
+        margin: 0;
+
+        &.no-requests {
+            flex: 1;
+            font-family: $montserrat;
+            font-size: 18px;
+            text-align: center;
+        }
+    }
+
+    .actions {
+        display: flex;
+
+        button {
+            flex: 1;
+
+            &.text-danger {
+                color: $brand-danger;
+            }
+
+            &.text-primary {
+                color: $brand-primary;
+            }
+        }
+    }
+
+    .avatar {
+        margin-right: 20px;
+    }
+}

@@ -5,7 +5,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Grid, Col, Row, Well } from 'react-bootstrap';
+import { Grid, Col, Row } from 'react-bootstrap';
 
 import Composer from '../../components/PostComposer/PostComposer.jsx';
 import MainHeader from '../../layouts/MainHeader/MainHeader.jsx';
@@ -24,27 +24,6 @@ const Dashboard = ({ user, posts, onlineFriends, params, ...props }) => (
                     }
                 </Col>
                 <Col xs={4} />
-                <Col xs={3}>
-                    <h4>Online Friends</h4>
-                    <hr />
-                    {
-                        onlineFriends.map(friend => (
-                            <Well bsSize="small" key={friend._id}>
-                                {friend.username}
-                                <span
-                                    className="pull-right"
-                                    style={{
-                                        display: 'inline-block',
-                                        padding: '6px',
-                                        margin: '4px',
-                                        borderRadius: '50%',
-                                        backgroundColor: friend.status === 'online' ? 'YellowGreen' : 'DarkOrange',
-                                    }}
-                                />
-                            </Well>
-                        ))
-                    }
-                </Col>
             </Row>
         </Grid>
     </MainHeader>
@@ -64,7 +43,6 @@ const DashboardContainer = withTracker(({ user }) => {
     return {
         user,
         posts: user.feed().friendsPosts({ sort: { createdAt: -1 } }).fetch(),
-        onlineFriends: user.onlineFriends().fetch(),
     };
 })(Dashboard);
 

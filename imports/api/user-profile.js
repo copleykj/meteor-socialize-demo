@@ -8,6 +8,9 @@ Profile.attachSchema(new SimpleSchema({
     lastName: {
         type: String,
     },
+    about: {
+        type: String,
+    },
 }));
 
 Profile.methods({

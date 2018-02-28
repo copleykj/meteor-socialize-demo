@@ -82,12 +82,12 @@ socialize:base-model@1.1.2
 socialize:cloudinary@1.0.0
 socialize:commentable@1.0.0
 socialize:feed@1.0.1
-socialize:friendships@1.0.0
+socialize:friendships@1.0.1
 socialize:likeable@1.0.0
 socialize:linkable-model@1.0.1
 socialize:messaging@1.1.0
 socialize:postable@1.0.0
-socialize:requestable@1.0.0
+socialize:requestable@1.0.2
 socialize:server-presence@1.0.1
 socialize:server-time@1.0.0
 socialize:user-blocking@1.0.0

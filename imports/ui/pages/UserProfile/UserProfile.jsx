@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Cloudinary } from 'meteor/socialize:cloudinary';
 
-import { AutoForm, AutoField } from 'uniforms-bootstrap3';
-import { Button, MenuItem, ButtonToolbar, ButtonGroup, Grid, Modal, Row, Col, Glyphicon, Dropdown } from 'react-bootstrap';
+import { AutoForm, AutoField, LongTextField } from 'uniforms-bootstrap3';
+import { Button, MenuItem, ButtonToolbar, ButtonGroup, Grid, Modal, Row, Col, Glyphicon, DropdownButton } from 'react-bootstrap';
 import { Profile, ProfilesCollection } from 'meteor/socialize:user-profile';
 import { User } from 'meteor/socialize:user-model';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -100,14 +100,9 @@ class UserProfile extends Component {
                                                     <Glyphicon glyph={glyph} />
                                                     {actionText}
                                                 </Button>
-                                                <Dropdown title="Menu" id="menu-nav-dropdown">
-                                                    <Dropdown.Toggle bsStyle="link" noCaret>
-                                                        <Glyphicon glyph="option-vertical" />
-                                                    </Dropdown.Toggle>
-                                                    <Dropdown.Menu>
-                                                        <MenuItem>Block</MenuItem>
-                                                    </Dropdown.Menu>
-                                                </Dropdown>
+                                                <DropdownButton title={<Glyphicon glyph="option-vertical" />} id="menu-nav-dropdown" bsStyle="link" noCaret>
+                                                    <MenuItem>Block</MenuItem>
+                                                </DropdownButton>
                                             </ButtonGroup>
                                         }
                                     </ButtonToolbar>
@@ -117,6 +112,13 @@ class UserProfile extends Component {
                         </header>
                         <div className="upload-progress">{!!percentUploaded && <div style={{ width: `${percentUploaded}%` }} />}</div>
                         <Row id="profile-content">
+                            <Col xs={6}>
+                                {profile && profile.about && profile.about.length !== 0 &&
+                                    <div id="about">
+                                        <p>{profile.about}</p>
+                                    </div>
+                                }
+                            </Col>
                             <Col xs={6}>
                                 <ProfileFeed user={profileUser} />
                             </Col>
@@ -146,7 +148,11 @@ class UserProfile extends Component {
                                         <AutoField name="lastName" />
                                     </Col>
                                 </Row>
-
+                                <Row>
+                                    <Col xs={12}>
+                                        <AutoField name="about" component={LongTextField} />
+                                    </Col>
+                                </Row>
                             </Modal.Body>
 
                             <Modal.Footer>

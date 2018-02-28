@@ -1,6 +1,8 @@
 $link-color: #375a7f;
 $link-hover-color: #fff;
-$body-bg: linear-gradient(135deg, #b75050, #336498);
+$brand-primary: #4c608a;
+$brand-danger: #b75050;
+$body-bg: linear-gradient(135deg, $brand-danger, #336498);
 //setup bootstrap with darkly theme
 @import './theme/_variables.scss';
 @import '{}/node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
@@ -68,6 +70,8 @@ $triangle-size: 10px;
 @import '../imports/ui/components/Post/Post.scss';
 @import '../imports/ui/components/PostComment/PostComment.scss';
 @import '../imports/ui/components/PostComposer/PostComposer.scss';
+@import '../imports/ui/components/OnlineFriends/OnlineFriends.scss';
+@import '../imports/ui/components/RequestItem/RequestItem.scss';
 
 * {
     box-sizing: border-box;
@@ -99,4 +103,35 @@ a {
         outline: none !important;
         text-decoration: none !important;
     }
+}
+
+#content-container {
+
+    #main-content {
+        margin-right: 300px;
+
+        .navbar {
+            margin-right: 300px;
+            transition: background-color .5s ease;
+
+            .dropdown {
+                &.open {
+                    background-color: rgba(215, 215, 215, .34);
+                }
+
+                >button {
+                    border: 0;
+                    line-height: 21px;
+                    padding: 19.5px;
+
+                    &:hover,
+                    &:focus {
+                        color: inherit;
+                    }
+                }
+            }
+
+        }
+    }
+
 }
