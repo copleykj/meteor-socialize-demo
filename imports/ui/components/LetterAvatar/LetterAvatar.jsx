@@ -33,17 +33,17 @@ const google = [
 const propTypes = {
     name: PropTypes.string,
     size: PropTypes.number,
-    radius: PropTypes.number,
+    fontFamily: PropTypes.string,
 };
 
 const defaultProps = {
-    name: 'X',
+    name: '?',
     size: 50,
-    radius: 0,
 };
 
-const ReactLetterAvatar = ({ name, size, radius, ...props }) => {
+const ReactLetterAvatar = ({ name, size, fontFamily, ...props }) => {
     const char = name.trim()[0].toUpperCase();
+    const textSize = Math.ceil(size / 1.5);
 
     let bgColor;
     if (/[A-Z]/.test(char)) {
@@ -55,21 +55,15 @@ const ReactLetterAvatar = ({ name, size, radius, ...props }) => {
         bgColor = [0, 0, 0];
     }
 
-    const style = {
-        backgroundColor: `rgb(${bgColor})`,
-        display: 'flex',
-        justifyContent: 'center',
-        width: size,
-        height: size,
-        fontSize: `${Math.floor(size / 1.6)}px`,
-        lineHeight: `${Math.ceil(size / 1.06)}px`,
-        borderRadius: radius,
-    };
+    const backgroundColor = `rgb(${bgColor})`;
+    const fontString = fontFamily || 'Lato, Arial, Helvetica Neue, Helvetica, sans-serif';
+
+    const svgImage = `data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" style="background-color:${backgroundColor};" width="${size}" height="${size}">
+  <text text-anchor="middle" font-family="${fontString}" x="50%" y="50%" dy="0.35em" fill="white" font-size="${textSize}">${char}</text>
+</svg>`;
 
     return (
-        <div style={style} {...props}>
-            {char}
-        </div>
+        <img src={svgImage} alt="" {...props} />
     );
 };
 
