@@ -4,12 +4,15 @@ import SimpleSchema from 'simpl-schema';
 Profile.attachSchema(new SimpleSchema({
     firstName: {
         type: String,
+        optional: true,
     },
     lastName: {
         type: String,
+        optional: true,
     },
     about: {
         type: String,
+        optional: true,
     },
 }));
 

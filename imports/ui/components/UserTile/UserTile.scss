@@ -1,0 +1,21 @@
+.user-tile {
+    position: relative;
+
+    img {
+        width: 100%;
+    }
+
+    span {
+        bottom: 0;
+        left: 0;
+        margin: 0;
+        max-width: 100%;
+        overflow: hidden;
+        padding: 5px;
+        position: absolute;
+        text-overflow: ellipsis;
+        text-shadow: 0 0 2px #000;
+        white-space: nowrap;
+        word-wrap: normal;
+    }
+}
