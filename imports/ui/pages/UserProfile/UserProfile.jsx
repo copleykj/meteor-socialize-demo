@@ -137,7 +137,7 @@ class UserProfile extends Component {
                                 }
                                 <div id="profile-friends">
                                     {friends &&
-                                        friends.map(friend => <UserTile user={friend} />)
+                                        friends.map(friend => <UserTile key={friend._id} user={friend} />)
                                     }
                                 </div>
                             </Col>
@@ -212,7 +212,7 @@ const UserProfileContainer = withTracker(({ params, user }) => {
         profile = ProfilesCollection.findOne({ username });
         profileUser = profile.user();
         Meteor.subscribe('socialize.friends', profileUser._id, { limit: 4 }).ready();
-        friends = profileUser.friendsAsUsers({ limit: 4 });
+        friends = profileUser.friendsAsUsers({ limit: 4 }).fetch();
         areFriends = profileUser && profileUser.isFriendsWith();
         hasRequest = user.hasFriendshipRequestFrom(profileUser);
         hasPendingRequest = profileUser.hasFriendshipRequestFrom(user);
