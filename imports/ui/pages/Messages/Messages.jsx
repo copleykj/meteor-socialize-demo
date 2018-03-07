@@ -113,6 +113,7 @@ const ConversationRow = ({ conversation, lastMessage, sender, isUnread }) => {
                 <UserAvatar
                     user={sender}
                     size={60}
+                    noLink
                 />
             </div>
             <div>
