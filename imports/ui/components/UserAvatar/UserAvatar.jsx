@@ -10,13 +10,14 @@ import ReactLetterAvatar from '../LetterAvatar/LetterAvatar.jsx';
 const propTypes = {
     user: PropTypes.instanceOf(User),
     size: PropTypes.number,
+    noLink: PropTypes.bool,
 };
 
 const defaultProps = {
     size: 50,
 };
 
-const UserAvatar = ({ user, size, ...props }) => {
+const UserAvatar = ({ user, size, noLink, ...props }) => {
     let returnElement;
 
     if (!user.avatar) {
@@ -28,7 +29,7 @@ const UserAvatar = ({ user, size, ...props }) => {
         );
     }
 
-    return <Link to={`/profile/${user.username}`}>{returnElement}</Link>;
+    return noLink ? returnElement : <Link to={`/profile/${user.username}`}>{returnElement}</Link>;
 };
 
 UserAvatar.propTypes = propTypes;
