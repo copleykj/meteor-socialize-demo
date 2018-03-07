@@ -14,9 +14,25 @@ import UserAvatar from '../../components/UserAvatar/UserAvatar.jsx';
 import ProfileFeed from '../../components/ProfileFeed/ProfileFeed.jsx';
 import { handleSendMessage } from '../../../utils/messaging.js';
 import Uploader from '../../components/Uploader/Uploader.jsx';
+import UserTile from '../../components/UserTile/UserTile.jsx';
 
 
 class UserProfile extends Component {
+    static propTypes = {
+        ready: PropTypes.bool,
+        areFriends: PropTypes.bool,
+        hasRequest: PropTypes.bool,
+        hasPendingRequest: PropTypes.bool,
+        friends: PropTypes.arrayOf(PropTypes.instanceOf(User)),
+        isSelf: PropTypes.bool,
+        profileUser: PropTypes.instanceOf(User),
+        user: PropTypes.instanceOf(User),
+        profile: PropTypes.instanceOf(Profile),
+        percentUploaded: PropTypes.number,
+        params: PropTypes.shape({
+            username: PropTypes.string,
+        }),
+    };
     state = { showModal: false }
     handleProfileAction = () => {
         const { areFriends, hasRequest, hasPendingRequest, profileUser } = this.props;
@@ -42,6 +58,7 @@ class UserProfile extends Component {
             ready,
             areFriends,
             hasRequest,
+            friends,
             hasPendingRequest,
             isSelf,
             profileUser,
@@ -112,12 +129,17 @@ class UserProfile extends Component {
                         </header>
                         <div className="upload-progress">{!!percentUploaded && <div style={{ width: `${percentUploaded}%` }} />}</div>
                         <Row id="profile-content">
-                            <Col xs={6}>
+                            <Col xs={6} className="left">
                                 {profile && profile.about && profile.about.length !== 0 &&
                                     <div id="about">
                                         <p>{profile.about}</p>
                                     </div>
                                 }
+                                <div id="profile-friends">
+                                    {friends &&
+                                        friends.map(friend => <UserTile user={friend} />)
+                                    }
+                                </div>
                             </Col>
                             <Col xs={6}>
                                 <ProfileFeed user={profileUser} />
@@ -184,10 +206,13 @@ const UserProfileContainer = withTracker(({ params, user }) => {
     let hasPendingRequest;
     let blocking;
     let isSelf;
+    let friends;
 
     if (ready) {
         profile = ProfilesCollection.findOne({ username });
         profileUser = profile.user();
+        Meteor.subscribe('socialize.friends', profileUser._id, { limit: 4 }).ready();
+        friends = profileUser.friendsAsUsers({ limit: 4 });
         areFriends = profileUser && profileUser.isFriendsWith();
         hasRequest = user.hasFriendshipRequestFrom(profileUser);
         hasPendingRequest = profileUser.hasFriendshipRequestFrom(user);
@@ -197,6 +222,7 @@ const UserProfileContainer = withTracker(({ params, user }) => {
         ready,
         areFriends,
         hasRequest,
+        friends,
         hasPendingRequest,
         blocking,
         isSelf,
@@ -208,19 +234,5 @@ const UserProfileContainer = withTracker(({ params, user }) => {
     };
 })(UserProfile);
 
-UserProfile.propTypes = {
-    ready: PropTypes.bool,
-    areFriends: PropTypes.bool,
-    hasRequest: PropTypes.bool,
-    hasPendingRequest: PropTypes.bool,
-    isSelf: PropTypes.bool,
-    profileUser: PropTypes.instanceOf(User),
-    user: PropTypes.instanceOf(User),
-    profile: PropTypes.instanceOf(Profile),
-    percentUploaded: PropTypes.number,
-    params: PropTypes.shape({
-        username: PropTypes.string,
-    }),
-};
 
 export default UserProfileContainer;

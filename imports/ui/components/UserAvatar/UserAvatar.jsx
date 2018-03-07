@@ -24,7 +24,7 @@ const UserAvatar = ({ user, size, ...props }) => {
     } else {
         const url = Cloudinary.url(user.avatar, { width: size, height: size, crop: 'lfill', gravity: 'center' });
         returnElement = (
-            <img src={url} width={size} height={size} alt="" {...props} />
+            <img src={url} width={size} alt="" {...props} />
         );
     }
 

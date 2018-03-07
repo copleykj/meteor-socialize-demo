@@ -78,6 +78,20 @@
         }
     }
 
+    #profile-friends {
+        background-color: $custom-default-bg;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 10px;
+        padding: 20px;
+    }
+
+    .left {
+        >div {
+            margin-bottom: 20px;
+        }
+    }
+
     .upload-progress {
         height: 5px;
 
