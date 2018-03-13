@@ -103,7 +103,7 @@ Conversations.propTypes = {
 
 const ConversationsContainer = withTracker(({ user }) => ({
     ready: Meteor.subscribe('socialize.conversations').ready(),
-    conversations: user.conversations({ sort: { createdAt: -1 } }).fetch(),
+    conversations: user.conversations({ sort: { updatedAt: -1 } }).fetch(),
 }))(Conversations);
 
 const ConversationRow = ({ conversation, lastMessage, sender, isUnread }) => {
