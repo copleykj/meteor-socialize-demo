@@ -85,11 +85,11 @@ Messages.propTypes = {
 
 export default MessagesContainer;
 
-const Conversations = ({ conversations }) => (
+const Conversations = ({ conversations, ready }) => (
     <div id="conversations-column">
         <header><h4>Conversations</h4><Link to="/messages/new"><Glyphicon glyph="edit" /></Link></header>
         <Scrollbars universal>
-            {
+            {ready &&
                 conversations.map(conversation => <ConversationContainer conversation={conversation} key={conversation._id} />)
             }
         </Scrollbars>
@@ -98,11 +98,12 @@ const Conversations = ({ conversations }) => (
 
 Conversations.propTypes = {
     conversations: PropTypes.arrayOf(PropTypes.instanceOf(Conversation)),
+    ready: PropTypes.bool,
 };
 
 const ConversationsContainer = withTracker(({ user }) => ({
-    ready: Meteor.subscribe('socialize.conversations'),
-    conversations: user.conversations({ sort: { createdAt: -1 } }).fetch(),
+    ready: Meteor.subscribe('socialize.conversations').ready(),
+    conversations: user.conversations({ sort: { updatedAt: -1 } }).fetch(),
 }))(Conversations);
 
 const ConversationRow = ({ conversation, lastMessage, sender, isUnread }) => {

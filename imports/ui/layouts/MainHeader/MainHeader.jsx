@@ -11,6 +11,7 @@ import { addQuery, removeQuery } from '../../../utils/router.js';
 import FriendsList from '../../components/FriendsList/FriendsList.jsx';
 import OnlineFriends from '../../components/OnlineFriends/OnlineFriends.jsx';
 import RequestItem from '../../components/RequestItem/RequestItem.jsx';
+import LatestConversationCollection from '../../../config/collection.js';
 
 const handleLogout = () => {
     Meteor.logout((error) => {
@@ -115,16 +116,16 @@ MainHeader.defaultProps = {
 };
 
 const MainHeaderContainer = withTracker(({ user, params, location: { query } }) => {
-    Meteor.subscribe('socialize.unreadConversations').ready();
-    Meteor.subscribe('socialize.conversations', { limit: 1, sort: { updatedAt: -1 } }).ready();
     Meteor.subscribe('socialize.friendRequests', {}).ready();
+    Meteor.subscribe('unreadConversations').ready();
 
     const requests = user.friendRequests().fetch();
-    const unreadConversation = user.newestConversation();
-    const newestConversationId = params.conversationId || (unreadConversation && unreadConversation._id);
+    const latestConversation = LatestConversationCollection.findOne();
+    const newestConversationId = params.conversationId || (latestConversation && latestConversation.conversationId);
+    const numUnreadConversations = user.numUnreadConversations() || '';
     return {
         user,
-        numUnreadConversations: user.numUnreadConversations() || '',
+        numUnreadConversations,
         newestConversationId,
         requests,
         numRequests: requests.length || '',
