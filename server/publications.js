@@ -17,9 +17,17 @@ publishComposite('onlineFriends', {
     ],
 });
 
+publishComposite(null, {
+    find() {
+        return ParticipantsCollection.find({ userId: this.userId, deleted: { $exists: false } }, { fields: { conversationId: 1 }, limit: 1, sort: { updatedAt: -1 } });
+    },
+    collectionName: 'latestConversation',
+});
+
 Meteor.publish(null, function appData() {
-    return [
-        Meteor.users.find({ _id: this.userId }, { fields: User.fieldsToPublish }),
-        ParticipantsCollection.find({ userId: this.userId, deleted: { $exists: false } }, { limit: 1, sort: { updatedAt: -1 } }),
-    ];
+    return Meteor.users.find({ _id: this.userId }, { fields: User.fieldsToPublish });
+}, { is_auto: true });
+
+Meteor.publish('unreadConversations', function unread() {
+    return ParticipantsCollection.find({ userId: this.userId, deleted: { $exists: false }, read: false });
 });
