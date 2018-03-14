@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { User } from 'meteor/socialize:user-model';
+import { Request } from 'meteor/socialize:requestable';
 import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
@@ -106,6 +107,8 @@ MainHeader.propTypes = {
     user: PropTypes.instanceOf(User),
     showFriends: PropTypes.bool,
     numUnreadConversations: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    numRequests: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    requests: PropTypes.arrayOf(PropTypes.instanceOf(Request)),
     newestConversationId: PropTypes.string,
     children: PropTypes.node,
     paddingTop: PropTypes.string,
