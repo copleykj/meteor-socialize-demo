@@ -24,6 +24,7 @@ class UserProfile extends Component {
         hasRequest: PropTypes.bool,
         hasPendingRequest: PropTypes.bool,
         friends: PropTypes.arrayOf(PropTypes.instanceOf(User)),
+        friendsReady: PropTypes.bool,
         isSelf: PropTypes.bool,
         profileUser: PropTypes.instanceOf(User),
         user: PropTypes.instanceOf(User),
@@ -59,6 +60,7 @@ class UserProfile extends Component {
             areFriends,
             hasRequest,
             friends,
+            friendsReady,
             hasPendingRequest,
             isSelf,
             profileUser,
@@ -136,7 +138,7 @@ class UserProfile extends Component {
                                     </div>
                                 }
                                 <div id="profile-friends">
-                                    {friends &&
+                                    {friendsReady && friends.length > 0 &&
                                         friends.map(friend => <UserTile key={friend._id} user={friend} />)
                                     }
                                 </div>
@@ -207,11 +209,12 @@ const UserProfileContainer = withTracker(({ params, user }) => {
     let blocking;
     let isSelf;
     let friends;
+    let friendsReady;
 
     if (ready) {
         profile = ProfilesCollection.findOne({ username });
         profileUser = profile.user();
-        Meteor.subscribe('socialize.friends', profileUser._id, { limit: 4 }).ready();
+        friendsReady = Meteor.subscribe('socialize.friends', profileUser._id, { limit: 4 }).ready();
         friends = profileUser.friendsAsUsers({ limit: 4 }).fetch();
         areFriends = profileUser && profileUser.isFriendsWith();
         hasRequest = user.hasFriendshipRequestFrom(profileUser);
@@ -223,6 +226,7 @@ const UserProfileContainer = withTracker(({ params, user }) => {
         areFriends,
         hasRequest,
         friends,
+        friendsReady,
         hasPendingRequest,
         blocking,
         isSelf,
