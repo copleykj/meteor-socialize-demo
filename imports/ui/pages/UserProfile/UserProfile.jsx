@@ -137,11 +137,11 @@ class UserProfile extends Component {
                                         <p>{profile.about}</p>
                                     </div>
                                 }
-                                <div id="profile-friends">
-                                    {friendsReady && friends.length > 0 &&
-                                        friends.map(friend => <UserTile key={friend._id} user={friend} />)
-                                    }
-                                </div>
+                                {friendsReady && friends.length > 0 &&
+                                    <div id="profile-friends">
+                                        {friends.map(friend => <UserTile key={friend._id} user={friend} />)}
+                                    </div>
+                                }
                             </Col>
                             <Col xs={6}>
                                 <ProfileFeed user={profileUser} />
