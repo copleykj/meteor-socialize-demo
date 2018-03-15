@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor';
+import { withTracker } from 'meteor/react-meteor-data';
 import { Conversation, Message } from 'meteor/socialize:messaging';
 import { Scrollbars } from 'react-custom-scrollbars';
 import PropTypes from 'prop-types';
@@ -7,7 +9,7 @@ import { Link } from 'react-router';
 import UserAvatar from '../UserAvatar/UserAvatar.jsx';
 import MessageComposer from '../../components/MessageComposer/MessageComposer.jsx';
 
-export default class MessagesContainer extends Component {
+class MessagesContainer extends Component {
     componentDidMount() {
         this.goToBottom();
     }
@@ -33,7 +35,7 @@ export default class MessagesContainer extends Component {
         this.scrollView.scrollToBottom();
     }
     render() {
-        const { messages, currentConversation } = this.props;
+        const { messages, messagesReady, currentConversation } = this.props;
 
         return (
             <div id="messages-column">
@@ -46,7 +48,7 @@ export default class MessagesContainer extends Component {
                 >
 
                     <div id="messages-container">
-                        {messages &&
+                        {messagesReady && messages &&
                             messages.map((message) => {
                                 const sender = message.user();
                                 const self = sender.isSelf() && 'self';
@@ -81,5 +83,22 @@ export default class MessagesContainer extends Component {
 
 MessagesContainer.propTypes = {
     messages: PropTypes.arrayOf(PropTypes.instanceOf(Message)),
+    messagesReady: PropTypes.bool,
     currentConversation: PropTypes.instanceOf(Conversation),
 };
+
+const ConversationArea = withTracker(({ currentConversation }) => {
+    let messagesReady;
+    let messages;
+    if (currentConversation) {
+        messagesReady = Meteor.subscribe('socialize.messagesFor', currentConversation._id).ready();
+        messages = currentConversation.messages().fetch();
+    }
+    return {
+        currentConversation,
+        messagesReady,
+        messages,
+    };
+})(MessagesContainer);
+
+export default ConversationArea;

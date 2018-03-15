@@ -15,13 +15,13 @@ import MainHeader from '../../layouts/MainHeader/MainHeader.jsx';
 import NewConversation from '../../components/NewConversation/NewConversation.jsx';
 
 
-const Messages = ({ user, messages, currentConversation, conversationParticipants, params, toUser, ...props }) => (
+const Messages = ({ user, currentConversation, conversationParticipants, params, toUser, ...props }) => (
     <MainHeader user={user} paddingTop="60px" params={params} {...props} >
         <Grid id="messages-page">
             <ConversationsContainer user={user} />
             {params.conversationId === 'new' ?
                 <NewConversation toUser={toUser} /> :
-                <ConversationArea messages={messages} currentConversation={currentConversation} />
+                <ConversationArea currentConversation={currentConversation} />
             }
             <div id="participants-column">
                 {conversationParticipants &&
@@ -57,9 +57,7 @@ const MessagesContainer = withTracker(({ user, params, location: { query: { toUs
     }
     if (conversationId && conversationId !== 'new') {
         Meteor.subscribe('socialize.viewingConversation', conversationId);
-        Meteor.subscribe('socialize.messagesFor', conversationId);
         currentConversation = ConversationsCollection.findOne(conversationId);
-        currentConversation && currentConversation.participants().fetch();
     } else {
         Meteor.subscribe('socialize.friends', user._id).ready();
     }
@@ -77,7 +75,6 @@ Messages.propTypes = {
     toUser: PropTypes.instanceOf(User),
     currentConversation: PropTypes.instanceOf(Conversation),
     conversationParticipants: PropTypes.arrayOf(PropTypes.instanceOf(User)),
-    messages: PropTypes.arrayOf(PropTypes.instanceOf(Message)),
     params: PropTypes.shape({
         conversationId: PropTypes.string,
     }),
