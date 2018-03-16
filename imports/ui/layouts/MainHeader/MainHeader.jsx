@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { browserHistory, Link } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, NavDropdown, NavItem, MenuItem, Dropdown, Badge, Glyphicon } from 'react-bootstrap';
+import ReactResizeDetector from 'react-resize-detector';
 
 import { addQuery, removeQuery } from '../../../utils/router.js';
 import FriendsList from '../../components/FriendsList/FriendsList.jsx';
@@ -30,6 +31,15 @@ class MainHeader extends Component {
     componentWillUnmount() {
         window.removeEventListener('scroll', this.handleScroll);
     }
+    onResize = (width) => {
+        if (width) {
+            if (width > 1470) {
+                this.setState({ hideOnlineFriends: false });
+            } else {
+                this.setState({ hideOnlineFriends: true });
+            }
+        }
+    }
     handleScroll = () => {
         const { scrollY } = window;
         const { coloredNavbar } = this.state;
@@ -49,12 +59,14 @@ class MainHeader extends Component {
     }
     render() {
         const { user, numUnreadConversations, newestConversationId, children, showFriends, paddingTop, requests, numRequests } = this.props;
-        const { coloredNavbar } = this.state;
+        const { coloredNavbar, hideOnlineFriends } = this.state;
         const navbarStyle = coloredNavbar ? { backgroundColor: '#8C5667' } : {};
+        const className = hideOnlineFriends ? 'full' : '';
 
         return (
             <div id="content-container">
-                <div id="main-content">
+                <ReactResizeDetector handleWidth onResize={this.onResize} refreshMode="throttle" refreshRate={200} />
+                <div id="main-content" className={className}>
                     <div style={{ paddingTop }}>
                         <Navbar fixedTop style={navbarStyle}>
                             <Navbar.Header>
@@ -97,7 +109,7 @@ class MainHeader extends Component {
                         { showFriends && <FriendsList show={showFriends} handleHide={this.handleHide} /> }
                     </div>
                 </div>
-                <OnlineFriends user={user} />
+                {!hideOnlineFriends && <OnlineFriends user={user} />}
             </div>
         );
     }
