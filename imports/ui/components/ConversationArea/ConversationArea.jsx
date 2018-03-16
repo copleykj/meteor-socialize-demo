@@ -10,16 +10,13 @@ import UserAvatar from '../UserAvatar/UserAvatar.jsx';
 import MessageComposer from '../../components/MessageComposer/MessageComposer.jsx';
 
 class MessagesContainer extends Component {
-    componentDidMount() {
-        this.goToBottom();
-    }
     componentDidUpdate() {
-        const { currentConversation } = this.props;
-        if (currentConversation && (this.scrollDiff > -10 || this.conversationId !== currentConversation._id)) {
+        const { currentConversation, messagesReady } = this.props;
+        if (messagesReady && (currentConversation && (this.scrollDiff > -10 || this.conversationId !== currentConversation._id))) {
             this.conversationId = currentConversation._id;
             /* If scroll is close to bottom, we'll scroll to bottom as new
                 messages are added */
-            this.scrollView.scrollToBottom();
+            this.goToBottom();
         }
     }
     onScrollFrame = (values) => {
