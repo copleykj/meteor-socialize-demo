@@ -27,20 +27,16 @@ class MessageComposer extends Component {
         const { onFocus, onBlur, disabled } = this.props;
         return (
             <div id="message-composer">
-                <div>
-                    <ComposerTextArea getRef={(ref) => { this.ta = ref; }} onFocus={onFocus} onBlur={onBlur} onSend={this.sendMessage} disabled={disabled} />
-                </div>
-                <div>
-                    <Button
-                        bsStyle="primary"
-                        onClick={() => {
-                            this.sendMessage(this.ta.value);
-                        }}
-                        disabled={disabled}
-                    >
-                        Send
-                    </Button>
-                </div>
+                <ComposerTextArea rows="1" getRef={(ref) => { this.ta = ref; }} onFocus={onFocus} onBlur={onBlur} onSend={this.sendMessage} disabled={disabled} />
+                <Button
+                    bsStyle="primary"
+                    onClick={() => {
+                        this.sendMessage(this.ta.value);
+                    }}
+                    disabled={disabled}
+                >
+                    Send
+                </Button>
             </div>
         );
     }
