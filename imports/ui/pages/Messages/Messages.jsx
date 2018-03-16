@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
-import { ConversationsCollection, Message, Conversation } from 'meteor/socialize:messaging';
+import { ConversationsCollection, Message, Conversation, Participant } from 'meteor/socialize:messaging';
 import { Grid, Glyphicon } from 'react-bootstrap';
 import { Link } from 'react-router';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -25,21 +25,8 @@ const Messages = ({ user, currentConversation, conversationParticipants, params,
             }
             <div id="participants-column">
                 {conversationParticipants &&
-                    conversationParticipants.map(participatingUser => (
-                        <div className="conversation-participant" key={participatingUser._id}>
-                            <div>
-                                <UserAvatar
-                                    user={participatingUser}
-                                    size={40}
-                                />
-                            </div>
-                            <div>
-                                <Link to={`/profile/${participatingUser.username}`}>{participatingUser.username}</Link></div>
-                            <div>
-                                {participatingUser.isObserving(currentConversation._id) && <span><Glyphicon glyph="eye-open" /> </span>}
-                                <span className={`status ${participatingUser.status}`} />
-                            </div>
-                        </div>
+                    conversationParticipants.map(participant => (
+                        <ParticipantContainer participant={participant} key={participant._id} />
                     ))
                 }
             </div>
@@ -65,7 +52,7 @@ const MessagesContainer = withTracker(({ user, params, location: { query: { toUs
         user,
         toUser,
         currentConversation,
-        conversationParticipants: currentConversation && currentConversation.participantsAsUsers().fetch(),
+        conversationParticipants: currentConversation && currentConversation.participants().fetch(),
         messages: currentConversation && currentConversation.messages({ sort: { createdAt: -1 } }).fetch().reverse(),
     };
 })(Messages);
@@ -74,7 +61,7 @@ Messages.propTypes = {
     user: PropTypes.instanceOf(User),
     toUser: PropTypes.instanceOf(User),
     currentConversation: PropTypes.instanceOf(Conversation),
-    conversationParticipants: PropTypes.arrayOf(PropTypes.instanceOf(User)),
+    conversationParticipants: PropTypes.arrayOf(PropTypes.instanceOf(Participant)),
     params: PropTypes.shape({
         conversationId: PropTypes.string,
     }),
@@ -143,3 +130,31 @@ const ConversationContainer = withTracker(({ conversation }) => {
         isUnread,
     };
 })(ConversationRow);
+
+
+const ParticipantListItem = ({ participant, participatingUser }) => (
+    <div className="conversation-participant" key={participatingUser._id}>
+        <div>
+            <UserAvatar
+                user={participatingUser}
+                size={40}
+            />
+        </div>
+        <div>
+            <Link to={`/profile/${participatingUser.username}`}>{participatingUser.username}</Link></div>
+        <div>
+            {participatingUser.isObserving(participant.conversationId) && <span><Glyphicon glyph="eye-open" /> </span>}
+            <span className={`status ${participatingUser.status}`} />
+        </div>
+    </div>
+);
+
+ParticipantListItem.propTypes = {
+    participant: PropTypes.instanceOf(Participant),
+    participatingUser: PropTypes.instanceOf(User),
+};
+
+const ParticipantContainer = withTracker(({ participant }) => ({
+    participatingUser: participant.user(),
+    participant,
+}))(ParticipantListItem);
