@@ -26,7 +26,7 @@ class ComposerTextArea extends Component {
                         onSend(event.target.value);
                     }
                 }}
-                className={`form-control ${className}`}
+                className={`${className}`}
                 {...props}
             />
         );

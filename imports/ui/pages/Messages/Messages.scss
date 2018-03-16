@@ -131,17 +131,22 @@
         }
 
         #message-composer {
+            align-items: flex-end;
+            background-color: $custom-default-bg;
             display: flex;
+            margin: 5px;
             padding: 5px;
 
-            > div {
-                &:first-child {
-                    flex: 1;
-                }
+            textarea {
+                background-color: transparent;
+                flex: 1;
+                margin: 7px 0;
+                padding: 5px;
+                resize: none;
+            }
 
-                &:nth-child(2) {
-                    padding: 10px 5px 10px 10px;
-                }
+            button {
+                margin-left: 10px;
             }
         }
     }

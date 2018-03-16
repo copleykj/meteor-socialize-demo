@@ -20,7 +20,6 @@ export default class extends Component {
             <div id="post-composer">
                 <ComposerTextArea
                     rows="1"
-                    className="form-control input-sm"
                     getRef={(ref) => { this.ta = ref; }}
                     placeholder="Enter your post.."
                     onSend={this.addPost}
