@@ -4,19 +4,24 @@ import React, { Component } from 'react';
 
 class ComposerTextArea extends Component {
     componentDidMount() {
-        this.ref.style.overflowY = 'hidden';
-        this.ref.style.height = `${this.ref.scrollHeight}px`;
+        this.textarea.style.overflowY = 'hidden';
+        this.textarea.style.height = `${this.textarea.scrollHeight}px`;
     }
     autoSize = () => {
-        this.ref.style.height = 'auto';
-        this.ref.style.height = `${this.ref.scrollHeight}px`;
+        this.textarea.style.height = 'auto';
+        this.textarea.style.height = `${this.textarea.scrollHeight}px`;
+    }
+    reset = () => {
+        this.textarea.value = '';
+        this.autoSize();
     }
     render() {
         const { onFocus, onBlur, onSend, getRef, disabled, className, ...props } = this.props;
+        getRef(this);
         return (
             <textarea
                 disabled={disabled}
-                ref={(ref) => { this.ref = ref; getRef(ref); }}
+                ref={(ref) => { this.textarea = ref; }}
                 onFocus={onFocus}
                 onBlur={onBlur}
                 onInput={this.autoSize}
@@ -35,6 +40,7 @@ class ComposerTextArea extends Component {
 
 ComposerTextArea.propTypes = {
     onFocus: PropTypes.func,
+    getReset: PropTypes.func,
     onBlur: PropTypes.func,
     onSend: PropTypes.func,
     getRef: PropTypes.func,

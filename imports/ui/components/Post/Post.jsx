@@ -14,10 +14,13 @@ import PostComment from '../PostComment/PostComment.jsx';
 import ComposerTextArea from '../ComposerTextArea/ComposerTextArea.jsx';
 
 class PostComponent extends Component {
-    addComment = (bodyText) => {
+    addComment = () => {
         const { post } = this.props;
-        post.addComment(bodyText);
-        this.ta.value = '';
+        const { value } = this.composer.textarea;
+        if (value) {
+            post.addComment(value);
+            this.composer.reset();
+        }
     }
     render() {
         const { user, post, poster, comments, likedByUser } = this.props;
@@ -72,7 +75,7 @@ class PostComponent extends Component {
                             <ComposerTextArea
                                 rows="1"
                                 className="form-control input-sm"
-                                getRef={(ref) => { this.ta = ref; }}
+                                getRef={(composer) => { this.composer = composer; }}
                                 placeholder="Enter your comment.."
                                 onSend={this.addComment}
                             />
@@ -80,9 +83,7 @@ class PostComponent extends Component {
                         <Button
                             bsStyle="link"
                             bsSize="xsmall"
-                            onClick={() => {
-                                this.addComment(this.ta.value);
-                            }}
+                            onClick={this.addComment}
                         >
                             <Glyphicon glyph="send" />
                         </Button>
