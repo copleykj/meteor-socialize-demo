@@ -18,18 +18,22 @@ const defaultProps = {
 };
 
 const UserAvatar = ({ user, size, noLink, ...props }) => {
-    let returnElement;
+    let returnElement = null;
 
-    if (!user.avatar) {
-        returnElement = (<ReactLetterAvatar name={user.username} size={size} {...props} />);
-    } else {
-        const url = Cloudinary.url(user.avatar, { width: size, height: size, crop: 'lfill', gravity: 'center' });
-        returnElement = (
-            <img src={url} width={size} alt="" {...props} />
-        );
+    if (user) {
+        if (user.avatar) {
+            const url = Cloudinary.url(user.avatar, { width: size, height: size, crop: 'lfill', gravity: 'center' });
+            returnElement = (
+                <img src={url} width={size} alt="" {...props} />
+            );
+        } else {
+            returnElement = (<ReactLetterAvatar name={user.username} size={size} {...props} />);
+        }
+
+        return noLink ? returnElement : <Link to={`/profile/${user.username}`}>{returnElement}</Link>;
     }
 
-    return noLink ? returnElement : <Link to={`/profile/${user.username}`}>{returnElement}</Link>;
+    return returnElement;
 };
 
 UserAvatar.propTypes = propTypes;
