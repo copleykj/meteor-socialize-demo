@@ -76,7 +76,7 @@ class MainHeader extends Component {
                             </Navbar.Header>
 
                             <Nav>
-                                <LinkContainer to={`/messages/${newestConversationId || 'new'}`}><NavItem>Messages <Badge>{numUnreadConversations}</Badge></NavItem></LinkContainer>
+                                <LinkContainer to={`/messages/${newestConversationId || 'new'}`}><NavItem><Glyphicon glyph="inbox" /> <Badge>{numUnreadConversations}</Badge></NavItem></LinkContainer>
                             </Nav>
 
                             <Dropdown id="menu-nav-dropdown" >
