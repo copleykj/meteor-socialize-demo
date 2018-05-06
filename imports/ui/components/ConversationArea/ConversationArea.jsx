@@ -89,7 +89,7 @@ const ConversationArea = withTracker(({ currentConversation }) => {
     let messages;
     if (currentConversation) {
         messagesReady = Meteor.subscribe('socialize.messagesFor', currentConversation._id).ready();
-        messages = currentConversation.messages().fetch();
+        messages = currentConversation.messages({ sort: { createdAt: 1 } }).fetch();
     }
     return {
         currentConversation,
