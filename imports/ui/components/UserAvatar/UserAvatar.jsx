@@ -11,20 +11,21 @@ const propTypes = {
     user: PropTypes.instanceOf(User),
     size: PropTypes.number,
     noLink: PropTypes.bool,
+    flex: PropTypes.bool,
 };
 
 const defaultProps = {
     size: 50,
 };
 
-const UserAvatar = ({ user, size, noLink, ...props }) => {
+const UserAvatar = ({ user, size, noLink, flex = false, ...props }) => {
     let returnElement = null;
 
     if (user) {
         if (user.avatar) {
             const url = Cloudinary.url(user.avatar, { width: size, height: size, crop: 'lfill', gravity: 'center' });
             returnElement = (
-                <img src={url} width={size} alt="" {...props} />
+                <img src={url} width={size} height={flex || size} alt="" {...props} />
             );
         } else {
             returnElement = (<ReactLetterAvatar name={user.username} size={size} {...props} />);
