@@ -25,7 +25,7 @@ const UserAvatar = ({ user, size, noLink, flex = false, ...props }) => {
         if (user.avatar) {
             const url = Cloudinary.url(user.avatar, { width: size, height: size, crop: 'lfill', gravity: 'center' });
             returnElement = (
-                <img src={url} width={size} height={flex || size} alt="" {...props} />
+                <img src={url} width={size} height={flex ? size : null} alt="" {...props} />
             );
         } else {
             returnElement = (<ReactLetterAvatar name={user.username} size={size} {...props} />);

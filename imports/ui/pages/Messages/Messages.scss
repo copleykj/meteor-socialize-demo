@@ -131,6 +131,17 @@
             }
         }
 
+        #select-participants {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-gap: 10px;
+            padding: 10px;
+        }
+
+        #selected-participants {
+            padding: 10px;
+        }
+
         #message-composer {
             align-items: flex-end;
             background-color: $custom-default-bg;

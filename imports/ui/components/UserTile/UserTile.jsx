@@ -4,9 +4,9 @@ import React from 'react';
 
 import UserAvatar from '../UserAvatar/UserAvatar.jsx';
 
-const UserTile = ({ user, size }) => (
-    <div className="user-tile">
-        <UserAvatar user={user} size={size} flex />
+const UserTile = ({ user, size, flex, noLink, onClick }) => (
+    <div className="user-tile" onClick={onClick}>
+        <UserAvatar user={user} size={size} flex={flex} noLink={noLink} />
         <span>{user.username}</span>
     </div>
 );
@@ -14,6 +14,9 @@ const UserTile = ({ user, size }) => (
 UserTile.propTypes = {
     user: PropTypes.instanceOf(User),
     size: PropTypes.number,
+    flex: PropTypes.bool,
+    noLink: PropTypes.bool,
+    onClick: PropTypes.func,
 };
 
 export default UserTile;
