@@ -7,7 +7,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.38",
     "babel-runtime": "^6.23.0",
-    "bcrypt": "^1.0.3",
+    "bcrypt": "^2.0.1",
     "bootstrap-sass": "^3.3.7",
     "cloudinary": "^1.10.0",
     "cloudinary-core": "^2.5.0",
