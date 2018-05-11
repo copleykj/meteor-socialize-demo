@@ -15,7 +15,7 @@ const Dashboard = ({ user, posts, onlineFriends, params, ...props }) => (
     <MainHeader user={user} params={params} {...props}>
         <Grid>
             <Row>
-                <Col xs={5}>
+                <Col xs={6}>
                     <Composer user={user} />
                     {
                         posts.map(post => (
