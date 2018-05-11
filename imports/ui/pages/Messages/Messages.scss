@@ -88,11 +88,10 @@
                     flex-direction: row-reverse;
 
                     .chat-bubble {
-                        background-color: $gray-light;
-                        color: $gray-darker;
+                        background-color: $brand-intermediary;
 
                         &::before {
-                            @include triangle(right, $triangle-size, $triangle-size, $gray-light);
+                            @include triangle(right, $triangle-size, $triangle-size, $brand-intermediary);
                             position: absolute;
                             right: -$triangle-size;
                         }
