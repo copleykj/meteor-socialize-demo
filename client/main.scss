@@ -93,6 +93,10 @@ body {
     flex: 1;
 }
 
+img {
+    max-width: 100%;
+}
+
 pre {
     code {
         white-space: pre;
