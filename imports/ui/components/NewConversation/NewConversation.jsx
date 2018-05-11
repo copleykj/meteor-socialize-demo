@@ -91,7 +91,7 @@ export default class NewConversation extends Component {
                                     bsStyle="primary"
                                     onClick={e => this.handleRemoveParticipant(e, user)}
                                 >
-                                    {user.username} <Glyphicon glyph="remove" />
+                                    <Glyphicon glyph="remove" /> {user.username}
                                 </Label>&nbsp;
                             </span>
                         )) : <span>&nbsp;</span>
