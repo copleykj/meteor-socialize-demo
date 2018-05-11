@@ -12,6 +12,7 @@ import TimeAgo from 'react-timeago';
 import UserAvatar from '../UserAvatar/UserAvatar.jsx';
 import PostComment from '../PostComment/PostComment.jsx';
 import ComposerTextArea from '../ComposerTextArea/ComposerTextArea.jsx';
+import Markdown from '../Markdown/Markdown.jsx';
 
 class PostComponent extends Component {
     addComment = () => {
@@ -45,7 +46,11 @@ class PostComponent extends Component {
                             <p className="time-ago"><TimeAgo date={post.createdAt} minPeriod={10} /></p>
                         </section>
                     </div>
-                    <p className="body">{post.body}</p>
+                    <div className="body">
+                        <Markdown
+                            source={post.body}
+                        />
+                    </div>
                     <div className="footer">
                         <small>
                             {`${likeCount} ${'like'.plural(likeCount)}`} - {`${commentCount} ${'comment'.plural(commentCount)}`}

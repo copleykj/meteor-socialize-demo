@@ -93,6 +93,12 @@ body {
     flex: 1;
 }
 
+pre {
+    code {
+        white-space: pre;
+    }
+}
+
 a {
     color: inherit !important;
     outline: none !important;
