@@ -1,6 +1,9 @@
 #online-friends {
     background-color: $custom-default-bg;
+    display: flex;
+    flex-direction: column;
     height: 100vh;
+    justify-content: flex-end;
     padding: 10px;
     position: fixed;
     right: 0;
@@ -12,7 +15,7 @@
         cursor: pointer;
         display: flex;
         justify-content: space-between;
-        margin-bottom: 10px;
+        margin-top: 10px;
         padding: 10px;
 
         .avatar {
