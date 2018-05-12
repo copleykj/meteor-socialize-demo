@@ -40,7 +40,7 @@ In the header directly to the right of the messaging icon you'll find a silohett
 - [socialize:friendships](https://atmospherejs.com/socialize/friendships)
 - [socialize:requestable](https://atmospherejs.com/socialize/requestable)
 
-##Online Friends
+## Online Friends
 On screens > 1470px you will see right side bar area which will contain any friends that are online. In the future this will be turned into an instant messaging area and when collapsed on smaller screens, will show as box affixed to the bottom of the viewport.
 
 ## User Profiles
