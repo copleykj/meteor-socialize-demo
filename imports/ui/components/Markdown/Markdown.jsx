@@ -47,7 +47,6 @@ const Markdown = ({ source }) => (
         source={source}
         skipHtml
         renderers={{ code: CodeBlock }}
-        disallowedTypes={['heading']}
         unwrapDisallowed
     />
 );
