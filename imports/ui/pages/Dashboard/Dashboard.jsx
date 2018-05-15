@@ -71,20 +71,21 @@ const Dashboard = ({ user, posts, ready, params, ...props }) => (
             <Row>
                 <Col xs={6}>
                     <Composer user={user} />
-                    {ready && posts.length !== 0 ?
-                        posts.map(post => (
-                            <PostComponent post={post} key={post._id} />
-                        )) :
-                        <div id="billboard">
-                            <header>
-                                <img src="meteor-logo.svg" alt="" width="200" />
-                                <h1>Socialize Demo</h1>
-                            </header>
-                            <Markdown
-                                source={billboardMessage}
-                            />
-                        </div>
-                    }
+                    {ready && (
+                        posts.length !== 0 ?
+                            posts.map(post => (
+                                <PostComponent post={post} key={post._id} />
+                            )) :
+                            <div id="billboard">
+                                <header>
+                                    <img src="meteor-logo.svg" alt="" width="200" />
+                                    <h1>Socialize Demo</h1>
+                                </header>
+                                <Markdown
+                                    source={billboardMessage}
+                                />
+                            </div>
+                    )}
                 </Col>
                 <Col xs={6} />
             </Row>
