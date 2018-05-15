@@ -1,0 +1,17 @@
+#new-users {
+    background-color: $custom-default-bg;
+    margin-bottom: 20px;
+    padding: 10px;
+
+    h1 {
+        font-size: 18px;
+        margin: 0 0 10px;
+        text-align: center;
+    }
+
+    >div {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        grid-gap: 10px;
+    }
+}

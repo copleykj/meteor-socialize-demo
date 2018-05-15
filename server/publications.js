@@ -17,6 +17,10 @@ publishComposite('onlineFriends', {
     ],
 });
 
+Meteor.publish('newUsers', function publishNewUsers() {
+    return Meteor.users.find({ _id: { $ne: this.userId } }, { limit: 12, sort: { createdAt: -1 }, fields: { ...User.fieldsToPublish, createdAt: 1 } });
+});
+
 publishComposite(null, {
     find() {
         return ParticipantsCollection.find({ userId: this.userId, deleted: { $exists: false } }, { fields: { conversationId: 1 }, limit: 1, sort: { updatedAt: -1 } });

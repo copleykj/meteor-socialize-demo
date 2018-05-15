@@ -10,6 +10,7 @@ import { Grid, Col, Row } from 'react-bootstrap';
 import Composer from '../../components/PostComposer/PostComposer.jsx';
 import MainHeader from '../../layouts/MainHeader/MainHeader.jsx';
 import PostComponent from '../../components/Post/Post.jsx';
+import NewUsers from '../../components/NewUsers/NewUsers.jsx';
 import Markdown from '../../components/Markdown/Markdown.jsx';
 
 const billboardMessage = `
@@ -88,6 +89,7 @@ const Dashboard = ({ user, posts, ready, params, ...props }) => (
                     )}
                 </Col>
                 <Col xs={6}>
+                    <NewUsers user={user} />
                     <a href="https://www.patreon.com/bePatron?u=4866588" target="_blank" rel="noopener noreferrer">
                         <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a patron" />
                     </a>
