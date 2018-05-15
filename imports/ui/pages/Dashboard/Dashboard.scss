@@ -35,6 +35,10 @@
                     color: $brand-success !important;
                 }
             }
+
+            blockquote {
+                color: $brand-danger;
+            }
         }
     }
 }
