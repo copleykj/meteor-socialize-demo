@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { User } from 'meteor/socialize:user-model';
 
-import { Label, Glyphicon } from 'react-bootstrap';
+import { Label, Glyphicon, Alert } from 'react-bootstrap';
 import { Scrollbars } from 'react-custom-scrollbars';
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
@@ -61,27 +61,32 @@ export default class NewConversation extends Component {
                     universal
                     renderThumbVertical={props => <div {...props} className="thumb-vertical" />}
                 >
-                    <div id="select-participants">
-                        {!this.state.composing && !toUser &&
-                            (
-                                potentialParticipants.length === 0 && selectedUsers.length === 0 ?
-                                    <p>You don&apos;t have any friends yet. Visit a user profile to message them if you are not yet friends.</p> :
-                                    potentialParticipants.map(user => (
-                                        <UserTile
-                                            key={user._id}
-                                            user={user}
-                                            size={80}
-                                            noLink
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                const newParticipants = [...this.state.selectedUsers, user];
-                                                this.setState({ selectedUsers: newParticipants, searchQuery: '' });
-                                            }}
-                                        />
-                                    ))
-                            )
-                        }
-                    </div>
+                    {!this.state.composing && !toUser &&
+                        (
+                            potentialParticipants.length === 0 && selectedUsers.length === 0 ?
+                                <Alert bsStyle="danger" style={{ margin: '20px' }}>
+                                    <h4>No Friends</h4>
+                                    You don&apos;t have any friends to send messages to yet. You can visit a users profile and either initiate a message, or request to be their friend.
+                                </Alert> :
+                                <div id="select-participants">
+                                    {
+                                        potentialParticipants.map(user => (
+                                            <UserTile
+                                                key={user._id}
+                                                user={user}
+                                                size={80}
+                                                noLink
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    const newParticipants = [...this.state.selectedUsers, user];
+                                                    this.setState({ selectedUsers: newParticipants, searchQuery: '' });
+                                                }}
+                                            />
+                                        ))
+                                    }
+                                </div>
+                        )
+                    }
                 </Scrollbars>
                 <div id="selected-participants">
                     { selectedUsers.length > 0 ?
