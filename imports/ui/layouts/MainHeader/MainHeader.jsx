@@ -99,7 +99,7 @@ class MainHeader extends Component {
                                     <LinkContainer to={`/profile/${user.username}`}>
                                         <MenuItem>My Profile</MenuItem>
                                     </LinkContainer>
-                                    <MenuItem onClick={this.handleShow}>Friends</MenuItem>
+                                    {user.friendCount > 0 && <MenuItem onClick={this.handleShow}>Friends</MenuItem>}
                                     <MenuItem divider />
                                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                                 </NavDropdown>

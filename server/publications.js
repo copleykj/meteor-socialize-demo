@@ -25,7 +25,7 @@ publishComposite(null, {
 });
 
 Meteor.publish(null, function appData() {
-    return Meteor.users.find({ _id: this.userId }, { fields: User.fieldsToPublish });
+    return Meteor.users.find({ _id: this.userId }, { fields: { ...User.fieldsToPublish, friendCount: 1 } });
 }, { is_auto: true });
 
 Meteor.publish('unreadConversations', function unread() {
