@@ -6,8 +6,9 @@ import UserAvatar from '../UserAvatar/UserAvatar.jsx';
 
 const UserTile = ({ user, size, flex, noLink, onClick }) => (
     <div className="user-tile" onClick={onClick}>
-        <UserAvatar user={user} size={size} flex={flex} noLink={noLink} />
-        <span>{user.username}</span>
+        <UserAvatar user={user} size={size} flex={flex} noLink={noLink}>
+            <span>{user.username}</span>
+        </UserAvatar>
     </div>
 );
 
