@@ -87,7 +87,11 @@ const Dashboard = ({ user, posts, ready, params, ...props }) => (
                             </div>
                     )}
                 </Col>
-                <Col xs={6} />
+                <Col xs={6}>
+                    <a href="https://www.patreon.com/bePatron?u=4866588" target="_blank" rel="noopener noreferrer">
+                        <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a patron" />
+                    </a>
+                </Col>
             </Row>
         </Grid>
     </MainHeader>
