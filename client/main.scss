@@ -119,6 +119,14 @@ a {
     }
 }
 
+.github-fork-ribbon {
+    position: fixed !important;
+
+    &::before {
+        background-color: $brand-intermediary !important;
+    }
+}
+
 #content-container {
     min-width: 100%;
 
