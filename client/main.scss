@@ -75,6 +75,9 @@ $triangle-size: 10px;
 @import '../imports/ui/components/UserTile/UserTile.scss';
 @import '../imports/ui/components/NewUsers/NewUsers.scss';
 
+// Other styles
+@import '../imports/styles/loader.scss';
+
 * {
     box-sizing: border-box;
 
