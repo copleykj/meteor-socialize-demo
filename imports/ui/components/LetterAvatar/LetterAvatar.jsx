@@ -41,7 +41,7 @@ const defaultProps = {
     size: 50,
 };
 
-const ReactLetterAvatar = ({ name, size, fontFamily, ...props }) => {
+const ReactLetterAvatar = ({ name, size, fontFamily, flex, ...props }) => {
     const char = name.trim()[0].toUpperCase();
     const textSize = Math.ceil(size / 1.5);
 
@@ -63,7 +63,7 @@ const ReactLetterAvatar = ({ name, size, fontFamily, ...props }) => {
 </svg>`;
 
     return (
-        <img src={svgImage} alt="" {...props} />
+        <img src={svgImage} width={size} height={flex ? size : null} alt="" {...props} />
     );
 };
 

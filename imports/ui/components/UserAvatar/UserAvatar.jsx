@@ -11,25 +11,30 @@ const propTypes = {
     user: PropTypes.instanceOf(User),
     size: PropTypes.number,
     noLink: PropTypes.bool,
+    flex: PropTypes.bool,
+    children: PropTypes.element,
 };
 
 const defaultProps = {
     size: 50,
 };
 
-const UserAvatar = ({ user, size, noLink, ...props }) => {
-    let returnElement;
+const UserAvatar = ({ user, size, noLink, flex = false, children, ...props }) => {
+    let returnElement = null;
+    if (user) {
+        if (user.avatar) {
+            const url = Cloudinary.url(user.avatar, { width: size, height: size, crop: 'lfill', gravity: 'center' });
+            returnElement = (
+                <img src={url} width={size} height={flex ? size : null} alt="" {...props} />
+            );
+        } else {
+            returnElement = (<ReactLetterAvatar name={user.username} size={size} flex={flex} {...props} />);
+        }
 
-    if (!user.avatar) {
-        returnElement = (<ReactLetterAvatar name={user.username} size={size} {...props} />);
-    } else {
-        const url = Cloudinary.url(user.avatar, { width: size, height: size, crop: 'lfill', gravity: 'center' });
-        returnElement = (
-            <img src={url} width={size} alt="" {...props} />
-        );
+        return noLink ? <div>{returnElement}{children}</div> : <Link to={`/profile/${user.username}`}>{returnElement}{children}</Link>;
     }
 
-    return noLink ? returnElement : <Link to={`/profile/${user.username}`}>{returnElement}</Link>;
+    return returnElement;
 };
 
 UserAvatar.propTypes = propTypes;

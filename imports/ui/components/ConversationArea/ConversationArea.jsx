@@ -8,6 +8,7 @@ import { Link } from 'react-router';
 
 import UserAvatar from '../UserAvatar/UserAvatar.jsx';
 import MessageComposer from '../../components/MessageComposer/MessageComposer.jsx';
+import Markdown from '../Markdown/Markdown.jsx';
 
 class MessagesContainer extends Component {
     componentDidUpdate() {
@@ -58,7 +59,7 @@ class MessagesContainer extends Component {
                                             />
                                         </div>
                                         <div className="chat-bubble">
-                                            <p>{message.body}</p>
+                                            <Markdown source={message.body} />
                                             <div className="username">
                                                 <small>
                                                     <Link to={`/profile/${sender.username}`}>{sender.displayName()}</Link> -
@@ -89,7 +90,7 @@ const ConversationArea = withTracker(({ currentConversation }) => {
     let messages;
     if (currentConversation) {
         messagesReady = Meteor.subscribe('socialize.messagesFor', currentConversation._id).ready();
-        messages = currentConversation.messages().fetch();
+        messages = currentConversation.messages({ sort: { createdAt: 1 } }).fetch();
     }
     return {
         currentConversation,

@@ -3,7 +3,6 @@ import { User } from 'meteor/socialize:user-model';
 import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
 import { ButtonToolbar, Dropdown, MenuItem, Glyphicon, Modal } from 'react-bootstrap';
 
 import { handleSendMessage } from '../../../utils/messaging.js';
@@ -32,12 +31,10 @@ class FriendsList extends Component {
                             friends.map(friend => (
                                 <div className="friends-list-item" key={friend._id}>
                                     <div>
-                                        <Link to={`/profile/${friend.username}`}>
-                                            <UserAvatar
-                                                user={friend}
-                                                size={60}
-                                            />
-                                        </Link>
+                                        <UserAvatar
+                                            user={friend}
+                                            size={60}
+                                        />
                                     </div>
                                     <div>
                                         <p><strong>{friend.username}</strong></p>
@@ -53,7 +50,6 @@ class FriendsList extends Component {
                                                 </Dropdown.Menu>
                                             </Dropdown>
                                         </ButtonToolbar>
-
                                     </div>
                                 </div>
                             ))

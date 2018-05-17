@@ -53,7 +53,6 @@ const MessagesContainer = withTracker(({ user, params, location: { query: { toUs
         toUser,
         currentConversation,
         conversationParticipants: currentConversation && currentConversation.participants().fetch(),
-        messages: currentConversation && currentConversation.messages({ sort: { createdAt: -1 } }).fetch().reverse(),
     };
 })(Messages);
 

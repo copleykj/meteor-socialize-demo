@@ -8,31 +8,37 @@ import React, { Component } from 'react';
 import ComposerTextArea from '../ComposerTextArea/ComposerTextArea.jsx';
 
 class MessageComposer extends Component {
-    sendMessage = (messageText) => {
+    sendMessage = () => {
         const { conversation, participants, onSend } = this.props;
-        if (messageText) {
+        const { value } = this.composer.textarea;
+        if (value) {
             if (conversation) {
-                conversation.sendMessage(messageText);
+                conversation.sendMessage(value);
             } else if (participants.length > 0) {
                 const convo = new Conversation().save();
                 convo.addParticipants(participants);
-                convo.sendMessage(messageText);
+                convo.sendMessage(value);
                 browserHistory.push(`/messages/${convo._id}`);
             }
             onSend && onSend();
-            this.ta.value = ''; // eslint-disable-line
+            this.composer.reset();
         }
     }
     render() {
         const { onFocus, onBlur, disabled } = this.props;
         return (
             <div id="message-composer">
-                <ComposerTextArea rows="1" getRef={(ref) => { this.ta = ref; }} onFocus={onFocus} onBlur={onBlur} onSend={this.sendMessage} disabled={disabled} />
+                <ComposerTextArea
+                    rows="1"
+                    getRef={(composer) => { this.composer = composer; }}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
+                    onSend={this.sendMessage}
+                    disabled={disabled}
+                />
                 <Button
                     bsStyle="primary"
-                    onClick={() => {
-                        this.sendMessage(this.ta.value);
-                    }}
+                    onClick={this.sendMessage}
                     disabled={disabled}
                 >
                     Send

@@ -12,15 +12,18 @@ export default class extends Component {
     }
     addPost = () => {
         const { user } = this.props;
-        user.feed().addPost(this.ta.value);
-        this.ta.value = '';
+        const { value } = this.composer.textarea;
+        if (value) {
+            user.feed().addPost(value);
+            this.composer.reset();
+        }
     }
     render() {
         return (
             <div id="post-composer">
                 <ComposerTextArea
                     rows="1"
-                    getRef={(ref) => { this.ta = ref; }}
+                    getRef={(composer) => { this.composer = composer; }}
                     placeholder="Enter your post.."
                     onSend={this.addPost}
                 />

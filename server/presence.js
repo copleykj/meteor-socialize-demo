@@ -3,6 +3,7 @@ import { check } from 'meteor/check';
 import { User } from 'meteor/socialize:user-model';
 import { UserPresence } from 'meteor/socialize:user-presence';
 import { Cloudinary } from 'meteor/socialize:cloudinary';
+import { FriendsCollection } from 'meteor/socialize:friendships';
 import SimpleSchema from 'simpl-schema';
 
 
@@ -19,6 +20,10 @@ const StatusSchema = new SimpleSchema({
     lastOnline: {
         type: Date,
         optional: true,
+    },
+    friendCount: {
+        type: SimpleSchema.Integer,
+        defaultValue: 0,
     },
 });
 
@@ -60,4 +65,12 @@ UserPresence.onUserIdle(function onUserIdle(userId) {
 
 UserPresence.onUserOffline(function onUserOffline(userId) {
     Meteor.users.update(userId, { $unset: { status: true } });
+});
+
+FriendsCollection.after.insert(function afterFriendInsert(userId, doc) {
+    Meteor.users.update({ _id: doc.userId }, { $inc: { friendCount: 1 } });
+});
+
+FriendsCollection.after.remove(function afterFriendRemove(userId, doc) {
+    Meteor.users.update({ $or: [{ _id: doc.userId }, { _id: doc.friendId }] }, { $inc: { friendCount: -1 } }, { multi: true });
 });

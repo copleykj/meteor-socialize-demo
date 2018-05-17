@@ -64,6 +64,7 @@ $triangle-size: 10px;
 @import '../imports/ui/pages/Login/Login.scss';
 @import '../imports/ui/pages/Messages/Messages.scss';
 @import '../imports/ui/pages/UserProfile/UserProfile.scss';
+@import '../imports/ui/pages/Dashboard/Dashboard.scss';
 
 
 //Component Level Styles
@@ -74,6 +75,7 @@ $triangle-size: 10px;
 @import '../imports/ui/components/OnlineFriends/OnlineFriends.scss';
 @import '../imports/ui/components/RequestItem/RequestItem.scss';
 @import '../imports/ui/components/UserTile/UserTile.scss';
+@import '../imports/ui/components/NewUsers/NewUsers.scss';
 
 * {
     box-sizing: border-box;
@@ -93,6 +95,16 @@ body {
     flex: 1;
 }
 
+img {
+    max-width: 100%;
+}
+
+pre {
+    code {
+        white-space: pre;
+    }
+}
+
 a {
     color: inherit !important;
     outline: none !important;
@@ -104,6 +116,14 @@ a {
         color: inherit !important;
         outline: none !important;
         text-decoration: none !important;
+    }
+}
+
+.github-fork-ribbon {
+    position: fixed !important;
+
+    &::before {
+        background-color: $brand-intermediary !important;
     }
 }
 

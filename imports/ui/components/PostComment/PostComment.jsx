@@ -5,6 +5,7 @@ import { Glyphicon, Button } from 'react-bootstrap';
 import TimeAgo from 'react-timeago';
 
 import UserAvatar from '../UserAvatar/UserAvatar.jsx';
+import Markdown from '../Markdown/Markdown.jsx';
 
 const PostComment = (comment) => {
     const likedByUser = comment.isLikedBy(Meteor.user());
@@ -31,7 +32,11 @@ const PostComment = (comment) => {
                     <p className="time-ago"><TimeAgo date={comment.createdAt} minPeriod={10} /></p>
                 </section>
             </div>
-            <p className="body">{comment.body}</p>
+            <div className="body">
+                <Markdown
+                    source={comment.body}
+                />
+            </div>
             <div className="footer">
                 <small>
                     {`${comment.likeCount} ${'like'.plural(comment.likeCount)}`}

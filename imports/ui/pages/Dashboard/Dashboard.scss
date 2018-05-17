@@ -1,0 +1,44 @@
+#dashboard {
+    padding-bottom: 20px;
+
+    #billboard {
+        background-color: $custom-default-bg;
+        font-family: 'Montserrat', sans-serif;
+        padding: 20px;
+
+        header {
+            margin-bottom: 20px;
+            text-align: center;
+
+            h1 {
+                font-family: inherit;
+                font-size: 30px;
+                font-weight: 100;
+                margin: 10px;
+                text-transform: uppercase;
+            }
+        }
+
+        >div {
+            h1 {
+                text-align: center;
+            }
+
+            h2 {
+                color: $gray;
+            }
+
+            a {
+                color: $brand-primary !important;
+
+                &:hover {
+                    color: $brand-success !important;
+                }
+            }
+
+            blockquote {
+                color: $brand-danger;
+            }
+        }
+    }
+}

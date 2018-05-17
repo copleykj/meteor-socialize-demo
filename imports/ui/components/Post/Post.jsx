@@ -12,12 +12,16 @@ import TimeAgo from 'react-timeago';
 import UserAvatar from '../UserAvatar/UserAvatar.jsx';
 import PostComment from '../PostComment/PostComment.jsx';
 import ComposerTextArea from '../ComposerTextArea/ComposerTextArea.jsx';
+import Markdown from '../Markdown/Markdown.jsx';
 
 class PostComponent extends Component {
-    addComment = (bodyText) => {
+    addComment = () => {
         const { post } = this.props;
-        post.addComment(bodyText);
-        this.ta.value = '';
+        const { value } = this.composer.textarea;
+        if (value) {
+            post.addComment(value);
+            this.composer.reset();
+        }
     }
     render() {
         const { user, post, poster, comments, likedByUser } = this.props;
@@ -42,7 +46,11 @@ class PostComponent extends Component {
                             <p className="time-ago"><TimeAgo date={post.createdAt} minPeriod={10} /></p>
                         </section>
                     </div>
-                    <p className="body">{post.body}</p>
+                    <div className="body">
+                        <Markdown
+                            source={post.body}
+                        />
+                    </div>
                     <div className="footer">
                         <small>
                             {`${likeCount} ${'like'.plural(likeCount)}`} - {`${commentCount} ${'comment'.plural(commentCount)}`}
@@ -72,7 +80,7 @@ class PostComponent extends Component {
                             <ComposerTextArea
                                 rows="1"
                                 className="form-control input-sm"
-                                getRef={(ref) => { this.ta = ref; }}
+                                getRef={(composer) => { this.composer = composer; }}
                                 placeholder="Enter your comment.."
                                 onSend={this.addComment}
                             />
@@ -80,9 +88,7 @@ class PostComponent extends Component {
                         <Button
                             bsStyle="link"
                             bsSize="xsmall"
-                            onClick={() => {
-                                this.addComment(this.ta.value);
-                            }}
+                            onClick={this.addComment}
                         >
                             <Glyphicon glyph="send" />
                         </Button>
