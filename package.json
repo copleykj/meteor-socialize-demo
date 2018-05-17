@@ -2,7 +2,8 @@
   "name": "meteor-socialize",
   "private": true,
   "scripts": {
-    "start": "meteor run --settings settings.json"
+    "start": "meteor run --settings settings.json",
+    "deploy": "DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy --settings settings-prod.json socialize.meteorapp.com"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.38",
