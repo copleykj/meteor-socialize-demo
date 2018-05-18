@@ -46,7 +46,7 @@ class PostComponent extends Component {
                             <p className="time-ago"><TimeAgo date={post.createdAt} minPeriod={10} /></p>
                         </section>
                         { post.canRemove() &&
-                            <DropdownButton title={<Glyphicon glyph="option-vertical" />} bsStyle="link" bsSize="small" noCaret>
+                            <DropdownButton title={<Glyphicon glyph="option-vertical" />} id={`dropdown-delete-${post._id}`} bsStyle="link" bsSize="small" noCaret>
                                 <MenuItem onClick={() => post.remove()}><Glyphicon glyph="trash" /> Delete</MenuItem>
                             </DropdownButton>
                         }
