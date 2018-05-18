@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Link } from 'react-router';
-import { Glyphicon, Button } from 'react-bootstrap';
+import { Glyphicon, Button, DropdownButton, MenuItem } from 'react-bootstrap';
 import TimeAgo from 'react-timeago';
 
 import UserAvatar from '../UserAvatar/UserAvatar.jsx';
@@ -24,6 +24,7 @@ const PostComment = (comment) => {
                 <UserAvatar
                     user={user}
                     size={40}
+                    showStatus
                 />
                 <section>
                     <p className="username">
@@ -31,6 +32,11 @@ const PostComment = (comment) => {
                     </p>
                     <p className="time-ago"><TimeAgo date={comment.createdAt} minPeriod={10} /></p>
                 </section>
+                { comment.checkOwnership() &&
+                    <DropdownButton title={<Glyphicon glyph="option-vertical" />} id={`dropdown-delete-${comment._id}`} bsStyle="link" bsSize="small" noCaret>
+                        <MenuItem onClick={() => comment.remove()}><Glyphicon glyph="trash" /> Delete</MenuItem>
+                    </DropdownButton>
+                }
             </div>
             <div className="body">
                 <Markdown

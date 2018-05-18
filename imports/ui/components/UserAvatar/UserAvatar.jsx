@@ -12,6 +12,7 @@ const propTypes = {
     size: PropTypes.number,
     noLink: PropTypes.bool,
     flex: PropTypes.bool,
+    showStatus: PropTypes.bool,
     children: PropTypes.element,
 };
 
@@ -19,7 +20,7 @@ const defaultProps = {
     size: 50,
 };
 
-const UserAvatar = ({ user, size, noLink, flex = false, children, ...props }) => {
+const UserAvatar = ({ user, size, noLink, flex, showStatus, children, ...props }) => {
     let returnElement = null;
     if (user) {
         if (user.avatar) {
@@ -31,7 +32,19 @@ const UserAvatar = ({ user, size, noLink, flex = false, children, ...props }) =>
             returnElement = (<ReactLetterAvatar name={user.username} size={size} flex={flex} {...props} />);
         }
 
-        return noLink ? <div>{returnElement}{children}</div> : <Link to={`/profile/${user.username}`}>{returnElement}{children}</Link>;
+        return (
+            <div className="user-avatar">
+                { noLink ?
+                    <div>{returnElement}{children}</div> :
+                    <Link to={`/profile/${user.username}`}>
+                        {returnElement}{children}
+                    </Link>
+                }
+                {showStatus && user.status &&
+                    <div className={`status ${user.status}`} />
+                }
+            </div>
+        );
     }
 
     return returnElement;

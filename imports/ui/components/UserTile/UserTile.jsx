@@ -4,9 +4,9 @@ import React from 'react';
 
 import UserAvatar from '../UserAvatar/UserAvatar.jsx';
 
-const UserTile = ({ user, size, flex, noLink, onClick }) => (
+const UserTile = ({ user, size, flex, noLink, onClick, showStatus }) => (
     <div className="user-tile" onClick={onClick}>
-        <UserAvatar user={user} size={size} flex={flex} noLink={noLink}>
+        <UserAvatar user={user} size={size} flex={flex} noLink={noLink} showStatus={showStatus}>
             <span>{user.username}</span>
         </UserAvatar>
     </div>
@@ -18,6 +18,7 @@ UserTile.propTypes = {
     flex: PropTypes.bool,
     noLink: PropTypes.bool,
     onClick: PropTypes.func,
+    showStatus: PropTypes.bool,
 };
 
 export default UserTile;

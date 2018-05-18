@@ -69,11 +69,11 @@ Messages.propTypes = {
 
 export default MessagesContainer;
 
-const Conversations = ({ conversations }) => (
+const Conversations = ({ conversations, ready }) => (
     <div id="conversations-column">
         <header><h4>Conversations</h4><Link to="/messages/new"><Glyphicon glyph="edit" /></Link></header>
         <Scrollbars universal>
-            <Loader ready={conversations.length !== 0}>
+            <Loader ready={conversations.length !== 0 || ready}>
                 <span>
                     {
                         conversations.map(conversation => <ConversationContainer conversation={conversation} key={conversation._id} />)
@@ -86,6 +86,7 @@ const Conversations = ({ conversations }) => (
 
 Conversations.propTypes = {
     conversations: PropTypes.arrayOf(PropTypes.instanceOf(Conversation)),
+    ready: PropTypes.bool,
 };
 
 const ConversationsContainer = withTracker(({ user }) => ({

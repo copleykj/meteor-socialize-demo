@@ -1,0 +1,11 @@
+.user-avatar {
+    position: relative;
+
+    .status {
+        box-shadow: 0 0 1px 1px #fff;
+        left: 4px;
+        padding: 3px;
+        position: absolute;
+        top: 4px;
+    }
+}

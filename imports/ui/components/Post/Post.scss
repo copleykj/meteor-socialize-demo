@@ -2,7 +2,6 @@
     $gray-mid: darken($gray-light, 25%);
     background-color: $custom-default-bg;
     margin-bottom: 10px;
-    overflow: hidden;
     padding: 10px;
 
     .post {
@@ -17,7 +16,12 @@
         display: flex;
 
         section {
+            flex: 1;
             margin-left: 10px;
+        }
+
+        .dropdown {
+            color: #fff;
         }
 
         .username {
