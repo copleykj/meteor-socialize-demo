@@ -18,6 +18,11 @@ Welcome to the __SocializeJs__ Demo. Here you'll find a Facebook style social ne
 
 <!-- TOC END -->
 
+## Support
+This demo costs me money to keep running, and the 17+ packages in the [Socialize](https://atmospherejs.com/socialize) set represent a considerable time commitment to keep updated for both Meteor and React Native. More packages and more awesome features are planned which will only add to this commitment. With that in mind, if you find this demo or any of the packages useful, please consider keeping development rolling with a small monetary contribution.
+
+Litecoin: LXLBD9sC5dV79eQkwj7tFusUHvJA5nhuD3 / [Patreon](https://www.patreon.com/user?u=4866588) / [Paypal](https://www.paypal.me/copleykj)
+
 ## Features
 This demo is live at https://socialize.meteorapp.com
 
