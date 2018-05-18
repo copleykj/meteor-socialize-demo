@@ -24,6 +24,7 @@ const PostComment = (comment) => {
                 <UserAvatar
                     user={user}
                     size={40}
+                    showStatus
                 />
                 <section>
                     <p className="username">

@@ -74,6 +74,7 @@ $triangle-size: 10px;
 @import '../imports/ui/components/RequestItem/RequestItem.scss';
 @import '../imports/ui/components/UserTile/UserTile.scss';
 @import '../imports/ui/components/NewUsers/NewUsers.scss';
+@import '../imports/ui/components/UserAvatar/UserAvatar.scss';
 
 // Other styles
 @import '../imports/styles/loader.scss';
@@ -125,6 +126,20 @@ a {
 
     &::before {
         background-color: $brand-intermediary !important;
+    }
+}
+
+.status {
+    border-radius: 50%;
+    display: inline-block;
+    padding: 6px;
+
+    &.online {
+        background-color: $online-color;
+    }
+
+    &.idle {
+        background-color: $idle-color;
     }
 }
 

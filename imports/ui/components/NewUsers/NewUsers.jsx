@@ -10,7 +10,7 @@ const NewUsers = ({ ready, users }) => (
         {ready &&
             <div id="new-users">
                 <h1>New Users</h1>
-                <div>{users.map(user => <UserTile key={user._id} user={user} size={50} />)}</div>
+                <div>{users.map(user => <UserTile key={user._id} user={user} size={50} showStatus />)}</div>
             </div>
         }
     </span>

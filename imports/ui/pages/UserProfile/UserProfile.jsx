@@ -103,7 +103,7 @@ class UserProfile extends Component {
                                             </Uploader>
                                         </div>
                                     }
-                                    <UserAvatar user={profileUser} size={150} className="avatar" />
+                                    <UserAvatar user={profileUser} size={150} className="avatar" showStatus />
                                 </div>
 
                                 <div className="actions-container">
