@@ -13,6 +13,7 @@ import UserAvatar from '../../components/UserAvatar/UserAvatar.jsx';
 import ConversationArea from '../../components/ConversationArea/ConversationArea.jsx';
 import MainHeader from '../../layouts/MainHeader/MainHeader.jsx';
 import NewConversation from '../../components/NewConversation/NewConversation.jsx';
+import Loader from '../../components/Loader/Loader.jsx';
 
 
 const Messages = ({ user, currentConversation, conversationParticipants, params, toUser, ...props }) => (
@@ -68,20 +69,23 @@ Messages.propTypes = {
 
 export default MessagesContainer;
 
-const Conversations = ({ conversations, ready }) => (
+const Conversations = ({ conversations }) => (
     <div id="conversations-column">
         <header><h4>Conversations</h4><Link to="/messages/new"><Glyphicon glyph="edit" /></Link></header>
         <Scrollbars universal>
-            {ready &&
-                conversations.map(conversation => <ConversationContainer conversation={conversation} key={conversation._id} />)
-            }
+            <Loader ready={conversations.length !== 0}>
+                <span>
+                    {
+                        conversations.map(conversation => <ConversationContainer conversation={conversation} key={conversation._id} />)
+                    }
+                </span>
+            </Loader>
         </Scrollbars>
     </div>
 );
 
 Conversations.propTypes = {
     conversations: PropTypes.arrayOf(PropTypes.instanceOf(Conversation)),
-    ready: PropTypes.bool,
 };
 
 const ConversationsContainer = withTracker(({ user }) => ({
