@@ -9,6 +9,7 @@ import { Link } from 'react-router';
 import UserAvatar from '../UserAvatar/UserAvatar.jsx';
 import MessageComposer from '../../components/MessageComposer/MessageComposer.jsx';
 import Markdown from '../Markdown/Markdown.jsx';
+import Loader from '../../components/Loader/Loader.jsx';
 
 class MessagesContainer extends Component {
     componentDidUpdate() {
@@ -46,31 +47,35 @@ class MessagesContainer extends Component {
                 >
 
                     <div id="messages-container">
-                        {messagesReady && messages &&
-                            messages.map((message) => {
-                                const sender = message.user();
-                                const self = sender.isSelf() && 'self';
-                                return (
-                                    <div className={`message ${self}`} key={message._id}>
-                                        <div>
-                                            <UserAvatar
-                                                user={sender}
-                                                size={60}
-                                            />
-                                        </div>
-                                        <div className="chat-bubble">
-                                            <Markdown source={message.body} />
-                                            <div className="username">
-                                                <small>
-                                                    <Link to={`/profile/${sender.username}`}>{sender.displayName()}</Link> -
-                                                    <small>{message.timestamp()}</small>
-                                                </small>
+                        <Loader ready={messagesReady} >
+                            <span>
+                                {messages &&
+                                    messages.map((message) => {
+                                        const sender = message.user();
+                                        const self = sender.isSelf() && 'self';
+                                        return (
+                                            <div className={`message ${self}`} key={message._id}>
+                                                <div>
+                                                    <UserAvatar
+                                                        user={sender}
+                                                        size={60}
+                                                    />
+                                                </div>
+                                                <div className="chat-bubble">
+                                                    <Markdown source={message.body} />
+                                                    <div className="username">
+                                                        <small>
+                                                            <Link to={`/profile/${sender.username}`}>{sender.displayName()}</Link> -
+                                                            <small>{message.timestamp()}</small>
+                                                        </small>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                );
-                            })
-                        }
+                                        );
+                                    })
+                                }
+                            </span>
+                        </Loader>
                     </div>
                 </Scrollbars>
                 <MessageComposer conversation={currentConversation} onFocus={this.goToBottom} onSend={this.onSend} />

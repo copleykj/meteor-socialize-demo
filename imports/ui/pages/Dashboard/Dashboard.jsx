@@ -12,6 +12,7 @@ import MainHeader from '../../layouts/MainHeader/MainHeader.jsx';
 import PostComponent from '../../components/Post/Post.jsx';
 import NewUsers from '../../components/NewUsers/NewUsers.jsx';
 import Markdown from '../../components/Markdown/Markdown.jsx';
+import Loader from '../../components/Loader/Loader.jsx';
 
 const billboardMessage = `
 Welcome to the __SocializeJs__ Demo. Here you'll find a Facebook style social network implemented using the packages in the [socialize package set](https://atmospherejs.com/socialize).
@@ -72,21 +73,25 @@ const Dashboard = ({ user, posts, ready, params, ...props }) => (
             <Row>
                 <Col xs={6}>
                     <Composer user={user} />
-                    {ready && (
-                        posts.length !== 0 ?
-                            posts.map(post => (
-                                <PostComponent post={post} key={post._id} />
-                            )) :
-                            <div id="billboard">
-                                <header>
-                                    <img src="meteor-logo.svg" alt="" width="200" />
-                                    <h1>Socialize Demo</h1>
-                                </header>
-                                <Markdown
-                                    source={billboardMessage}
-                                />
-                            </div>
-                    )}
+                    <Loader ready={ready}>
+                        <span>
+                            {
+                                posts.length !== 0 ?
+                                    posts.map(post => (
+                                        <PostComponent post={post} key={post._id} />
+                                    )) :
+                                    <div id="billboard">
+                                        <header>
+                                            <img src="meteor-logo.svg" alt="" width="200" />
+                                            <h1>Socialize Demo</h1>
+                                        </header>
+                                        <Markdown
+                                            source={billboardMessage}
+                                        />
+                                    </div>
+                            }
+                        </span>
+                    </Loader>
                 </Col>
                 <Col xs={6}>
                     <NewUsers user={user} />

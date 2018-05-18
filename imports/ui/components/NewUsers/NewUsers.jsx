@@ -23,7 +23,7 @@ NewUsers.propTypes = {
 
 export default withTracker(({ user }) => {
     const ready = Meteor.subscribe('newUsers').ready();
-    const users = Meteor.users.find({ _id: { $ne: user._id } }, { sort: { createdAt: -1 } }).fetch();
+    const users = Meteor.users.find({ _id: { $ne: user._id } }, { sort: { createdAt: -1 }, limit: 18 }).fetch();
 
     return { ready, users };
 })(NewUsers);

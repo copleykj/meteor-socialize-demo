@@ -9,8 +9,6 @@ $body-bg: linear-gradient(135deg, $brand-danger, #336498);
 @import '{}/node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 @import './theme/_bootswatch.scss';
 
-@import url('https://fonts.googleapis.com/css?family=Montserrat:100,400,900');
-
 $montserrat: 'Montserrat', sans-serif;
 //user status colors
 $online-color: #9acd32;
@@ -76,6 +74,9 @@ $triangle-size: 10px;
 @import '../imports/ui/components/RequestItem/RequestItem.scss';
 @import '../imports/ui/components/UserTile/UserTile.scss';
 @import '../imports/ui/components/NewUsers/NewUsers.scss';
+
+// Other styles
+@import '../imports/styles/loader.scss';
 
 * {
     box-sizing: border-box;

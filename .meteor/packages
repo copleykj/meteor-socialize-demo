@@ -36,3 +36,4 @@ aldeed:collection2-core
 audit-argument-checks@1.0.7
 socialize:user-profile
 socialize:cloudinary
+force-ssl
