@@ -3,7 +3,7 @@ import { Comment } from 'meteor/socialize:commentable';
 import { User } from 'meteor/socialize:user-model';
 import { Post } from 'meteor/socialize:postable';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Glyphicon, Button, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
+import { Glyphicon, Button, ButtonGroup, ButtonToolbar, DropdownButton, MenuItem } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
@@ -45,6 +45,11 @@ class PostComponent extends Component {
                             </p>
                             <p className="time-ago"><TimeAgo date={post.createdAt} minPeriod={10} /></p>
                         </section>
+                        { post.canRemove() &&
+                            <DropdownButton title={<Glyphicon glyph="option-vertical" />} bsStyle="link" bsSize="small" noCaret>
+                                <MenuItem onClick={() => post.remove()}><Glyphicon glyph="trash" /> Delete</MenuItem>
+                            </DropdownButton>
+                        }
                     </div>
                     <div className="body">
                         <Markdown
