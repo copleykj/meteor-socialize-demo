@@ -150,7 +150,7 @@ const MainHeaderContainer = withTracker(({ user, params, location: { query } }) 
     const newestConversationId = params.conversationId || (latestConversation && latestConversation.conversationId);
     const numUnreadConversations = user.numUnreadConversations() || '';
 
-    if (window) {
+    if (typeof window !== 'undefined') {
         window.requestsReady = requestsReady;
         window.convosReady = convosReady;
     }
