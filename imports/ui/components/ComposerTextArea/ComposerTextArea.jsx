@@ -5,10 +5,10 @@ import { Meteor } from 'meteor/meteor';
 
 class ComposerTextArea extends Component {
     componentDidMount() {
-        Meteor.defer(() => {
+        Meteor.setTimeout(() => {
             this.textarea.style.overflowY = 'hidden';
             this.textarea.style.height = `${this.textarea.scrollHeight}px`;
-        });
+        }, 10);
     }
     autoSize = () => {
         this.textarea.style.height = 'auto';
