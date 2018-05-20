@@ -1,0 +1,36 @@
+
+.navbar-right {
+    float: right !important;
+    margin-right: -15px;
+}
+
+.navbar-header {
+    float: left;
+}
+
+.navbar-nav {
+    float: left;
+    margin: 0;
+}
+
+.navbar-nav > li > a {
+    padding-bottom: 19.5px;
+    padding-top: 19.5px;
+}
+
+.container > .navbar-header {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#user-nav-dropdown {
+    left: unset;
+    right: 0;
+}
+
+#requests-dropdown {
+    right: unset;
+    @media (max-width: 767px) {
+        left: -230%;
+    }
+}

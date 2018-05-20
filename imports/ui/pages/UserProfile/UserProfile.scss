@@ -3,13 +3,31 @@
         background: $custom-default-bg;
         display: flex;
         flex-direction: column;
-        height: 300px;
         justify-content: flex-end;
         margin-top: 20px;
+        min-height: 300px;
         padding: 20px;
+
+
 
         section {
             display: flex;
+
+            @media (max-width: 767px) {
+                flex-direction: column;
+
+                .avatar-container {
+                    top: 0 !important;
+                }
+
+                .actions-container {
+                    margin-left: 0 !important;
+
+                    h1 {
+                        text-align: center;
+                    }
+                }
+            }
 
             .avatar-container {
                 align-items: flex-end;
@@ -27,6 +45,7 @@
                 .upload-container {
                     bottom: 0;
                     position: absolute;
+                    z-index: 1;
 
                     button {
                         color: rgba($custom-default-bg, .9);
@@ -78,6 +97,7 @@
 
     #about {
         background-color: $custom-default-bg;
+        margin-bottom: 20px;
         padding: 20px;
 
         p {
@@ -90,6 +110,7 @@
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         grid-gap: 10px;
+        margin-bottom: 20px;
         padding: 20px;
     }
 

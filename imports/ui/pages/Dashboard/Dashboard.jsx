@@ -71,7 +71,7 @@ const Dashboard = ({ user, posts, ready, params, ...props }) => (
     <MainHeader user={user} params={params} {...props}>
         <Grid id="dashboard">
             <Row>
-                <Col xs={6}>
+                <Col xs={12} md={6}>
                     <Composer user={user} />
                     <Loader ready={ready}>
                         <span>
@@ -93,7 +93,7 @@ const Dashboard = ({ user, posts, ready, params, ...props }) => (
                         </span>
                     </Loader>
                 </Col>
-                <Col xs={6}>
+                <Col xs={12} md={6}>
                     <NewUsers user={user} />
                     <a href="https://www.patreon.com/bePatron?u=4866588" target="_blank" rel="noopener noreferrer">
                         <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a patron" />

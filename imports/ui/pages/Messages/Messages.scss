@@ -7,7 +7,6 @@
         display: flex;
         flex: 1.5;
         flex-direction: column;
-        max-width: 300px;
 
         header {
             align-items: center;
@@ -55,7 +54,7 @@
         display: flex;
         flex: 3;
         flex-direction: column;
-        min-width: 400px;
+        min-width: 350px;
 
         .thumb-vertical {
             background-color: $brand-primary;

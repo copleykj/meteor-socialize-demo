@@ -19,12 +19,12 @@ import Loader from '../../components/Loader/Loader.jsx';
 const Messages = ({ user, currentConversation, conversationParticipants, params, toUser, ...props }) => (
     <MainHeader user={user} paddingTop="60px" params={params} {...props} >
         <Grid id="messages-page">
-            <ConversationsContainer user={user} />
+            <ConversationsContainer user={user} shouldShow={params.conversationId} />
             {params.conversationId === 'new' ?
                 <NewConversation toUser={toUser} /> :
                 <ConversationArea currentConversation={currentConversation} />
             }
-            <div id="participants-column">
+            <div id="participants-column" className="hidden-xs hidden-sm">
                 {conversationParticipants &&
                     conversationParticipants.map(participant => (
                         <ParticipantContainer participant={participant} key={participant._id} />
@@ -69,8 +69,8 @@ Messages.propTypes = {
 
 export default MessagesContainer;
 
-const Conversations = ({ conversations, ready }) => (
-    <div id="conversations-column">
+const Conversations = ({ conversations, ready, shouldShow }) => (
+    <div id="conversations-column" className={shouldShow ? 'hidden-xs' : ''}>
         <header><h4>Conversations</h4><Link to="/messages/new"><Glyphicon glyph="edit" /></Link></header>
         <Scrollbars universal>
             <Loader ready={conversations.length !== 0 || ready}>
@@ -87,11 +87,13 @@ const Conversations = ({ conversations, ready }) => (
 Conversations.propTypes = {
     conversations: PropTypes.arrayOf(PropTypes.instanceOf(Conversation)),
     ready: PropTypes.bool,
+    shouldShow: PropTypes.bool,
 };
 
-const ConversationsContainer = withTracker(({ user }) => ({
+const ConversationsContainer = withTracker(({ user, shouldShow }) => ({
     ready: Meteor.subscribe('socialize.conversations').ready(),
     conversations: user.conversations({ sort: { updatedAt: -1 } }).fetch(),
+    shouldShow,
 }))(Conversations);
 
 const ConversationRow = ({ conversation, lastMessage, sender, isUnread }) => {

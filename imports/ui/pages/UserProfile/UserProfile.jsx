@@ -9,7 +9,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import MainHeader from '../../layouts/MainHeader/MainHeader';
+import MainHeader from '../../layouts/MainHeader/MainHeader.jsx';
 import UserAvatar from '../../components/UserAvatar/UserAvatar.jsx';
 import ProfileFeed from '../../components/ProfileFeed/ProfileFeed.jsx';
 import { handleSendMessage } from '../../../utils/messaging.js';
@@ -103,7 +103,7 @@ class UserProfile extends Component {
                                             </Uploader>
                                         </div>
                                     }
-                                    <UserAvatar user={profileUser} size={150} className="avatar" showStatus />
+                                    <UserAvatar user={profileUser} size={150} className="avatar" noLink showStatus />
                                 </div>
 
                                 <div className="actions-container">
@@ -131,7 +131,7 @@ class UserProfile extends Component {
                         </header>
                         <div className="upload-progress">{!!percentUploaded && <div style={{ width: `${percentUploaded}%` }} />}</div>
                         <Row id="profile-content">
-                            <Col xs={6} className="left">
+                            <Col sm={12} md={6}>
                                 {profile && profile.about && profile.about.length !== 0 &&
                                     <div id="about">
                                         <p>{profile.about}</p>
@@ -143,7 +143,7 @@ class UserProfile extends Component {
                                     </div>
                                 }
                             </Col>
-                            <Col xs={6}>
+                            <Col sm={12} md={6}>
                                 <ProfileFeed user={profileUser} />
                             </Col>
                         </Row>

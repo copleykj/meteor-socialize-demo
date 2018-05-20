@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { Meteor } from 'meteor/meteor';
 
 
 class ComposerTextArea extends Component {
     componentDidMount() {
-        this.textarea.style.overflowY = 'hidden';
-        this.textarea.style.height = `${this.textarea.scrollHeight}px`;
+        Meteor.defer(() => {
+            this.textarea.style.overflowY = 'hidden';
+            this.textarea.style.height = `${this.textarea.scrollHeight}px`;
+        });
     }
     autoSize = () => {
         this.textarea.style.height = 'auto';
