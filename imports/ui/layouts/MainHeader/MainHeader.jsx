@@ -142,13 +142,19 @@ MainHeader.defaultProps = {
 };
 
 const MainHeaderContainer = withTracker(({ user, params, location: { query } }) => {
-    Meteor.subscribe('socialize.friendRequests', {}).ready();
-    Meteor.subscribe('unreadConversations').ready();
+    const requestsReady = Meteor.subscribe('socialize.friendRequests', {}).ready();
+    const convosReady = Meteor.subscribe('unreadConversations').ready();
 
     const requests = user.friendRequests().fetch();
     const latestConversation = LatestConversationCollection.findOne();
     const newestConversationId = params.conversationId || (latestConversation && latestConversation.conversationId);
     const numUnreadConversations = user.numUnreadConversations() || '';
+
+    if (window) {
+        window.requestsReady = requestsReady;
+        window.convosReady = convosReady;
+    }
+
     return {
         user,
         numUnreadConversations,
