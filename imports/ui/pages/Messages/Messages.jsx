@@ -19,7 +19,7 @@ import Loader from '../../components/Loader/Loader.jsx';
 const Messages = ({ user, currentConversation, conversationParticipants, params, toUser, ...props }) => (
     <MainHeader user={user} paddingTop="60px" params={params} {...props} >
         <Grid id="messages-page">
-            <ConversationsContainer user={user} shouldShow={params.conversationId} />
+            <ConversationsContainer user={user} shouldShow={!!params.conversationId} />
             {params.conversationId === 'new' ?
                 <NewConversation toUser={toUser} /> :
                 <ConversationArea currentConversation={currentConversation} />
