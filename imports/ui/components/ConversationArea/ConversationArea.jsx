@@ -37,7 +37,7 @@ class MessagesContainer extends Component {
         const { messages, messagesReady, currentConversation } = this.props;
 
         return (
-            <div id="messages-column">
+            <div id="messages-column" className={!currentConversation ? 'hidden-xs' : ''}>
                 <Scrollbars
                     className="scroll-area"
                     universal

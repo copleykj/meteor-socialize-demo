@@ -78,7 +78,7 @@ export default class LoginPage extends Component {
             <div id="login-page">
                 <Grid>
                     <Row>
-                        <Col xs={6} xsOffset={3}>
+                        <Col sm={12} md={8} mdOffset={2}>
                             <div className="form-container">
                                 <img src="meteor-logo.svg" alt="" />
                                 <h1>Socialize</h1>

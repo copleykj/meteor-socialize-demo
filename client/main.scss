@@ -58,6 +58,9 @@ $triangle-size: 10px;
     }
 }
 
+//Layout Level styles
+@import '../imports/ui/layouts/MainHeader/MainHeader.scss';
+
 //Page Level Styles
 @import '../imports/ui/pages/Login/Login.scss';
 @import '../imports/ui/pages/Messages/Messages.scss';
@@ -76,6 +79,7 @@ $triangle-size: 10px;
 @import '../imports/ui/components/NewUsers/NewUsers.scss';
 @import '../imports/ui/components/UserAvatar/UserAvatar.scss';
 
+
 // Other styles
 @import '../imports/styles/loader.scss';
 
@@ -91,6 +95,7 @@ $triangle-size: 10px;
 body {
     background: $body-bg;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 .scroll-area {
@@ -121,6 +126,12 @@ a {
     }
 }
 
+.container {
+    @media (max-width: 767px) {
+        padding: 0;
+    }
+}
+
 .github-fork-ribbon {
     position: fixed !important;
 
@@ -140,6 +151,13 @@ a {
 
     &.idle {
         background-color: $idle-color;
+    }
+}
+
+.dropdown-menu {
+    @media (max-width: 991px) {
+        left: unset;
+        right: 0;
     }
 }
 

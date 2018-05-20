@@ -2,10 +2,22 @@
     min-height: 100vh;
     padding: 80px 0;
 
+    @media (max-width: 767px) {
+        padding: 40px 0;
+    }
+
     .form-container {
         background-color: rgba(240, 240, 240, .14);
         padding: 50px 70px;
         text-align: center;
+
+        @media (max-width: 767px) {
+            padding: 50px 40px;
+
+            h1 {
+                font-size: 45px !important;
+            }
+        }
 
         label {
             display: none;

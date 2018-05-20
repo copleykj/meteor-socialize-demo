@@ -131,7 +131,7 @@ class UserProfile extends Component {
                         </header>
                         <div className="upload-progress">{!!percentUploaded && <div style={{ width: `${percentUploaded}%` }} />}</div>
                         <Row id="profile-content">
-                            <Col xs={6} className="left">
+                            <Col sm={12} md={6}>
                                 {profile && profile.about && profile.about.length !== 0 &&
                                     <div id="about">
                                         <p>{profile.about}</p>
@@ -143,7 +143,7 @@ class UserProfile extends Component {
                                     </div>
                                 }
                             </Col>
-                            <Col xs={6}>
+                            <Col sm={12} md={6}>
                                 <ProfileFeed user={profileUser} />
                             </Col>
                         </Row>

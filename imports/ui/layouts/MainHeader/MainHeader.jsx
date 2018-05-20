@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { browserHistory, Link } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Navbar, Nav, NavDropdown, NavItem, MenuItem, Dropdown, Badge, Glyphicon } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, MenuItem, Dropdown, Badge, Glyphicon } from 'react-bootstrap';
 import ReactResizeDetector from 'react-resize-detector';
 
 import { addQuery, removeQuery } from '../../../utils/router.js';
@@ -24,7 +24,7 @@ const handleLogout = () => {
 };
 
 class MainHeader extends Component {
-    state = { showFriends: false, coloredNavbar: false }
+    state = { showFriends: false, isMobile: false, coloredNavbar: false }
     componentDidMount() {
         window.addEventListener('scroll', this.handleScroll);
     }
@@ -37,6 +37,12 @@ class MainHeader extends Component {
                 this.setState({ hideOnlineFriends: false });
             } else {
                 this.setState({ hideOnlineFriends: true });
+            }
+
+            if (width < 768) {
+                this.setState({ isMobile: true });
+            } else {
+                this.setState({ isMobile: false });
             }
         }
     }
@@ -59,7 +65,7 @@ class MainHeader extends Component {
     }
     render() {
         const { user, numUnreadConversations, newestConversationId, children, showFriends, paddingTop, requests, numRequests } = this.props;
-        const { coloredNavbar, hideOnlineFriends } = this.state;
+        const { coloredNavbar, hideOnlineFriends, isMobile } = this.state;
         const navbarStyle = coloredNavbar ? { backgroundColor: '#8C5667' } : {};
         const className = hideOnlineFriends ? 'full' : '';
 
@@ -76,15 +82,15 @@ class MainHeader extends Component {
                             </Navbar.Header>
 
                             <Nav>
-                                <LinkContainer to={`/messages/${newestConversationId || 'new'}`}><NavItem><Glyphicon glyph="inbox" /> <Badge>{numUnreadConversations}</Badge></NavItem></LinkContainer>
+                                <LinkContainer to={isMobile ? '/messages' : `/messages/${newestConversationId || 'new'}`}><NavItem><Glyphicon glyph="inbox" /> <Badge>{numUnreadConversations}</Badge></NavItem></LinkContainer>
                             </Nav>
 
-                            <Dropdown id="menu-nav-dropdown" >
+                            <Dropdown id="requests-dropdown-button" >
                                 <Dropdown.Toggle noCaret bsStyle="link">
                                     <Glyphicon glyph="user" />
                                     <Badge>{numRequests}</Badge>
                                 </Dropdown.Toggle>
-                                <Dropdown.Menu>
+                                <Dropdown.Menu id="requests-dropdown">
                                     {requests && requests.length > 0 ?
                                         requests.map(request => <RequestItem key={request._id} request={request} />) :
                                         <div className="request-item">
@@ -94,16 +100,21 @@ class MainHeader extends Component {
                                 </Dropdown.Menu>
                             </Dropdown>
 
-                            <Nav pullRight>
-                                <NavDropdown title={user.username} id="user-menu">
-                                    <LinkContainer to={`/profile/${user.username}`}>
-                                        <MenuItem>My Profile</MenuItem>
-                                    </LinkContainer>
-                                    {user.friendCount > 0 && <MenuItem onClick={this.handleShow}>Friends</MenuItem>}
-                                    <MenuItem divider />
-                                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                                </NavDropdown>
-                            </Nav>
+                            <div className="pull-right">
+                                <Dropdown id="user-nav-dropdown-button" >
+                                    <Dropdown.Toggle bsStyle="link">
+                                        {user.username}
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu id="user-nav-dropdown">
+                                        <LinkContainer to={`/profile/${user.username}`}>
+                                            <MenuItem>My Profile</MenuItem>
+                                        </LinkContainer>
+                                        {user.friendCount > 0 && <MenuItem onClick={this.handleShow}>Friends</MenuItem>}
+                                        <MenuItem divider />
+                                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </div>
                         </Navbar>
                         {children}
                         { showFriends && <FriendsList show={showFriends} handleHide={this.handleHide} /> }
