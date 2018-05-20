@@ -9,7 +9,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import MainHeader from '../../layouts/MainHeader/MainHeader';
+import MainHeader from '../../layouts/MainHeader/MainHeader.jsx';
 import UserAvatar from '../../components/UserAvatar/UserAvatar.jsx';
 import ProfileFeed from '../../components/ProfileFeed/ProfileFeed.jsx';
 import { handleSendMessage } from '../../../utils/messaging.js';
