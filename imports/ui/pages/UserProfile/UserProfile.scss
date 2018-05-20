@@ -27,6 +27,7 @@
                 .upload-container {
                     bottom: 0;
                     position: absolute;
+                    z-index: 1;
 
                     button {
                         color: rgba($custom-default-bg, .9);
