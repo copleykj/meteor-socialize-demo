@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Conversation, Message } from 'meteor/socialize:messaging';
+import { SubsCache } from 'meteor/ccorcos:subs-cache';
+
 import { Scrollbars } from 'react-custom-scrollbars';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -10,6 +12,9 @@ import UserAvatar from '../UserAvatar/UserAvatar.jsx';
 import MessageComposer from '../../components/MessageComposer/MessageComposer.jsx';
 import Markdown from '../Markdown/Markdown.jsx';
 import Loader from '../../components/Loader/Loader.jsx';
+
+const subsCache = new SubsCache(5, 20);
+
 
 class MessagesContainer extends Component {
     componentDidUpdate() {
@@ -94,7 +99,7 @@ const ConversationArea = withTracker(({ currentConversation }) => {
     let messagesReady;
     let messages;
     if (currentConversation) {
-        messagesReady = Meteor.subscribe('socialize.messagesFor', currentConversation._id).ready();
+        messagesReady = subsCache.subscribe('socialize.messagesFor', currentConversation._id).ready();
         messages = currentConversation.messages({ sort: { createdAt: 1 } }).fetch();
     }
     return {
