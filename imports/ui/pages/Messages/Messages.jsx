@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
-
 import { ConversationsCollection, Message, Conversation, Participant } from 'meteor/socialize:messaging';
+import { SubsCache } from 'meteor/ccorcos:subs-cache';
+
 import { Grid, Glyphicon } from 'react-bootstrap';
 import { Link } from 'react-router';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -15,6 +16,7 @@ import MainHeader from '../../layouts/MainHeader/MainHeader.jsx';
 import NewConversation from '../../components/NewConversation/NewConversation.jsx';
 import Loader from '../../components/Loader/Loader.jsx';
 
+const subsCache = new SubsCache();
 
 const Messages = ({ user, currentConversation, conversationParticipants, params, toUser, ...props }) => (
     <MainHeader user={user} paddingTop="60px" params={params} {...props} >
@@ -91,7 +93,7 @@ Conversations.propTypes = {
 };
 
 const ConversationsContainer = withTracker(({ user, shouldShow }) => ({
-    ready: Meteor.subscribe('socialize.conversations').ready(),
+    ready: subsCache.subscribe('socialize.conversations').ready(),
     conversations: user.conversations({ sort: { updatedAt: -1 } }).fetch(),
     shouldShow,
 }))(Conversations);

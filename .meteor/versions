@@ -16,6 +16,7 @@ boilerplate-generator@1.4.0
 caching-compiler@1.1.11
 caching-html-compiler@1.1.2
 callback-hook@1.1.0
+ccorcos:subs-cache@0.9.6
 check@1.3.0
 chuangbo:cookie@1.1.0
 cultofcoders:redis-oplog@1.2.6_2

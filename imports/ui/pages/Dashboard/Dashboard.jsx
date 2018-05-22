@@ -1,7 +1,7 @@
-import { Meteor } from 'meteor/meteor';
 import { Post } from 'meteor/socialize:postable';
 import { User } from 'meteor/socialize:user-model';
 import { withTracker } from 'meteor/react-meteor-data';
+import { SubsCache } from 'meteor/ccorcos:subs-cache';
 
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -13,6 +13,8 @@ import PostComponent from '../../components/Post/Post.jsx';
 import NewUsers from '../../components/NewUsers/NewUsers.jsx';
 import Markdown from '../../components/Markdown/Markdown.jsx';
 import Loader from '../../components/Loader/Loader.jsx';
+
+const subsCache = new SubsCache();
 
 const billboardMessage = `
 Welcome to the __SocializeJs__ Demo. Here you'll find a Facebook style social network implemented using the packages in the [socialize package set](https://atmospherejs.com/socialize).
@@ -114,7 +116,7 @@ Dashboard.propTypes = {
 };
 
 const DashboardContainer = withTracker(({ user }) => {
-    const ready = Meteor.subscribe('socialize.feed.friendsPosts', user._id).ready();
+    const ready = subsCache.subscribe('socialize.feed.friendsPosts', user._id).ready();
     return {
         ready,
         user,

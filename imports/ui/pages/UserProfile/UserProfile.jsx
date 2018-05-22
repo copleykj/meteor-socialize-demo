@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Cloudinary } from 'meteor/socialize:cloudinary';
+import { SubsCache } from 'meteor/ccorcos:subs-cache';
 
 import { AutoForm, AutoField, LongTextField } from 'uniforms-bootstrap3';
 import { Button, MenuItem, ButtonToolbar, ButtonGroup, Grid, Modal, Row, Col, Glyphicon, DropdownButton } from 'react-bootstrap';
@@ -16,6 +17,7 @@ import { handleSendMessage } from '../../../utils/messaging.js';
 import Uploader from '../../components/Uploader/Uploader.jsx';
 import UserTile from '../../components/UserTile/UserTile.jsx';
 
+const subsCache = new SubsCache();
 
 class UserProfile extends Component {
     static propTypes = {
@@ -194,7 +196,7 @@ class UserProfile extends Component {
 
 const UserProfileContainer = withTracker(({ params, user }) => {
     const { username } = params;
-    const ready = Meteor.subscribe('socialize.userProfile', username).ready();
+    const ready = subsCache.subscribe('socialize.userProfile', username).ready();
     let uploadingFile;
 
     if (Meteor.isClient) {
