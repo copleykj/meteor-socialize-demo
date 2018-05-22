@@ -17,7 +17,7 @@ publishComposite('onlineFriends', {
     ],
 });
 
-Meteor.publish('newUsers', function publishNewUsers() {
+Meteor.publish(null, function publishNewUsers() {
     return Meteor.users.find({ _id: { $ne: this.userId } }, { limit: 18, sort: { createdAt: -1 }, fields: { ...User.fieldsToPublish, createdAt: 1 } });
 });
 
