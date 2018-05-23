@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Conversation, Message } from 'meteor/socialize:messaging';
 import { SubsCache } from 'meteor/ccorcos:subs-cache';
