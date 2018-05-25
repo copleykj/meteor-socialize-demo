@@ -1,3 +1,11 @@
+.navbar {
+    .badge {
+        left: 16px;
+        position: absolute;
+        top: 6px;
+        z-index: -1;
+    }
+}
 
 .navbar-right {
     float: right !important;
@@ -14,8 +22,7 @@
 }
 
 .navbar-nav > li > a {
-    padding-bottom: 19.5px;
-    padding-top: 19.5px;
+    padding: 19.5px;
 }
 
 .container > .navbar-header {
