@@ -6,7 +6,7 @@ $brand-intermediary: #8c5667;
 $body-bg: linear-gradient(135deg, $brand-danger, #336498);
 //setup bootstrap with darkly theme
 @import './theme/_variables.scss';
-@import '{}/node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
+@import '../imports/styles/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 @import './theme/_bootswatch.scss';
 
 $montserrat: 'Montserrat', sans-serif;
