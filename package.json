@@ -6,12 +6,13 @@
     "deploy": "DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy --settings settings-prod.json socialize.meteorapp.com"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.38",
+    "@babel/runtime": "^7.0.0-beta.49",
     "babel-runtime": "^6.23.0",
     "bcrypt": "^2.0.1",
     "bootstrap-sass": "^3.3.7",
     "cloudinary": "^1.10.0",
     "cloudinary-core": "^2.5.0",
+    "core-js": "^2.5.7",
     "idle-timer": "^1.2.0",
     "meteor-node-stubs": "^0.2.11",
     "plural": "^0.3.0",
