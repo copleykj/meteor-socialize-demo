@@ -1,15 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { User } from 'meteor/socialize:user-model';
+import { browserHistory } from 'meteor/communitypackages:react-router-ssr';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router';
 import { Grid, Row, Col, Button, Collapse } from 'react-bootstrap';
 import SimpleSchema from 'simpl-schema';
 import AutoField from 'uniforms-bootstrap3/AutoField';
 import AutoForm from 'uniforms-bootstrap3/AutoForm';
 import ErrorsField from 'uniforms-bootstrap3/ErrorsField';
-
 
 const LoginSchema = new SimpleSchema({
     usernameOrEmail: {

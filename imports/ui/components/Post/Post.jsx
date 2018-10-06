@@ -6,7 +6,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Glyphicon, Button, ButtonGroup, ButtonToolbar, DropdownButton, MenuItem } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import TimeAgo from 'react-timeago';
 
 import UserAvatar from '../UserAvatar/UserAvatar.jsx';
@@ -117,7 +117,7 @@ const PostComponentContainer = withTracker(({ post }) => ({
     post,
     poster: post.poster(),
     user: Meteor.user(),
-    comments: post.comments().fetch(),
+    comments: post.comments({ limit: 1 }).fetch(),
     likedByUser: post.isLikedBy(Meteor.user()),
 }))(PostComponent);
 

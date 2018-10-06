@@ -3,7 +3,10 @@
         left: 16px;
         position: absolute;
         top: 6px;
-        z-index: -1;
+        z-index: 1;
+    }
+    .glyph-icon {
+        z-index: 2;
     }
 }
 

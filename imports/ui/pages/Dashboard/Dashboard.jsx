@@ -69,7 +69,7 @@ From your personal profile you can upload new avatars by clicking the upload ico
 - [socialize:cloudinary](https://atmospherejs.com/socialize/cloudinary)
 `;
 
-const Dashboard = ({ user, posts, ready, params, ...props }) => (
+const Dashboard = ({ user, posts, ready, match: { params }, ...props }) => (
     <MainHeader user={user} params={params} {...props}>
         <Grid id="dashboard">
             <Row>
@@ -110,8 +110,10 @@ Dashboard.propTypes = {
     user: PropTypes.instanceOf(User),
     posts: PropTypes.arrayOf(PropTypes.instanceOf(Post)),
     ready: PropTypes.bool,
-    params: PropTypes.shape({
-        conversationId: PropTypes.string,
+    match: PropTypes.shape({
+        params: PropTypes.shape({
+            conversationId: PropTypes.string,
+        }),
     }),
 };
 

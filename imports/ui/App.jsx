@@ -2,57 +2,41 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { User } from 'meteor/socialize:user-model';
 
-import React, { Component } from 'react';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import plural from 'plural';
 
 import LoginPage from './pages/Login/Login.jsx';
 
+import Dashboard from '../ui/pages/Dashboard/Dashboard.jsx';
+import Messages from '../ui/pages/Messages/Messages.jsx';
+import UserProfile from '../ui/pages/UserProfile/UserProfile.jsx';
+
 plural.monkeyPatch();
 
-class App extends Component {
-    componentDidMount() {
-        const { user } = this.props;
-
-        this.newConvoSound.volume = 0.5;
-        this.newRequestSound.volume = 0.25;
-
-        user.unreadConversations().observeChanges({
-            added: () => {
-                if (window.convosReady) {
-                    this.newConvoSound && this.newConvoSound.play().catch(() => {});
-                }
-            },
-        });
-
-        user.friendRequests().observeChanges({
-            added: () => {
-                if (window.requestsReady) {
-                    this.newRequestSound && this.newRequestSound.play().catch(() => {});
-                }
-            },
-        });
+const SecuredPage = (props) => {
+    const { Component, ...restProps } = props;
+    if (props.user) {
+        return (<Component {...restProps} />);
     }
-    render() {
-        const { children, ...props } = this.props;
-        return (
-            <div>
-                <audio ref={(ref) => { this.newConvoSound = ref; }} preload="auto" >
-                    <source src="blip.mp3" type="audio/mpeg" />
-                </audio>
-                <audio ref={(ref) => { this.newRequestSound = ref; }} preload="auto">
-                    <source src="harp.mp3" type="audio/mpeg" />
-                </audio>
-                {props.user ? children && React.cloneElement(children, { ...props }) : <LoginPage />}
-            </div>
-        );
-    }
-}
-
-App.propTypes = {
-    user: PropTypes.instanceOf(User),
-    children: PropTypes.node,
+    return (<LoginPage />);
 };
+
+SecuredPage.propTypes = {
+    user: PropTypes.instanceOf(User),
+    Component: PropTypes.func,
+};
+
+const App = props => (
+    <>
+        <Route path="/" exact render={routerProps => <SecuredPage Component={Dashboard} {...props} {...routerProps} />} />
+        <Route path="/login" component={LoginPage} />
+        <Route exact path="/profile/:username" render={routerProps => <SecuredPage Component={UserProfile} {...props} {...routerProps} />} />
+        <Route path="/messages/:conversationId" render={routerProps => <SecuredPage Component={Messages} {...props} {...routerProps} />} />
+        <Route path="/messages" render={routerProps => <SecuredPage Component={Messages} {...props} {...routerProps} />} />
+    </>
+);
 
 const AppContainer = withTracker(() => ({
     user: Meteor.user(),

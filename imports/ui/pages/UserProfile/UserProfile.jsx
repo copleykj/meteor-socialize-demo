@@ -13,7 +13,7 @@ import React, { Component } from 'react';
 import MainHeader from '../../layouts/MainHeader/MainHeader.jsx';
 import UserAvatar from '../../components/UserAvatar/UserAvatar.jsx';
 import ProfileFeed from '../../components/ProfileFeed/ProfileFeed.jsx';
-import { handleSendMessage } from '../../../utils/messaging.js';
+import handleSendMessage from '../../../utils/messaging.js';
 import Uploader from '../../components/Uploader/Uploader.jsx';
 import UserTile from '../../components/UserTile/UserTile.jsx';
 
@@ -194,7 +194,7 @@ class UserProfile extends Component {
 }
 
 
-const UserProfileContainer = withTracker(({ params, user }) => {
+const UserProfileContainer = withTracker(({ user, match: { params } }) => {
     const { username } = params;
     const ready = subsCache.subscribe('socialize.userProfile', username).ready();
     let uploadingFile;
@@ -215,6 +215,7 @@ const UserProfileContainer = withTracker(({ params, user }) => {
 
     if (ready) {
         profile = ProfilesCollection.findOne({ username });
+
         profileUser = profile.user();
         friendsReady = Meteor.subscribe('socialize.friends', profileUser._id, { limit: 4 }).ready();
         friends = profileUser.friendsAsUsers({ limit: 4 }).fetch();
@@ -223,6 +224,7 @@ const UserProfileContainer = withTracker(({ params, user }) => {
         hasPendingRequest = profileUser.hasFriendshipRequestFrom(user);
         isSelf = profileUser.isSelf();
     }
+
     return {
         ready,
         areFriends,

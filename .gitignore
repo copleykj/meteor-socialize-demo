@@ -4,3 +4,5 @@ packages/
 settings\.json
 
 settings-prod\.json
+
+\.vscode/

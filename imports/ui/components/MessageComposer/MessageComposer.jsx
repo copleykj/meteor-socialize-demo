@@ -1,7 +1,6 @@
 import { Button } from 'react-bootstrap';
 import { Conversation } from 'meteor/socialize:messaging';
 import { User } from 'meteor/socialize:user-model';
-import { browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
@@ -14,13 +13,13 @@ class MessageComposer extends Component {
         if (value) {
             if (conversation) {
                 conversation.sendMessage(value);
+                onSend && onSend();
             } else if (participants.length > 0) {
                 const convo = new Conversation().save();
                 convo.addParticipants(participants);
                 convo.sendMessage(value);
-                browserHistory.push(`/messages/${convo._id}`);
+                onSend && onSend(convo._id);
             }
-            onSend && onSend();
             this.composer.reset();
         }
     }
