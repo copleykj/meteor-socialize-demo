@@ -2,11 +2,13 @@ import { Meteor } from 'meteor/meteor';
 import { User } from 'meteor/socialize:user-model';
 import { Request } from 'meteor/socialize:requestable';
 import { withTracker } from 'meteor/react-meteor-data';
+import { browserHistory } from 'meteor/communitypackages:react-router-ssr';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory, Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, NavItem, MenuItem, Dropdown, Badge, Glyphicon } from 'react-bootstrap';
+import queryString from 'query-string';
 import ReactResizeDetector from 'react-resize-detector';
 
 import { addQuery, removeQuery } from '../../../utils/router.js';
@@ -15,20 +17,36 @@ import OnlineFriends from '../../components/OnlineFriends/OnlineFriends.jsx';
 import RequestItem from '../../components/RequestItem/RequestItem.jsx';
 import LatestConversationCollection from '../../../config/collection.js';
 
-const handleLogout = () => {
-    Meteor.logout((error) => {
-        if (!error) {
-            browserHistory.replace('/login');
-        }
-    });
-};
-
 class MainHeader extends Component {
     state = { showFriends: false, isMobile: false, coloredNavbar: false }
     componentDidMount() {
+        const { user } = this.props;
+
+        this.newConvoSound.volume = 0.5;
+        this.newRequestSound.volume = 0.25;
+
+        this.unreadConversationObserver = user.unreadConversations().observeChanges({
+            added: () => {
+                if (window.convosReady) {
+                    this.newConvoSound && this.newConvoSound.play().catch(() => { });
+                }
+            },
+        });
+
+        this.friendRequestObserver = user.friendRequests().observeChanges({
+            added: () => {
+                if (window.requestsReady) {
+                    this.newRequestSound && this.newRequestSound.play().catch(() => { });
+                }
+            },
+        });
+
         window.addEventListener('scroll', this.handleScroll);
     }
     componentWillUnmount() {
+        this.unreadConversationObserver.stop();
+        this.friendRequestObserver.stop();
+
         window.removeEventListener('scroll', this.handleScroll);
     }
     onResize = (width) => {
@@ -60,17 +78,29 @@ class MainHeader extends Component {
     handleShow = () => {
         addQuery({ showFriends: true });
     }
-    handleHide= () => {
+    handleHide = () => {
         removeQuery('showFriends');
     }
+    handleLogout = () => {
+        Meteor.logout((error) => {
+            if (!error) {
+                browserHistory.replace('/');
+            }
+        });
+    };
     render() {
         const { user, numUnreadConversations, newestConversationId, children, showFriends, paddingTop, requests, numRequests } = this.props;
         const { coloredNavbar, hideOnlineFriends, isMobile } = this.state;
         const navbarStyle = coloredNavbar ? { backgroundColor: '#8C5667' } : {};
         const className = hideOnlineFriends ? 'full' : '';
-
         return (
             <div id="content-container">
+                <audio ref={(ref) => { this.newConvoSound = ref; }} preload="auto" >
+                    <source src="/blip.mp3" type="audio/mpeg" />
+                </audio>
+                <audio ref={(ref) => { this.newRequestSound = ref; }} preload="auto">
+                    <source src="/harp.mp3" type="audio/mpeg" />
+                </audio>
                 <ReactResizeDetector handleWidth onResize={this.onResize} refreshMode="throttle" refreshRate={200} />
                 <div id="main-content" className={className}>
                     <div style={{ paddingTop }}>
@@ -111,13 +141,13 @@ class MainHeader extends Component {
                                         </LinkContainer>
                                         {user.friendCount > 0 && <MenuItem onClick={this.handleShow}>Friends</MenuItem>}
                                         <MenuItem divider />
-                                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                        <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </div>
                         </Navbar>
                         {children}
-                        { showFriends && <FriendsList show={showFriends} handleHide={this.handleHide} /> }
+                        {showFriends && <FriendsList show={showFriends} handleHide={this.handleHide} />}
                     </div>
                 </div>
                 {!hideOnlineFriends && <OnlineFriends user={user} />}
@@ -141,7 +171,8 @@ MainHeader.defaultProps = {
     paddingTop: '80px',
 };
 
-const MainHeaderContainer = withTracker(({ user, params, location: { query } }) => {
+const MainHeaderContainer = withTracker(({ user, params, location: { search } }) => {
+    const query = queryString.parse(search);
     const requestsReady = Meteor.subscribe('socialize.friendRequests', {}).ready();
     const convosReady = Meteor.subscribe('unreadConversations').ready();
 

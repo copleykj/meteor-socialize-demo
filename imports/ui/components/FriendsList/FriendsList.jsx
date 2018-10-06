@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ButtonToolbar, Dropdown, MenuItem, Glyphicon, Modal } from 'react-bootstrap';
 
-import { handleSendMessage } from '../../../utils/messaging.js';
+import handleSendMessage from '../../../utils/messaging.js';
 import UserAvatar from '../UserAvatar/UserAvatar.jsx';
 
 class FriendsList extends Component {

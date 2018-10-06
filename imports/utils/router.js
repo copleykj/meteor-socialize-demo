@@ -1,13 +1,20 @@
-import { browserHistory } from 'react-router';
+import queryString from 'query-string';
+import { browserHistory } from 'meteor/communitypackages:react-router-ssr';
 
-export const addQuery = (query) => {
-    const location = Object.assign({}, browserHistory.getCurrentLocation());
-    Object.assign(location.query, query);
-    browserHistory.push(location);
+
+export const addQuery = (rawQuery) => {
+    const { location } = browserHistory;
+    const query = { ...queryString.parse(location.search), ...rawQuery };
+    const newLocation = { ...location };
+    newLocation.search = queryString.stringify(query);
+    browserHistory.push(newLocation);
 };
 
 export const removeQuery = (...queryNames) => {
-    const location = Object.assign({}, browserHistory.getCurrentLocation());
-    queryNames.forEach(q => delete location.query[q]);
-    browserHistory.push(location);
+    const { location } = browserHistory;
+    const query = queryString.parse(location.search);
+    const newLocation = { ...location };
+    queryNames.forEach(q => delete query[q]);
+    newLocation.search = queryString.stringify(query);
+    browserHistory.push(newLocation);
 };

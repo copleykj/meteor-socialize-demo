@@ -3,7 +3,7 @@ import { ConversationsCollection, Message, Conversation, Participant } from 'met
 import { SubsCache } from 'meteor/ccorcos:subs-cache';
 
 import { Grid, Glyphicon } from 'react-bootstrap';
-import { Link } from 'react-router';
+import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { User } from 'meteor/socialize:user-model';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -22,9 +22,9 @@ const Messages = ({ user, currentConversation, conversationParticipants, params,
     <MainHeader user={user} paddingTop="60px" params={params} {...props} >
         <Grid id="messages-page">
             <ConversationsContainer user={user} shouldShow={!!params.conversationId} />
-            {params.conversationId === 'new' ?
-                <NewConversation toUser={toUser} /> :
-                <ConversationArea currentConversation={currentConversation} />
+            { params.conversationId === 'new' ?
+                <NewConversation toUser={toUser} {...props} /> :
+                <ConversationArea currentConversation={currentConversation} {...props} />
             }
             <div id="participants-column" className="hidden-xs hidden-sm">
                 {conversationParticipants &&
@@ -37,7 +37,7 @@ const Messages = ({ user, currentConversation, conversationParticipants, params,
     </MainHeader>
 );
 
-const MessagesContainer = withTracker(({ user, params, location: { query: { toUsername } } }) => {
+const MessagesContainer = withTracker(({ user, match: { params }, location: { query: { toUsername } = {} } }) => {
     const { conversationId } = params;
     let currentConversation;
     let toUser;
@@ -55,6 +55,7 @@ const MessagesContainer = withTracker(({ user, params, location: { query: { toUs
         user,
         toUser,
         currentConversation,
+        params,
         conversationParticipants: currentConversation && currentConversation.participants().fetch(),
     };
 })(Messages);
@@ -101,7 +102,7 @@ const ConversationsContainer = withTracker(({ user, shouldShow }) => ({
 const ConversationRow = ({ conversation, lastMessage, sender, isUnread }) => {
     const unread = isUnread ? 'unread' : '';
     return (
-        <Link to={`/messages/${conversation._id}`} key={conversation._id} activeClassName="active" className={`conversation ${unread}`}>
+        <NavLink to={`/messages/${conversation._id}`} key={conversation._id} activeClassName="active" className={`conversation ${unread}`}>
             <div>
                 <UserAvatar
                     user={sender}
@@ -116,7 +117,7 @@ const ConversationRow = ({ conversation, lastMessage, sender, isUnread }) => {
                     </span>
                 }
             </div>
-        </Link>
+        </NavLink>
     );
 };
 
