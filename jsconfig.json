@@ -1,0 +1,71 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "meteor/socialize:postable": [
+        "packages/socialize-postable/server/server.js",
+        "packages/socialize-postable/common/common.js"
+      ],
+      "meteor/socialize:requestable": [
+        "packages/socialize-requestable/common/common.js"
+      ],
+      "meteor/socialize:commentable": [
+        "packages/socialize-commentable/server/server.js",
+        "packages/socialize-commentable/common/common.js"
+      ],
+      "meteor/communitypackages:react-router-ssr": [
+        "packages/meteor-react-router-ssr/lib/client.jsx",
+        "packages/meteor-react-router-ssr/lib/server.jsx"
+      ],
+      "meteor/socialize:voteable": [
+        "packages/socialize-voteable/server/server.js",
+        "packages/socialize-voteable/common/common.js"
+      ],
+      "meteor/socialize:user-model": [
+        "packages/socialize-messaging/node_modules/@socialize/user-model/common/common.js"
+      ],
+      "meteor/socialize:messaging": [
+        "packages/socialize-messaging/server.js",
+        "packages/socialize-messaging/common.js"
+      ],
+      "meteor/socialize:user-blocking": [
+        "packages/socialize-user-blocking/server/server.js",
+        "packages/socialize-user-blocking/common/common.js"
+      ],
+      "meteor/socialize:notifications": [
+        "packages/socialize-notifications/server.js",
+        "packages/socialize-notifications/client.js"
+      ],
+      "meteor/socialize:feed": [
+        "packages/socialize-feed/server/server.js",
+        "packages/socialize-feed/common/common.js"
+      ],
+      "meteor/socialize:friendships": [
+        "packages/socialize-friendships/server/server.js",
+        "packages/socialize-friendships/common/common.js"
+      ],
+      "meteor/socialize:user-profile": [
+        "packages/socialize-user-profile/server/server.js",
+        "packages/socialize-user-profile/common/common.js"
+      ],
+      "meteor/socialize:linkable-model": [
+        "packages/socialize-messaging/node_modules/@socialize/linkable-model/common/common.js"
+      ],
+      "meteor/socialize:base-model": [
+        "packages/socialize-linkable-model/node_modules/@socialize/base-model/entry-meteor.js"
+      ],
+      "meteor/socialize:user-presence": [
+        "packages/socialize-messaging/node_modules/@socialize/user-presence/server/server.js",
+        "packages/socialize-messaging/node_modules/@socialize/user-presence/common/common.js"
+      ],
+      "meteor/socialize:server-time": [
+        "packages/socialize-linkable-model/node_modules/@socialize/server-time/server/server-time.js",
+        "packages/socialize-linkable-model/node_modules/@socialize/server-time/client/entry-meteor.js"
+      ],
+      "meteor/socialize:likeable": [
+        "packages/socialize-likeable/server/server.js",
+        "packages/socialize-likeable/common/common.js"
+      ]
+    }
+  }
+}

@@ -1,10 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { User } from 'meteor/socialize:user-model';
+import { browserHistory } from 'meteor/communitypackages:react-router-ssr';
 
 import { Label, Glyphicon, Alert } from 'react-bootstrap';
 import { Scrollbars } from 'react-custom-scrollbars';
 import React, { Component } from 'react';
-import { browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
 
 import UserTile from '../UserTile/UserTile.jsx';
@@ -38,6 +38,9 @@ export default class NewConversation extends Component {
         const { selectedUsers } = this.state;
         const newParticipants = selectedUsers.filter(participant => participant._id !== user._id);
         this.setState({ selectedUsers: newParticipants });
+    }
+    handleSend = (conversationId) => {
+        browserHistory.push(`/messages/${conversationId}`);
     }
     render() {
         const { selectedUsers, searchQuery } = this.state;
@@ -107,6 +110,7 @@ export default class NewConversation extends Component {
                     onFocus={() => this.setState({ composing: true })}
                     onBlur={() => this.setState({ composing: false })}
                     disabled={!this.state.selectedUsers.length > 0}
+                    onSend={this.handleSend}
                 />
             </div>
         );
