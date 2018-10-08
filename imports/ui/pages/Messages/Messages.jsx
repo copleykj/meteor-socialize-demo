@@ -3,7 +3,7 @@ import { ConversationsCollection, Message, Conversation, Participant } from 'met
 import { SubsCache } from 'meteor/ccorcos:subs-cache';
 
 import { Grid, Glyphicon } from 'react-bootstrap';
-import { Link, NavLink, Route, Switch } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { User } from 'meteor/socialize:user-model';
 import { withTracker } from 'meteor/react-meteor-data';
