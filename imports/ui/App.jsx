@@ -33,8 +33,8 @@ const App = props => (
         <Route path="/" exact render={routerProps => <SecuredPage Component={Dashboard} {...props} {...routerProps} />} />
         <Route path="/login" component={LoginPage} />
         <Route exact path="/profile/:username" render={routerProps => <SecuredPage Component={UserProfile} {...props} {...routerProps} />} />
-        <Route path="/messages/:conversationId" render={routerProps => <SecuredPage Component={Messages} {...props} {...routerProps} />} />
-        <Route path="/messages" render={routerProps => <SecuredPage Component={Messages} {...props} {...routerProps} />} />
+        <Route exact path="/messages/:conversationId" render={routerProps => <SecuredPage Component={Messages} {...props} {...routerProps} />} />
+        <Route exact path="/messages" render={routerProps => <SecuredPage Component={Messages} {...props} {...routerProps} />} />
     </>
 );
 
