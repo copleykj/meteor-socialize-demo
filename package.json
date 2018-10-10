@@ -7,8 +7,7 @@
     "deploy": "DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy --settings settings-prod.json socialize.meteorapp.com"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.49",
-    "babel-runtime": "^6.23.0",
+    "@babel/runtime": "^7.1.2",
     "bcrypt": "^2.0.1",
     "bootstrap-sass": "^3.3.7",
     "cloudinary": "^1.11.0",
@@ -17,7 +16,7 @@
     "fbjs": "^1.0.0",
     "history": "^4.7.2",
     "idle-timer": "^1.2.0",
-    "meteor-node-stubs": "^0.2.11",
+    "meteor-node-stubs": "^0.4.1",
     "plural": "^1.1.0",
     "prop-types": "^15.6.2",
     "query-string": "^6.2.0",
@@ -27,7 +26,7 @@
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.5.2",
     "react-helmet": "^5.2.0",
-    "react-markdown": "^3.3.2",
+    "react-markdown": "^4.0.2",
     "react-resize-detector": "^2.2.0",
     "react-router": "^4.3.1",
     "react-router-bootstrap": "^0.24.4",
