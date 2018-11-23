@@ -14,8 +14,8 @@
         "packages/socialize-commentable/common/common.js"
       ],
       "meteor/communitypackages:react-router-ssr": [
-        "packages/meteor-react-router-ssr/lib/client.jsx",
-        "packages/meteor-react-router-ssr/lib/server.jsx"
+        "packages/meteor-react-router-ssr/client.jsx",
+        "packages/meteor-react-router-ssr/server.jsx"
       ],
       "meteor/socialize:voteable": [
         "packages/socialize-voteable/server/server.js",
